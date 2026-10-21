@@ -5,7 +5,7 @@ export const KEY={id:"mossy-key",name:"Mossy key",rate:1/16};
 export const DRY_ITEMS=[ESSENCE,KEY];
 export function checkCount(n,label="kills"){if(!Number.isSafeInteger(n)||n<0||n>MAX_KILLS)throw new RangeError("Enter 0–1,000,000 "+label+".");return n;}
 export function checkWorld(w){if(!["members","f2p"].includes(w))throw new RangeError("Choose Members or F2P.");return w;}
-export function checkMode(m){if(!["preobtained","boss"].includes(m))throw new RangeError("Choose Pre-obtained keys or Boss obtained keys.");return m;}
+export function checkMode(m){if(!["preobtained","boss"].includes(m))throw new RangeError("Choose Pre-obtained keys or Key obtained form boss.");return m;}
 // id:amount:ticket-weight. Boss main table is 128 tickets; chest is 118.
 const unpack=s=>s.trim().split(/\s+/).map(entry=>{
  const [id,quantity,weight]=entry.split(":");return [id,Number(quantity),Number(weight)];
@@ -40,8 +40,16 @@ function ordinary(rows,rng,add){
  else if(id==="$gems"){add("uncut-ruby",5);add("uncut-diamond",5);return;}
  if(id!=="nothing")add(id,count);
 }
-export function simulate(kills,{rng=Math.random,mode="preobtained",world="members",slayerTask=false}={}){
+export function simulate(kills,{
+ rng=Math.random,mode="preobtained",world="members",slayerKills=0,
+ maxChestOpenings=MAX_KILLS
+}={}){
  checkCount(kills);checkMode(mode);checkWorld(world);
+ checkCount(slayerKills,"kills on Slayer task");
+ if(slayerKills>kills)throw new RangeError("Kills on Slayer task cannot exceed total boss kills.");
+ checkCount(maxChestOpenings,"maximum chest openings");
+ if(mode==="preobtained"&&maxChestOpenings<kills)
+  throw new RangeError("Pre-obtained keys require one chest per boss kill.");
  const bossDrops=Object.create(null),chestDrops=Object.create(null);
  const collector=target=>(id,n=1)=>{if(n>0)target[id]=(target[id]??0)+n;};
  const boss=collector(bossDrops),chest=collector(chestDrops);
@@ -57,14 +65,31 @@ export function simulate(kills,{rng=Math.random,mode="preobtained",world="member
    if(random(rng)<1/5012.5)boss("curved-bone");
   }
   if(random(rng)<1/45)boss("clue-scroll-beginner");
-  if(random(rng)<(slayerTask?1/8:1/16)){keysFromBoss++;boss("mossy-key");}
+  if(random(rng)<(kill<slayerKills?1/8:1/16)){keysFromBoss++;boss("mossy-key");}
  }
- const chestsOpened=mode==="preobtained"?kills:keysFromBoss;
- let chestKeysFound=0;
- for(let i=0;i<chestsOpened;i++){
+ // Pre-obtained keys means exactly one chest per kill, even when
+ // either source drops keys. In boss-key mode, every opened chest can
+ // yield another key, which is immediately available for an extra chest.
+ // The explicit cap prevents infinite loops with pathological RNGs.
+ const startingKeys=mode==="preobtained"?kills:0;
+ let keysAvailable=mode==="preobtained"?kills:keysFromBoss;
+ let chestsOpened=0,chestKeysFound=0;
+ while(keysAvailable>0&&chestsOpened<maxChestOpenings){
+  keysAvailable--;
+  chestsOpened++;
   chest("clue-scroll-beginner");ordinary(ctable,rng,chest);
-  if(random(rng)<1/16){chestKeysFound++;chest("mossy-key");}
+  if(random(rng)<1/16){
+   chestKeysFound++;
+   chest("mossy-key");
+   if(mode==="boss")keysAvailable++;
+  }
  }
- return {kills,mode,world,bossDrops,chestDrops,keysFromBoss,chestsOpened,
-  chestKeysFound,startingKeys:mode==="preobtained"?kills:0,keysSpent:chestsOpened};
+ const chestLimitReached=mode==="boss"&&keysAvailable>0;
+ return {
+  kills,mode,world,slayerKills,bossDrops,chestDrops,keysFromBoss,
+  chestsOpened,chestKeysFound,startingKeys,keysSpent:chestsOpened,
+  chestKeyOpenings:mode==="boss"?Math.max(0,chestsOpened-keysFromBoss):0,
+  unspentKeys:mode==="boss"?keysAvailable:keysFromBoss+chestKeysFound,
+  chestLimitReached
+ };
 }

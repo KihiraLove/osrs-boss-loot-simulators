@@ -19,7 +19,7 @@ function selectMode(next){
  mode=next;const dry=mode==="dry";
  $("kills-input").hidden=dry;$("chests-input").hidden=!dry;
  $("key-mode").hidden=dry;$("world-mode").hidden=dry;
- $("slayer-option").hidden=dry;$("simulation-note").hidden=dry;$("dry-note").hidden=!dry;
+ $("slayer-option").hidden=dry;$("dry-note").hidden=!dry;
  $("loot-panel").hidden=dry;$("dry-panel").hidden=!dry;
  for(const [id,selected] of [["loot",!dry],["dry",dry]]){
   $("mode-"+id).classList.toggle("is-active",selected);
@@ -47,6 +47,18 @@ function lootCard(item,quantity){
  const name=document.createElement("span");name.textContent=item.name;
  details.append(amount,name);card.append(picture,details);return card;
 }
+function renderUnique(drops){
+ const item=ESSENCE,count=drops[item.id]??0;
+ const card=document.createElement("div");
+ card.className="unique-card"+(count?" found":"");
+ const name=document.createElement("strong");name.textContent=item.name;
+ const amount=document.createElement("span");amount.className="count";
+ amount.textContent="× "+fmt(count);
+ const rate=document.createElement("span");rate.className="rarity";
+ rate.textContent="1/118 per chest";
+ card.append(icon(item),name,amount,rate);
+ $("unique-grid").replaceChildren(card);
+}
 function populate(id,drops){
  const dest=$(id);dest.replaceChildren();
  const sorted=Object.entries(drops).filter(([,n])=>n>0)
@@ -67,11 +79,24 @@ function stat(label,value){
 function lootResults(data){
  const summary=$("key-summary");summary.replaceChildren(
   stat("Boss kills",data.kills),
+  stat("Kc on Slayer task",data.slayerKills),
   stat("Boss-dropped keys",data.keysFromBoss),
   stat("Chests opened",data.chestsOpened),
-  stat("Keys found in chests",data.chestKeysFound)
+  stat("Keys found in chests",data.chestKeysFound),
+  stat("Chests opened with chest keys",data.chestKeyOpenings)
  );
- populate("boss-loot",data.bossDrops);populate("chest-loot",data.chestDrops);
+ if(data.chestLimitReached){
+  const notice=document.createElement("p");
+  notice.className="bryophyta-limit";
+  notice.textContent="Simulation stopped at the maximum chest openings; "+
+   fmt(data.unspentKeys)+" key(s) remain unused.";
+  summary.append(notice);
+ }
+ renderUnique(data.chestDrops);
+ populate("boss-loot",data.bossDrops);
+ const chestLoot={...data.chestDrops};
+ delete chestLoot[ESSENCE.id];
+ populate("chest-loot",chestLoot);
  $("empty-state").hidden=true;$("results-content").hidden=false;
 }
 function percentage(x){
@@ -108,7 +133,7 @@ $("mode-dry").addEventListener("click",()=>selectMode("dry"));
 form.addEventListener("input",()=>{clearResults();showError("");});
 $("clear-button").addEventListener("click",()=>{
  $("kill-count").value="100";$("chest-count").value="100";
- $("slayer-task").checked=false;
+ $("slayer-kills").value="0";
  form.querySelector('input[name="key-mode"][value="preobtained"]').checked=true;
  form.querySelector('input[name="world"][value="members"]').checked=true;
  clearResults();showError("");
@@ -117,8 +142,12 @@ form.addEventListener("submit",event=>{
  event.preventDefault();showError("");
  try{
   if(mode==="dry")dryResults(calculateDry(count("chest-count","Chest openings")));
-  else lootResults(simulate(count("kill-count","Boss kills"),{
-   mode:setting("key-mode"),world:setting("world"),slayerTask:$("slayer-task").checked
-  }));
+  else {
+   const kills=count("kill-count","Boss kills");
+   lootResults(simulate(kills,{
+    mode:setting("key-mode"),world:setting("world"),
+    slayerKills:count("slayer-kills","Kills on Slayer task")
+   }));
+  }
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate results.");}
 });

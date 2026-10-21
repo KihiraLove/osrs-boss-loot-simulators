@@ -29,34 +29,67 @@ test("Pre-obtained keys give exactly one chest per kill independently of boss ke
  assert.equal(r.chestDrops["clue-scroll-beginner"],3);
  assert.equal(r.bossDrops["bryophytas-essence"],undefined);
 });
-test("Boss-obtained keys open only chests earned from the boss",()=>{
+test("Key obtained form boss opens additional chests using chest-found keys",()=>{
  const none=simulate(7,{rng:()=>.99999,mode:"boss"});
  assert.equal(none.chestsOpened,0);assert.equal(none.keysFromBoss,0);
  assert.deepEqual({...none.chestDrops},{});
- const all=simulate(4,{rng:()=>0,mode:"boss"});
- assert.equal(all.keysFromBoss,4);assert.equal(all.chestsOpened,4);
- assert.equal(all.bossDrops["mossy-key"],4);
- assert.equal(all.chestKeysFound,4);
- assert.equal(all.chestDrops["mossy-key"],4);
- assert.equal(all.chestDrops["rune-longsword"],4);
- assert.equal(all.chestDrops["clue-scroll-beginner"],4);
- // Chest-sourced keys are recorded, never recursively opened.
- assert.equal(all.keysSpent,4);
+ // F2P kill: common loot, clue, boss key; then chest loot + chest key
+ // for each opened chest. The first chest generates another key.
+ const rolls=[.99,.99,0,0,0,.999,.999];
+ let index=0;
+ const all=simulate(1,{mode:"boss",world:"f2p",
+   rng:()=>rolls[index++]??.999});
+ assert.equal(all.keysFromBoss,1);
+ assert.equal(all.chestsOpened,2);
+ assert.equal(all.chestKeyOpenings,1);
+ assert.equal(all.bossDrops["mossy-key"],1);
+ assert.equal(all.chestKeysFound,1);
+ assert.equal(all.chestDrops["mossy-key"],1);
+ assert.equal(all.chestDrops["rune-longsword"],1);
+ assert.equal(all.chestDrops["strength-potion-4"],15);
+ assert.equal(all.chestDrops["clue-scroll-beginner"],2);
+ assert.equal(all.keysSpent,2);
+ assert.equal(all.unspentKeys,0);
+ assert.equal(all.chestLimitReached,false);
 });
-test("Boss-key Slayer boost only affects boss keys, not chest keys",()=>{
- const seq=()=>{let calls=0;return ()=>[.99,.99,.10][calls++]??.99;};
- // F2P call order: main loot, beginner clue, boss key.
- // 0.10 is above 1/16 but below the Slayer task's 1/8 threshold.
- const normal=simulate(1,{rng:seq(),mode:"boss",slayerTask:false,world:"f2p"});
- const slayer=simulate(1,{rng:seq(),mode:"boss",slayerTask:true,world:"f2p"});
- assert.equal(normal.keysFromBoss,0);
- assert.equal(normal.chestsOpened,0);
- assert.equal(slayer.keysFromBoss,1);
- assert.equal(slayer.chestsOpened,1);
- assert.equal(slayer.chestKeysFound,0); // 0.99 is not a chest key
- const zero=simulate(1,{rng:()=>0,mode:"boss",slayerTask:true,world:"f2p"});
- assert.equal(zero.keysFromBoss,1);
- assert.equal(zero.chestKeysFound,1);
+test("Pre-obtained mode ignores both sources of extra keys",()=>{
+ const all=simulate(3,{rng:()=>0,mode:"preobtained"});
+ assert.equal(all.keysFromBoss,3);
+ assert.equal(all.chestsOpened,3);
+ assert.equal(all.chestKeysFound,3);
+ assert.equal(all.chestKeyOpenings,0);
+ assert.equal(all.unspentKeys,6);
+ assert.equal(all.chestLimitReached,false);
+});
+test("Chest-key chains have a bounded safeguard and report unused keys",()=>{
+ const capped=simulate(1,{rng:()=>0,world:"f2p",
+  mode:"boss",maxChestOpenings:5});
+ assert.equal(capped.keysFromBoss,1);
+ assert.equal(capped.chestsOpened,5);
+ assert.equal(capped.chestKeysFound,5);
+ assert.equal(capped.chestKeyOpenings,4);
+ assert.equal(capped.unspentKeys,1);
+ assert.equal(capped.chestLimitReached,true);
+ assert.throws(()=>simulate(2,{mode:"preobtained",maxChestOpenings:1}));
+});
+test("The on-task kill count applies the key boost only to those kills",()=>{
+ // F2P boss: common loot, beginner clue, key (0.10 qualifies only on task).
+ // Subsequent chest rolls are .99 so they cannot create another key.
+ const seq=()=>{let i=0;return ()=>{
+  if(i<9)return [0.99,0.99,0.10][i++%3];
+  i++;return 0.99;
+ };};
+ const normal=simulate(3,{rng:seq(),mode:"boss",slayerKills:0,world:"f2p"});
+ const partial=simulate(3,{rng:seq(),mode:"boss",slayerKills:2,world:"f2p"});
+ const full=simulate(3,{rng:seq(),mode:"boss",slayerKills:3,world:"f2p"});
+ assert.equal(normal.keysFromBoss,0);assert.equal(normal.chestsOpened,0);
+ assert.equal(partial.keysFromBoss,2);assert.equal(partial.chestsOpened,2);
+ assert.equal(partial.chestKeysFound,0);
+ assert.equal(partial.slayerKills,2);
+ assert.equal(full.keysFromBoss,3);assert.equal(full.chestsOpened,3);
+ assert.throws(()=>simulate(2,{slayerKills:3}),/cannot exceed/);
+ for(const value of [-1,1.5,Infinity,NaN,MAX_KILLS+1])
+  assert.throws(()=>simulate(2,{slayerKills:value}));
 });
 test("F2P and Members produce their respective guaranteed and ordinary loot",()=>{
  const mem=simulate(1,{rng:()=>0,world:"members"});
@@ -80,6 +113,19 @@ test("Bryophyta essence can only come from chest; 1/118 chest roll",()=>{
  close(chest["bryophytas-essence"].atLeastOne,1/118);
  close(chest["mossy-key"].atLeastOne,1/16);
  close(chest["bryophytas-essence"].none,117/118);
+});
+test("Essence is awarded by chest openings rather than boss kills",()=>{
+ const index=CHEST_F2P.findIndex(row=>row[0]===ESSENCE.id);
+ const before=CHEST_F2P.slice(0,index).reduce((sum,row)=>sum+row[2],0);
+ const essenceRoll=(before+0.5)/118;
+ // F2P boss: main roll, beginner clue, key. Chest: main roll, key.
+ const values=[0.99,0.99,0.99,essenceRoll,0.99];
+ let i=0;
+ const result=simulate(1,{world:"f2p",mode:"preobtained",
+  rng:()=>values[i++]??0.99});
+ assert.equal(result.bossDrops[ESSENCE.id],undefined);
+ assert.equal(result.chestDrops[ESSENCE.id],1);
+ assert.equal(result.chestsOpened,1);
 });
 test("Dry calculator uses only chest openings with stable independent odds",()=>{
  const n=118;const d=calculateDry(n);
@@ -114,7 +160,20 @@ test("Page shows independent loot sections, exactly two key modes and chest-only
  assert.match(html,/value="preobtained"/);assert.match(html,/value="boss"/);
  assert.match(html,/id="kill-count"/);assert.match(html,/id="chest-count"/);
  assert.match(html,/id="boss-loot"/);assert.match(html,/id="chest-loot"/);
- assert.match(html,/id="slayer-task"/);
+ assert.match(html,/id="slayer-kills"/);
+ assert.match(html,/Kc on slayer task out of total/);
+ assert.match(html,/Key obtained form boss/);
+ assert.match(html,/id="unique-grid"/);
+ assert.match(app,/renderUnique\(data\.chestDrops\)/);
+ assert.match(app,/delete chestLoot\[ESSENCE\.id\]/);
+ for(const removed of [
+  "One chest opening per boss kill; ignore boss-dropped keys for openings.",
+  "Only open chests with keys dropped by Bryophyta (1/16 normally).",
+  "Boss loot and chest loot are rolled separately. Keys found in opened chests are kept as loot, not automatically reused.",
+  "Boss obtained keys"
+ ])assert.ok(!html.includes(removed),removed+" should be absent");
+ assert.ok(!html.includes('id="simulation-note"'));
+ assert.match(app,/slayerKills:count\("slayer-kills"/);
  assert.match(app,/if\(mode==="dry"\)dryResults\(calculateDry\(count\("chest-count"/);
  assert.doesNotMatch(html,/id="dry-inputs"/);
  for(const item of Object.values(ITEMS)){

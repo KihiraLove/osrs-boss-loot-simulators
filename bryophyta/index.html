@@ -32,17 +32,15 @@
 <label class="depth-field phosani-kills" id="chests-input" hidden><span>Opened chests</span>
 <input id="chest-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Number of chest openings"></label>
 <fieldset class="bryophyta-choice" id="key-mode"><legend>Chest keys</legend>
-<label><input name="key-mode" type="radio" value="preobtained" checked> Pre-obtained keys
-<small>One chest opening per boss kill; ignore boss-dropped keys for openings.</small></label>
-<label><input name="key-mode" type="radio" value="boss"> Boss obtained keys
-<small>Only open chests with keys dropped by Bryophyta (1/16 normally).</small></label>
+<label><input name="key-mode" type="radio" value="preobtained" checked> Pre-obtained keys</label>
+<label><input name="key-mode" type="radio" value="boss"> Key obtained form boss</label>
 </fieldset>
 <fieldset class="bryophyta-choice" id="world-mode"><legend>World type</legend>
 <label><input name="world" type="radio" value="members" checked> Members</label>
 <label><input name="world" type="radio" value="f2p"> Free-to-play</label>
 </fieldset>
-<label class="phosani-option" id="slayer-option"><input type="checkbox" id="slayer-task"> Moss giant Slayer task (boss key chance 1/8)</label>
-<p class="bryophyta-note" id="simulation-note">Boss loot and chest loot are rolled separately. Keys found in opened chests are kept as loot, not automatically reused.</p>
+<label class="depth-field phosani-kills" id="slayer-option"><span>Kc on slayer task out of total</span>
+<input id="slayer-kills" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Kc on slayer task out of total"></label>
 <p class="bryophyta-note" id="dry-note" hidden>Only chest openings count. Bryophyta's essence is 1/118 per chest; mossy keys are 1/16 per chest.</p>
 <p id="validation-message" class="validation-message" role="alert" hidden></p>
 <div class="action-row">
@@ -57,6 +55,8 @@
 <h3>Nothing claimed yet</h3><p>Enter completed Bryophyta kills to simulate boss drops and chest rewards.</p></div>
 <div id="results-content" hidden>
 <div id="key-summary" class="bryophyta-summary" aria-label="Chest opening summary"></div>
+<div class="subheading"><h3>Unique rewards</h3></div>
+<div id="unique-grid" class="unique-grid"></div>
 <div class="subheading"><h3>Boss loot</h3></div><div id="boss-loot" class="loot-grid"></div>
 <div class="subheading inventory-title"><h3>Chest loot</h3></div><div id="chest-loot" class="loot-grid"></div>
 </div></section>

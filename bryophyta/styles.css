@@ -2,14 +2,11 @@
 .phosani-icon{width:36px;height:32px;flex:0 0 36px;display:inline-flex;align-items:center;justify-content:center;background:var(--panel-2);border:1px solid var(--border-soft)}
 .phosani-icon img{display:block;width:36px;height:32px;object-fit:contain;image-rendering:pixelated}
 .loot-icon .phosani-icon{background:transparent;border:0}.dry-result-heading .phosani-icon{width:42px;height:42px;flex-basis:42px}.dry-result-heading .phosani-icon img{width:42px;height:42px}
-.phosani-option{display:flex;align-items:center;gap:8px;margin:14px 0;color:var(--muted);font-size:.84rem}
-.phosani-option input{width:16px;height:16px;accent-color:var(--accent)}
 .bryophyta-choice{display:grid;gap:8px;border:0;padding:0;margin:14px 0}
 .bryophyta-choice legend{font-size:.83rem;color:var(--muted);margin-bottom:8px}
 .bryophyta-choice label{padding:11px 12px;border:1px solid var(--border);color:var(--muted);background:var(--panel-2);font-size:.83rem;cursor:pointer}
 .bryophyta-choice label:has(input:checked){border-color:var(--accent);color:var(--accent-strong)}
 .bryophyta-choice input{width:16px;height:16px;accent-color:var(--accent);vertical-align:middle;margin-right:6px}
-.bryophyta-choice small{display:block;font-size:.75rem;margin:6px 0 0 24px;color:var(--muted)}
 .bryophyta-note{font-size:.78rem;color:var(--muted);line-height:1.5}
 .bryophyta-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .bryophyta-stat{border:1px solid var(--border-soft);padding:12px;background:var(--panel-2)}
@@ -17,3 +14,6 @@
 .bryophyta-stat strong{font-size:1.1rem;color:var(--accent-strong)}
 .bryophyta-empty{font-size:.81rem;color:var(--muted);margin:16px 0}
 @media(max-width:490px){.bryophyta-summary{grid-template-columns:1fr}}
+
+.bryophyta-limit{grid-column:1/-1;margin:0;color:var(--muted);font-size:.8rem;line-height:1.5}
+#unique-grid{margin-bottom:14px}
