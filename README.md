@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), [Obor](https://oldschool.runescape.wiki/w/Obor), [Callisto & Artio](https://oldschool.runescape.wiki/w/Callisto), [Venenatis & Spindel](https://oldschool.runescape.wiki/w/Venenatis), [Vet'ion & Calvar'ion](https://oldschool.runescape.wiki/w/Vet%27ion), [Kalphite Queen](https://oldschool.runescape.wiki/w/Kalphite_Queen), and [Scurrius](https://oldschool.runescape.wiki/w/Scurrius). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), [Obor](https://oldschool.runescape.wiki/w/Obor), [Callisto & Artio](https://oldschool.runescape.wiki/w/Callisto), [Venenatis & Spindel](https://oldschool.runescape.wiki/w/Venenatis), [Vet'ion & Calvar'ion](https://oldschool.runescape.wiki/w/Vet%27ion), [Kalphite Queen](https://oldschool.runescape.wiki/w/Kalphite_Queen), [Scurrius](https://oldschool.runescape.wiki/w/Scurrius), and [Chaos Elemental](https://oldschool.runescape.wiki/w/Chaos_Elemental). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), Bryophyta at [`/bryophyta/`](./bryophyta/), Obor at [`/obor/`](./obor/), Callisto and Artio at [`/callisto-artio/`](./callisto-artio/), Venenatis and Spindel at [`/venenatis-spindel/`](./venenatis-spindel/), Vet'ion and Calvar'ion at [`/vetion-calvarion/`](./vetion-calvarion/), Kalphite Queen at [`/kalphite-queen/`](./kalphite-queen/), or Scurrius at [`/scurrius/`](./scurrius/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), Bryophyta at [`/bryophyta/`](./bryophyta/), Obor at [`/obor/`](./obor/), Callisto and Artio at [`/callisto-artio/`](./callisto-artio/), Venenatis and Spindel at [`/venenatis-spindel/`](./venenatis-spindel/), Vet'ion and Calvar'ion at [`/vetion-calvarion/`](./vetion-calvarion/), Kalphite Queen at [`/kalphite-queen/`](./kalphite-queen/), Scurrius at [`/scurrius/`](./scurrius/), or Chaos Elemental at [`/chaos-elemental/`](./chaos-elemental/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Chaos Elemental — loot simulator and dry calculator
+
+The [Chaos Elemental simulator](./chaos-elemental/) includes a completed-kills field, loot simulator and dry calculator. Every kill awards **one of five equally likely minor drops**, alongside a major drop determined by a **Dragon pickaxe pre-roll (1/256)** followed by a **128-ticket ordinary drop table** if that pre-roll fails. The major table has **Dragon 2h sword at 2/128 conditional on reaching the table**; a pickaxe and Dragon 2h therefore cannot both be awarded as major drops on the same kill. The effective per-kill Dragon 2h probability in the dry calculator is **(255/256) × (2/128)**, while the UI displays its published 1/64 main-table rarity. The independently rolled **Pet chaos elemental (1/300)** can appear alongside either.
+
+The three collection-log rewards are **Dragon 2h sword, Dragon pickaxe and Pet chaos elemental**. The dry calculator takes obtained quantities for all three and computes expected drops, odds of fewer, exactly and more than received, plus chance of at least one. The **any rare reward** calculation models mutually exclusive major uniques and an independently rolled pet, so it permits a primary unique and pet on one kill, but not both weapons.
+
+The common major table has 128 weighted tickets covering weapons, runes, herbs, resources, materials, and an **8/128 rare drop table branch**. The latter uses the published unboosted rarity figures for twelve listed results, with unlisted outcomes treated as empty, so this part of the model is an approximation rather than a complete rare-drop-table simulation. RDT effects from the imbued ring and quest-dependent modifiers are not modeled. Actual quantity ranges are rolled uniformly.
+
+Additional independent loot rolls are **Weapon poison(++) at 10/128**, **looting bag at 1/3**, **elite clue scroll at 1/200** (1/190 with Elite Combat Achievements, 1/100 with imbued ring of wealth, or 1/95 with both), and the pet. Players can choose no Slayer task, **Konar (brimstone key 1/59)**, or **Krystilia (Larran's key 1/58 and Slayer's enchantment 1/30)**. One task type at a time is allowed. Elite clue ownership and ring-of-wealth item effects beyond clues are not modeled.
+
+All item sprites are local PNG assets. Sources: [OSRS Wiki — Chaos Elemental](https://oldschool.runescape.wiki/w/Chaos_Elemental), [Collection log](https://oldschool.runescape.wiki/w/Collection_log).
 
 ## Scurrius — solo/MVP and group non-MVP
 
@@ -232,7 +244,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, http://localhost:8000/bryophyta/ for Bryophyta, http://localhost:8000/obor/ for Obor, http://localhost:8000/callisto-artio/ for Callisto and Artio, http://localhost:8000/venenatis-spindel/ for Venenatis and Spindel, http://localhost:8000/vetion-calvarion/ for Vet'ion and Calvar'ion, http://localhost:8000/kalphite-queen/ for Kalphite Queen, or http://localhost:8000/scurrius/ for Scurrius. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, http://localhost:8000/bryophyta/ for Bryophyta, http://localhost:8000/obor/ for Obor, http://localhost:8000/callisto-artio/ for Callisto and Artio, http://localhost:8000/venenatis-spindel/ for Venenatis and Spindel, http://localhost:8000/vetion-calvarion/ for Vet'ion and Calvar'ion, http://localhost:8000/kalphite-queen/ for Kalphite Queen, http://localhost:8000/scurrius/ for Scurrius, or http://localhost:8000/chaos-elemental/ for Chaos Elemental. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -293,6 +305,9 @@ node --check kalphite-queen/app.mjs
 node --check scurrius/simulator.mjs
 node --check scurrius/dry-calc.mjs
 node --check scurrius/app.mjs
+node --check chaos-elemental/simulator.mjs
+node --check chaos-elemental/dry-calc.mjs
+node --check chaos-elemental/app.mjs
 ```
 
 ## GitHub Pages
@@ -336,6 +351,8 @@ Vet'ion and Calvar'ion simulator: https://kihiralove.github.io/osrs-boss-loot-si
 Kalphite Queen simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/kalphite-queen/
 
 Scurrius simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/scurrius/
+
+Chaos Elemental simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/chaos-elemental/
 
 ## Deployment
 

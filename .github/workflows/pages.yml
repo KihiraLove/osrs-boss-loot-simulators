@@ -108,6 +108,9 @@ jobs:
           node --check scurrius/simulator.mjs
           node --check scurrius/dry-calc.mjs
           node --check scurrius/app.mjs
+          node --check chaos-elemental/simulator.mjs
+          node --check chaos-elemental/dry-calc.mjs
+          node --check chaos-elemental/app.mjs
       - name: Record published revision
         if: steps.revision.outputs.deploy == 'true'
         run: printf '%s\n' "$GITHUB_SHA" > deployment-revision.txt
