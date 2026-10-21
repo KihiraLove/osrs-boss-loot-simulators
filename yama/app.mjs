@@ -1,4 +1,4 @@
-import {BOSS_UNIQUES,DRY_ITEMS,ITEM_MAP,MAX_KILLS,simulate} from "./simulator.mjs";
+import {BOSS_UNIQUES,DRY_ITEMS,ITEM_MAP,MAX_KILLS,validatePlan,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 const $=id=>document.getElementById(id);
 const format=n=>new Intl.NumberFormat("en-US").format(n);
@@ -45,8 +45,10 @@ function parse(input,max,label){
   throw new RangeError("Enter a non-negative whole number up to "+format(max)+" for "+label+".");
  return Number(raw);
 }
-function contribution(){
- return Number(form.querySelector('input[name="contribution"]:checked').value);
+function readPlan(){
+ const solo=parse($("solo-kills"),MAX_KILLS,"solo kills");
+ const duo=parse($("duo-kills"),MAX_KILLS,"duo kills");
+ return validatePlan({solo,duo});
 }
 function makeUnique(item,amount){
  const card=document.createElement("div");card.className="unique-card"+(amount?" found":"");
@@ -120,11 +122,12 @@ function renderDry(result){
  for(const item of DRY_ITEMS)grid.append(dryCard(item.name,item,result[item.id]));
  $("dry-empty").hidden=true;$("dry-results").hidden=false;
 }
-function readDry(kills,c){
+function readDry(plan){
  const received={};
  for(const input of $("dry-inputs").querySelectorAll("input")){
   const item=ITEM_MAP[input.dataset.id];
-  const max=item.id==="oathplate-shards"?kills*(c===1?12:6):kills;
+  const max=item.id==="oathplate-shards"
+   ?plan.solo*12+plan.duo*6:plan.total;
   received[item.id]=parse(input,max,item.name);
  }
  return received;
@@ -133,16 +136,15 @@ $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{clearOutput();showError("");});
 $("clear-button").addEventListener("click",()=>{
- $("kill-count").value="0";
- form.querySelector('input[value="1"][name="contribution"]').checked=true;
+ $("solo-kills").value="0";$("duo-kills").value="0";
  for(const input of $("dry-inputs").querySelectorAll("input"))input.value="0";
  clearOutput();showError("");
 });
 form.addEventListener("submit",event=>{
  event.preventDefault();showError("");
  try{
-  const kills=parse($("kill-count"),MAX_KILLS,"completed kills"),c=contribution();
-  if(mode==="dry")renderDry(calculateDry(kills,c,readDry(kills,c)));
-  else renderLoot(simulate(kills,c));
+  const plan=readPlan();
+  if(mode==="dry")renderDry(calculateDry(plan,readDry(plan)));
+  else renderLoot(simulate(plan));
  }catch(error){showError(error instanceof Error?error.message:"Could not calculate.");}
 });

@@ -84,6 +84,14 @@ export function validateKills(kills){
  if(!Number.isSafeInteger(kills)||kills<0||kills>MAX_KILLS)throw new RangeError("Enter 0 to 1,000,000 completed kills.");
  return kills;
 }
+// Validate both inputs and cap the combined work, not just each field.
+export function validatePlan(plan){
+ if(!plan||typeof plan!=="object"||Array.isArray(plan))
+  throw new TypeError("Provide solo and duo kill counts.");
+ const solo=validateKills(plan.solo),duo=validateKills(plan.duo);
+ if(solo+duo>MAX_KILLS)throw new RangeError("Combined kills cannot exceed 1,000,000.");
+ return {solo,duo,total:solo+duo};
+}
 export function validateContribution(contribution){
  if(contribution!==1&&contribution!==0.5)throw new RangeError("Choose Solo (100%) or Duo (50%).");
  return contribution;
@@ -118,13 +126,16 @@ function sample(table,total,rng,weightIndex=3){
 function add(drops,id,n=1){if(n>0)drops[id]=(drops[id]||0)+n;}
 function qtyScaled(q,c){return Math.max(1,Math.floor(q*c));}
 function qtyRange(low,high,rng){return low+Math.floor(unit(rng)*(high-low+1));}
-// Open every simulated box/dossier immediately after its Yama kill, so
-// first dossier at >=100 KC can satisfy the Rite of vile transference guarantee.
-export function simulate(kills,contribution=1,{rng=Math.random}={}){
- validateKills(kills);const r=rates(contribution);
+// Solo kills are processed first, then duo kills. All results share a single
+// account/session for the Rite unlock and opened-container reward state.
+export function simulate(plan,{rng=Math.random}={}){
+ const {solo,duo,total}=validatePlan(plan);
+ const soloRates=rates(1),duoRates=rates(.5);
  const drops=Object.create(null), boxes=Object.create(null), dossiers=Object.create(null);
- let lockboxes=0, dossierCount=0, riteOwned=false;
- for(let kc=1;kc<=kills;kc++){
+ let lockboxes=0,dossierCount=0,riteOwned=false;
+ for(let kc=1;kc<=total;kc++){
+  const contribution=kc<=solo?1:.5;
+  const r=kc<=solo?soloRates:duoRates;
   const roll=unit(rng);
   if(roll<r.gear){
    const eq=sample(EQUIPMENT.map(i=>[i.id,i.name,i.weight]),5,rng,2);
@@ -163,5 +174,5 @@ export function simulate(kills,contribution=1,{rng=Math.random}={}){
   if(unit(rng)<r.clue)add(drops,"clue-scroll-elite");
   if(unit(rng)<r.pet)add(drops,"yami");
  }
- return {kills,contribution,drops,boxes,dossiers,lockboxes,dossierCount};
+ return {kills:total,soloKills:solo,duoKills:duo,drops,boxes,dossiers,lockboxes,dossierCount};
 }

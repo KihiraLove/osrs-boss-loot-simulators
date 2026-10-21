@@ -3,7 +3,7 @@
 <head>
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
  <meta name="theme-color" content="#11100d">
- <meta name="description" content="Yama loot simulator for solo (100%) and duo (50%) contribution, with lockbox and dossier openings and Yama-only dry calculator.">
+ <meta name="description" content="Yama loot simulator combining solo (100%) and duo (50%) kill counts, with lockbox and dossier openings and a combined dry calculator.">
  <title>Yama | Loot Simulator</title>
  <link rel="icon" type="image/png" href="../assets/items/yami.png">
  <link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="./styles.css">
@@ -28,13 +28,14 @@
   <section class="panel controls-panel" aria-labelledby="plan-heading">
    <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
    <form id="simulator-form" novalidate>
-    <fieldset class="contribution"><legend>Contribution</legend>
-     <label><input type="radio" name="contribution" value="1" checked> Solo (100%)</label>
-     <label><input type="radio" name="contribution" value="0.5"> Duo (50%)</label>
-    </fieldset>
-    <label class="depth-field yama-kills"><span>Completed kills</span>
-     <input type="number" id="kill-count" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Yama kills">
-    </label>
+    <div class="yama-kill-inputs" role="group" aria-label="Completed Yama kills by contribution">
+     <label class="depth-field yama-kills"><span>Solo kills (100%)</span>
+      <input type="number" id="solo-kills" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed solo Yama kills">
+     </label>
+     <label class="depth-field yama-kills"><span>Duo kills (50%)</span>
+      <input type="number" id="duo-kills" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Completed duo Yama kills at 50 percent contribution">
+     </label>
+    </div>
     <div class="dry-fields" id="dry-fields" hidden>
      <h3>Drops obtained</h3><div id="dry-inputs" class="dry-inputs"></div>
     </div>
@@ -48,7 +49,7 @@
     <div class="section-heading"><h2 id="results-heading">Your Yama loot</h2></div>
     <div class="empty-state" id="empty-state">
      <div class="empty-orb"><img src="../assets/items/yami.png" width="62" height="62" alt=""></div>
-     <h3>Nothing claimed yet</h3><p>Enter completed kills to simulate Yama drops.</p>
+     <h3>Nothing claimed yet</h3><p>Enter your solo and duo kills to simulate their combined Yama drops.</p>
     </div>
     <div id="results-content" hidden>
      <div class="subheading"><h3>Signature rewards</h3></div><div class="unique-grid" id="unique-grid"></div>
@@ -69,7 +70,7 @@
    <section class="panel dry-panel" id="dry-panel" aria-labelledby="dry-heading" hidden>
     <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
     <div class="empty-state" id="dry-empty"><div class="empty-orb"><img src="../assets/items/yami.png" width="62" height="62" alt=""></div>
-     <h3>How lucky are your drops?</h3><p>Enter Yama kills and Yama-only drops to calculate the odds.</p>
+     <h3>How lucky are your drops?</h3><p>Enter your solo and duo kills plus Yama-only drops to calculate combined odds.</p>
     </div>
     <div id="dry-results" hidden><div class="dry-results-grid" id="dry-results-grid"></div></div>
    </section>
