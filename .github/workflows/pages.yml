@@ -111,6 +111,9 @@ jobs:
           node --check chaos-elemental/simulator.mjs
           node --check chaos-elemental/dry-calc.mjs
           node --check chaos-elemental/app.mjs
+          node --check corporeal-beast/simulator.mjs
+          node --check corporeal-beast/dry-calc.mjs
+          node --check corporeal-beast/app.mjs
           node --check chaos-fanatic/simulator.mjs
           node --check chaos-fanatic/dry-calc.mjs
           node --check chaos-fanatic/app.mjs

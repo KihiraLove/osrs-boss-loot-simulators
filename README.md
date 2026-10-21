@@ -29,6 +29,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Kalphite Queen](./kalphite-queen/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/kalphite-queen/) |
 | [Scurrius](./scurrius/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/scurrius/) |
 | [Chaos Elemental](./chaos-elemental/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chaos-elemental/) |
+| [Corporeal Beast](./corporeal-beast/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/corporeal-beast/) |
 | [Chaos Fanatic](./chaos-fanatic/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chaos-fanatic/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
