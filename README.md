@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), [Obor](https://oldschool.runescape.wiki/w/Obor), [Callisto & Artio](https://oldschool.runescape.wiki/w/Callisto), [Venenatis & Spindel](https://oldschool.runescape.wiki/w/Venenatis), [Vet'ion & Calvar'ion](https://oldschool.runescape.wiki/w/Vet%27ion), and [Kalphite Queen](https://oldschool.runescape.wiki/w/Kalphite_Queen). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), [Obor](https://oldschool.runescape.wiki/w/Obor), [Callisto & Artio](https://oldschool.runescape.wiki/w/Callisto), [Venenatis & Spindel](https://oldschool.runescape.wiki/w/Venenatis), [Vet'ion & Calvar'ion](https://oldschool.runescape.wiki/w/Vet%27ion), [Kalphite Queen](https://oldschool.runescape.wiki/w/Kalphite_Queen), and [Scurrius](https://oldschool.runescape.wiki/w/Scurrius). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), Bryophyta at [`/bryophyta/`](./bryophyta/), Obor at [`/obor/`](./obor/), Callisto and Artio at [`/callisto-artio/`](./callisto-artio/), Venenatis and Spindel at [`/venenatis-spindel/`](./venenatis-spindel/), Vet'ion and Calvar'ion at [`/vetion-calvarion/`](./vetion-calvarion/), or Kalphite Queen at [`/kalphite-queen/`](./kalphite-queen/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), Bryophyta at [`/bryophyta/`](./bryophyta/), Obor at [`/obor/`](./obor/), Callisto and Artio at [`/callisto-artio/`](./callisto-artio/), Venenatis and Spindel at [`/venenatis-spindel/`](./venenatis-spindel/), Vet'ion and Calvar'ion at [`/vetion-calvarion/`](./vetion-calvarion/), Kalphite Queen at [`/kalphite-queen/`](./kalphite-queen/), or Scurrius at [`/scurrius/`](./scurrius/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Scurrius — solo/MVP and group non-MVP
+
+[Scurrius](./scurrius/) has a standalone loot simulator and dry calculator. Choose **Solo / MVP** (default) or **Non-MVP** before entering kill count. The two modes have distinct, mutually exclusive common-loot tables. Solo/MVP uses a **100-ticket** table and guarantees one big bones and one raw rat meat per kill. Non-MVP uses a **33-ticket** table with a one-ticket no-extra-item outcome, and guarantees only big bones. Quantity ranges are rolled inclusively.
+
+The only two collection-log rewards are **Scurrius' spine (1/33)** and the **Scurry pet (1/3,000)**. Spine can be awarded to MVP or non-MVP, though only one recipient may obtain it per group kill. Scurry only rolls for MVP. The other independent MVP tertiary rewards are medium clue scroll (1/25, or **1/23** with Medium Combat Achievements), long bone (1/400) and curved bone (1/5,012.5). Non-MVP does not receive these other tertiary rolls. MVP's standard common rolls follow the 100-ticket table; non-MVP has a different common-loot distribution.
+
+The dry calculator accepts the number of received collection-log rewards and reports probabilities of fewer, exactly, and more drops alongside expected quantities and odds of at least one. For MVP, the total count combines two independently rolled rewards, which can occur on the same kill. In non-MVP mode, Scurry is unavailable and only the spine counts.
+
+This models one eligible player's loot, **not** simultaneous group distributions, damage shares, or loot awarded to other players. MVP pet eligibility and the single-spine-per-group rule apply to each kill independently. This frontend requires no runtime Wiki API and includes local PNG item assets.
+
+Sources: [OSRS Wiki Scurrius](https://oldschool.runescape.wiki/w/Scurrius) and [Scurrius drop table](https://reldo.org/a/scurrius/).
 
 ## Kalphite Queen — loot simulator and dry calculator
 
@@ -220,7 +232,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, http://localhost:8000/bryophyta/ for Bryophyta, http://localhost:8000/obor/ for Obor, http://localhost:8000/callisto-artio/ for Callisto and Artio, http://localhost:8000/venenatis-spindel/ for Venenatis and Spindel, http://localhost:8000/vetion-calvarion/ for Vet'ion and Calvar'ion, or http://localhost:8000/kalphite-queen/ for Kalphite Queen. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, http://localhost:8000/bryophyta/ for Bryophyta, http://localhost:8000/obor/ for Obor, http://localhost:8000/callisto-artio/ for Callisto and Artio, http://localhost:8000/venenatis-spindel/ for Venenatis and Spindel, http://localhost:8000/vetion-calvarion/ for Vet'ion and Calvar'ion, http://localhost:8000/kalphite-queen/ for Kalphite Queen, or http://localhost:8000/scurrius/ for Scurrius. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -278,6 +290,9 @@ node --check vetion-calvarion/app.mjs
 node --check kalphite-queen/simulator.mjs
 node --check kalphite-queen/dry-calc.mjs
 node --check kalphite-queen/app.mjs
+node --check scurrius/simulator.mjs
+node --check scurrius/dry-calc.mjs
+node --check scurrius/app.mjs
 ```
 
 ## GitHub Pages
@@ -319,6 +334,8 @@ Venenatis and Spindel simulator: https://kihiralove.github.io/osrs-boss-loot-sim
 Vet'ion and Calvar'ion simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/vetion-calvarion/
 
 Kalphite Queen simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/kalphite-queen/
+
+Scurrius simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/scurrius/
 
 ## Deployment
 
