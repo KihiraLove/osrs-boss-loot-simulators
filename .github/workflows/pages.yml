@@ -59,6 +59,9 @@ jobs:
           node --check barrows/simulator.mjs
           node --check barrows/dry-calc.mjs
           node --check barrows/app.mjs
+          node --check brutus/simulator.mjs
+          node --check brutus/dry-calc.mjs
+          node --check brutus/app.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), and [Barrows](https://oldschool.runescape.wiki/w/Barrows). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), and [Brutus](https://oldschool.runescape.wiki/w/Brutus). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), or Barrows at [`/barrows/`](./barrows/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), or Brutus at [`/brutus/`](./brutus/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Brutus
+
+The [Brutus loot simulator and dry calculator](./brutus/) model the **repeatable post-quest Brutus encounter**, not Demonic Brutus. Choose **Members** (default) or **Free-to-play** worlds before entering your kill count. Each kill always drops **one bull bones and one raw t-bone steak**. Bull bones cannot normally be picked up in-game; the simulator records their guaranteed appearances for completeness.
+
+The **150-ticket pre-roll** awards exactly one reward when successful: **Mooleta (5/150)** on either world type, **Bottomless milk bucket (empty) (4/150)** on Members worlds, or **Cow slippers (1/150)** on Members worlds. A successful unique pre-roll replaces the ordinary main-table drop. When the pre-roll fails, there is one **81-ticket** ordinary loot roll. The Members table contains iron armour, runes, iron arrows, seeds, cowhide, logs, and three additional noted raw t-bone steaks. On F2P worlds the **25 combined tickets** for potato seeds (10), acorns (5), and noted steaks (10) are replaced by coins in three respective weighted quantity ranges (**60–80 at 15/81**, **80–100 at 5/81**, and **100–120 at 5/81**); the remaining 56 ordinary-loot tickets are shared.
+
+Independent tertiary drops are beginner clue scrolls **1/15** on either world type; easy clue scrolls **1/40** on Members worlds (**1/38** with Easy Combat Achievements); and the **Beef pet 1/1,000** on Members worlds. The simulator assumes the player is eligible for clues on every kill, without tracking currently held scrolls or boxes.
+
+In the dry calculator, enter the number obtained of each of the three pre-roll uniques and Beef. The displayed **fewer / exactly / more** probabilities use individual binomial distributions at the applicable world rates. **Any rare reward** combines the mutually exclusive main pre-roll (10/150 on Members worlds, 5/150 on F2P) with the independent Beef chance, allowing a Members kill to produce both a main unique and the pet. Items that cannot drop on F2P worlds are hidden and excluded from the calculation. Individual probability cards are marginals, not the joint probability of receiving the entire entered inventory.
+
+All reward icons and the homepage Beef icon are local PNGs sourced from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db). Source: [OSRS Wiki — Brutus](https://oldschool.runescape.wiki/w/Brutus), [September 2026 saved wiki reference](https://danielpgleason.com/osrs/reference/brutus-ad606f08/), and [Reldo Brutus drop rates](https://reldo.org/a/brutus/).
 
 ## Barrows (all six brothers)
 
@@ -138,7 +150,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, or http://localhost:8000/barrows/ for Barrows. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, or http://localhost:8000/brutus/ for Brutus. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -175,6 +187,9 @@ node --check araxxor/app.mjs
 node --check barrows/simulator.mjs
 node --check barrows/dry-calc.mjs
 node --check barrows/app.mjs
+node --check brutus/simulator.mjs
+node --check brutus/dry-calc.mjs
+node --check brutus/app.mjs
 ```
 
 ## GitHub Pages
@@ -202,6 +217,8 @@ Amoxliatl simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/amox
 Araxxor simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/araxxor/
 
 Barrows simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/barrows/
+
+Brutus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/brutus/
 
 ## Loot model
 
