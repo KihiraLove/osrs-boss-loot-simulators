@@ -3,13 +3,23 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), and [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), and [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), or Mad Angel at [`/mad-angel/`](./mad-angel/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), or Abyssal Sire at [`/sire/`](./sire/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Abyssal Sire
+
+The [Abyssal Sire simulator and dry calculator](./sire/) model the boss's **Unsired and Font of Consumption rewards separately**, in the same two-panel format as Yama's opening results. Every completed kill gives Abyssal ashes. An independent **1/100 Unsired pre-roll** replaces the ordinary weighted main loot roll if successful. The regular loot table has **139 tickets**, including herb, seed, talisman and shared rare-drop-table branches. Elite clues roll separately at 1/180 (or 1/171 with Elite Combat Achievements); Brimstone keys appear only with the Konar-task option at 1/40. The simulator assumes all eligible clues can be received.
+
+Each simulated Unsired is offered to the Font for exactly one reward. The 128-ticket reward pool consists of **62 bludgeon-piece, 26 abyssal dagger, 13 Jar of miasma, 12 abyssal whip, 10 abyssal head, and 5 Abyssal orphan tickets**. Bludgeon components cycle through the three distinct parts without duplicates before a full set is completed. The pet can be obtained only once; after it appears, the reward pool has 123 tickets without the pet.
+
+The dry calculator has **two independent groups**. Enter completed kills and Unsireds received to calculate Unsired odds (1/100 per kill); then enter the number of each Font reward received to calculate the corresponding odds from the **number of Unsireds**, not from kills. Bludgeon-piece dry probabilities account for no duplicates within each set, and the pet-restricted rewards account for the once-only pet. There is deliberately **no "any item" chance** for Font rewards, because every Unsired awards one item. Fewer-than, exactly, and more-than probabilities appear for each observation. The probabilities are marginals, not a combined probability of receiving the entire entered reward distribution.
+
+All item icons are local PNGs sourced from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db), including the Abyssal orphan on the boss picker. Sources: [OSRS Wiki — Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire) and [Unsired](https://oldschool.runescape.wiki/w/Unsired).
 
 ## Mad Angel
 
@@ -94,7 +104,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, or http://localhost:8000/mad-angel/ for Mad Angel. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, or http://localhost:8000/sire/ for Abyssal Sire. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -119,6 +129,9 @@ node --check cerberus/app.mjs
 node --check mad-angel/simulator.mjs
 node --check mad-angel/dry-calc.mjs
 node --check mad-angel/app.mjs
+node --check sire/simulator.mjs
+node --check sire/dry-calc.mjs
+node --check sire/app.mjs
 ```
 
 ## GitHub Pages
@@ -138,6 +151,8 @@ Alchemical Hydra simulator: https://kihiralove.github.io/osrs-boss-loot-simulato
 Cerberus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/cerberus/
 
 Mad Angel simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/mad-angel/
+
+Abyssal Sire simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/sire/
 
 ## Loot model
 
