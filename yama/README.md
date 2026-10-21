@@ -1,0 +1,13 @@
+# Yama
+
+[Open Yama simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/yama/) · [All simulators](../README.md)
+
+## Mechanics and drop rates
+
+The [Yama simulator and dry calculator](./) have **separate inputs for Solo (100% contribution) and Duo (50% contribution) kill counts**, and combine their results in a single loot summary. These model ordinary (non-contract) Yama encounters. Each player receives their own sequential roll: equipment at contribution/120, dossier at contribution/12 if the equipment roll fails, forgotten lockbox at 1/30 if preceding rolls fail, and oathplate shards at 1/15 if preceding rolls fail. A standard drop follows when no earlier reward succeeds. Normal loot quantities and the 12-shard quantity scale with contribution; Yami (1/2,500) and elite clues (1/30) roll independently. The supply table can produce several different supplies on one roll.
+
+The loot simulator processes **solo kills first, then duo kills**, and combines all ordinary loot, unique rewards, forgotten lockboxes and dossiers into one result. Containers are opened immediately on their corresponding simulated kills, with their contents shown separately from Yama's main loot. The Rite of vile transference is guaranteed on the first dossier opened at or after **100 combined kills** unless already obtained; this assumes both kill inputs describe the same character's continuous kill-count progression. Later rite rolls become 15–18 chasm teleport scrolls because this model assumes the first rite was already learned. All reward icons are local OSRS item sprites from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db).
+
+The Yama dry calculator **does not include any lockbox or dossier-opening rewards** or contracted Yama fights. Each observed item count is compared with the *combined distribution* of solo-rate and duo-rate drops, rather than treating all kills as having the same drop chance. **Oathplate shards** are counted by actual quantity, correctly combining **12 per solo shard drop** with **6 per duo shard drop**. "Any equipment drop or Yami" combines contribution-specific equipment-roll chances with the independent Yami pet roll across all kills. Forgotten lockboxes remain excluded from dry-input/output results. Total solo plus duo kills are capped at 1,000,000, and one combined set of drop counts is entered. The results are marginal probabilities, not the chance of receiving every observed reward simultaneously.
+
+Sources: [Yama](https://oldschool.runescape.wiki/w/Yama), [Dossier](https://oldschool.runescape.wiki/w/Dossier), and [Forgotten lockbox](https://oldschool.runescape.wiki/w/Forgotten_lockbox). Numbers match Wiki tables retrieved October 2026.
