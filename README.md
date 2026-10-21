@@ -1,6 +1,6 @@
 # OSRS Boss Loot Simulators
 
-[![Deploy GitHub Pages](https://github.com/KihiraLove/doom-loot-simulator/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/doom-loot-simulator/actions/workflows/pages.yml)
+[![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
 An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), and [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
@@ -125,19 +125,19 @@ node --check mad-angel/app.mjs
 
 A workflow in `.github/workflows/pages.yml` deploys on pushes to `main` after validation. If needed, select **GitHub Actions** as the Pages source in repository settings.
 
-Site: https://kihiralove.github.io/doom-loot-simulator/ (boss picker)
+Site: https://kihiralove.github.io/osrs-boss-loot-simulators/ (boss picker)
 
-Doom simulator: https://kihiralove.github.io/doom-loot-simulator/doom/
+Doom simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/doom/
 
-Phosani simulator: https://kihiralove.github.io/doom-loot-simulator/phosani/
+Phosani simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/phosani/
 
-Yama simulator: https://kihiralove.github.io/doom-loot-simulator/yama/
+Yama simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/yama/
 
-Alchemical Hydra simulator: https://kihiralove.github.io/doom-loot-simulator/hydra/
+Alchemical Hydra simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/hydra/
 
-Cerberus simulator: https://kihiralove.github.io/doom-loot-simulator/cerberus/
+Cerberus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/cerberus/
 
-Mad Angel simulator: https://kihiralove.github.io/doom-loot-simulator/mad-angel/
+Mad Angel simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/mad-angel/
 
 ## Loot model
 

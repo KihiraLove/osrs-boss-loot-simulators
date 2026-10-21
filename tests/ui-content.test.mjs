@@ -64,12 +64,12 @@ test("footer uses the BingoPlayerStats structure and privacy statement", () => {
   assert.match(css, /\.footer-meta\s*\{/);
   assert.match(css, /\.footer-actions\s*\{/);
   assert.match(css, /\.text-button\s*\{/);
-  assert.match(html, /href="https:\/\/github.com\/KihiraLove\/doom-loot-simulator"/);
+  assert.match(html, /href="https:\/\/github.com\/KihiraLove\/osrs-boss-loot-simulators"/);
 });
 
 test("README uses matching GitHub Pages CI status and Ko-fi badges", () => {
   const markdown = read("README.md");
-  assert.match(markdown, /KihiraLove\/doom-loot-simulator\/actions\/workflows\/pages\.yml\/badge\.svg/);
+  assert.match(markdown, /KihiraLove\/osrs-boss-loot-simulators\/actions\/workflows\/pages\.yml\/badge\.svg/);
   assert.match(markdown, /img\.shields\.io\/badge\/Ko--fi-Support%20me-29ABE0\?logo=ko-fi&logoColor=white/);
   assert.match(markdown, /https:\/\/ko-fi\.com\/KihiraLove/);
 });
