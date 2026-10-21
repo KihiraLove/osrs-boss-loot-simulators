@@ -239,6 +239,15 @@ Brutus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/brutus/
 
 Bryophyta simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/bryophyta/
 
+## Deployment
+
+GitHub Pages is deployed by [Deploy GitHub Pages](./.github/workflows/pages.yml).
+The workflow validates the JavaScript and tests, then publishes the static site when
+a commit is pushed to `main`. It also supports manual deployment from
+**Actions → Deploy GitHub Pages → Run workflow → main**.
+Check that the workflow run targets the latest `main` commit before considering
+the site up to date.
+
 ## Loot model
 
 The common loot table is one 312-ticket weighted roll per completed delve. Stack sizes scale by that delve level with truncation: `quantity = base + trunc(base * level_multiplier)`. Every counted delve separately adds the guaranteed demon tears from its row and rolls for its eligible equipment, Dom pet, and elite clue scroll. Neither guaranteed demon tears nor unique rewards use the common-loot quantity multiplier.
