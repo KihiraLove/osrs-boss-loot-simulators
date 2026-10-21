@@ -62,6 +62,9 @@ jobs:
           node --check brutus/simulator.mjs
           node --check brutus/dry-calc.mjs
           node --check brutus/app.mjs
+          node --check bryophyta/simulator.mjs
+          node --check bryophyta/dry-calc.mjs
+          node --check bryophyta/app.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

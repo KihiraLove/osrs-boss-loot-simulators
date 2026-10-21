@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Choose an Old School RuneScape boss to simulate loot.">
+  <title>OSRS Boss Loot Simulators</title>
+  <link rel="icon" type="image/png" href="./assets/items/dom.png">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="boss-selection-page">
+  <main class="boss-picker" aria-label="Select a boss simulator">
+    <a class="boss-tile" href="./doom/" aria-label="Open Doom of Mokhaiotl loot simulator" title="Doom of Mokhaiotl">
+      <img src="./assets/items/dom.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./phosani/" aria-label="Open Phosani's Nightmare loot simulator" title="Phosani's Nightmare">
+      <img src="./assets/items/little-nightmare.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./yama/" aria-label="Open Yama loot simulator" title="Yama">
+      <img src="./assets/items/yami.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./hydra/" aria-label="Open Alchemical Hydra loot simulator" title="Alchemical Hydra">
+      <img src="./assets/items/ikkle-hydra.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./cerberus/" aria-label="Open Cerberus loot simulator" title="Cerberus">
+      <img src="./assets/items/hellpuppy.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./mad-angel/" aria-label="Open Mad Angel loot simulator" title="Mad Angel">
+      <img src="./assets/items/aggy.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./sire/" aria-label="Open Abyssal Sire loot simulator" title="Abyssal Sire">
+      <img src="./assets/items/abyssal-orphan.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./amoxliatl/" aria-label="Open Amoxliatl loot simulator" title="Amoxliatl">
+      <img src="./assets/items/moxi.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./araxxor/" aria-label="Open Araxxor loot simulator" title="Araxxor">
+      <img src="./assets/items/nid.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./barrows/" aria-label="Open Barrows loot simulator" title="Barrows (all six brothers)">
+      <img src="./assets/items/dharoks-helm.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./brutus/" aria-label="Open Brutus loot simulator" title="Brutus">
+      <img src="./assets/items/beef.png" alt="" width="96" height="96">
+    </a>
+    <a class="boss-tile" href="./bryophyta/" aria-label="Open Bryophyta loot simulator" title="Bryophyta">
+      <img src="./assets/items/bryophytas-essence.png" alt="" width="96" height="96">
+    </a>
+  </main>
+</body>
+</html>
