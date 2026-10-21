@@ -3,13 +3,23 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), and [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), and [Obor](https://oldschool.runescape.wiki/w/Obor). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), or Bryophyta at [`/bryophyta/`](./bryophyta/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), Bryophyta at [`/bryophyta/`](./bryophyta/), or Obor at [`/obor/`](./obor/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Obor — separate boss and giant-key chest rewards
+
+[Obor's simulator and dry calculator](./obor/) use the **June–July 2025** loot system. Obor's boss-kill loot is separate from the giant-key chest's loot. The boss rolls the **135-ticket** common drop table and has an independent **1/16 giant-key roll** on Members and F2P worlds, with guaranteed giant bones or big bones respectively. The original high-value rewards moved into the chest, which has a **118-ticket** primary table, yielding the **Hill giant club at 1/118 per chest**, plus a separate independent **1/16 giant-key chance**. The chest also always yields a beginner clue scroll and an ensouled giant head.
+
+The simulator has the same two key modes as Bryophyta: **Pre-obtained keys** simulates N boss kills and exactly N chest openings; **Key obtained form boss** simulates N boss kills, spends boss keys on chests and then spends any giant keys found inside those chests on additional chest openings. Every extra chest's loot goes into the same chest loot list. Boss kills and chest openings remain separate counters internally; the UI displays **Keys from boss** and **Keys found in chests** above the highlighted Hill giant club unique. The recursive chest-key loop has a 1,000,000-opening safeguard for pathological random sequences. Other giant keys found in pre-obtained mode are shown in loot but do not increase openings.
+
+The chest-only **dry calculator** takes a number of chest openings and calculates the expected number of Hill giant clubs and chest-dropped giant keys and the probabilities of zero, exactly one, or at least one of each. It does not use boss kills or key mode. Both Members and free-to-play main tables are modelled; the boss's herb/seed subtables use published rounded rates and the eight unlisted weight units in the 135-ticket ordinary table are treated as an empty reward. The in-game first-time gate unlock (requiring a giant key which is not consumed) is assumed to be completed. Obor does **not** gain a higher key-drop chance while on Slayer task, unlike Bryophyta.
+
+Drops: [OSRS Wiki — Obor](https://oldschool.runescape.wiki/w/Obor), [Obor reference snapshot](https://danielpgleason.com/osrs/reference/obor-2c2dffe9/), and [Obor's chest rates](https://reldo.org/a/obor-chest/). All reward sprites are local PNG assets; no runtime Wiki requests are required.
 
 ## Bryophyta — separate boss and chest rewards
 
@@ -164,7 +174,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, or http://localhost:8000/bryophyta/ for Bryophyta. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, http://localhost:8000/bryophyta/ for Bryophyta, or http://localhost:8000/obor/ for Obor. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -207,6 +217,9 @@ node --check brutus/app.mjs
 node --check bryophyta/simulator.mjs
 node --check bryophyta/dry-calc.mjs
 node --check bryophyta/app.mjs
+node --check obor/simulator.mjs
+node --check obor/dry-calc.mjs
+node --check obor/app.mjs
 ```
 
 ## GitHub Pages
@@ -238,6 +251,8 @@ Barrows simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/barrow
 Brutus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/brutus/
 
 Bryophyta simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/bryophyta/
+
+Obor simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/obor/
 
 ## Deployment
 

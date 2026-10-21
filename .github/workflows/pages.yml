@@ -90,6 +90,9 @@ jobs:
           node --check bryophyta/simulator.mjs
           node --check bryophyta/dry-calc.mjs
           node --check bryophyta/app.mjs
+          node --check obor/simulator.mjs
+          node --check obor/dry-calc.mjs
+          node --check obor/app.mjs
       - name: Record published revision
         if: steps.revision.outputs.deploy == 'true'
         run: printf '%s\n' "$GITHUB_SHA" > deployment-revision.txt
