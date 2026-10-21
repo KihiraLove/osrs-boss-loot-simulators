@@ -50,6 +50,9 @@ jobs:
           node --check sire/simulator.mjs
           node --check sire/dry-calc.mjs
           node --check sire/app.mjs
+          node --check amoxliatl/simulator.mjs
+          node --check amoxliatl/dry-calc.mjs
+          node --check amoxliatl/app.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
