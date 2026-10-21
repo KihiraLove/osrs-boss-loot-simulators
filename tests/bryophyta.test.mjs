@@ -176,6 +176,14 @@ test("Page shows independent loot sections, exactly two key modes and chest-only
  assert.match(app,/slayerKills:count\("slayer-kills"/);
  assert.match(app,/if\(mode==="dry"\)dryResults\(calculateDry\(count\("chest-count"/);
  assert.doesNotMatch(html,/id="dry-inputs"/);
+ assert.doesNotMatch(html,/id="dry-note"/);
+ assert.doesNotMatch(html,/Only chest openings count\. Bryophyta's essence is 1\/118 per chest; mossy keys are 1\/16 per chest\./);
+ const summarySection=app.slice(app.indexOf('function lootResults(data){'),app.indexOf('function percentage(x){'));
+ assert.match(summarySection,/stat\("Keys from boss",data\.keysFromBoss\)/);
+ assert.match(summarySection,/stat\("Keys found in chests",data\.chestKeysFound\)/);
+ assert.equal((summarySection.match(/stat\("/g)||[]).length,2);
+ for(const text of ["Boss-dropped keys","Boss kills","Kc on Slayer task","Chests opened","Chests opened with chest keys"])
+  assert.ok(!summarySection.includes('stat("'+text+'"'),text+" should not appear as a summary field");
  for(const item of Object.values(ITEMS)){
   const icon=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...icon.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id+" missing local PNG");

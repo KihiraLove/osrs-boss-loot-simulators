@@ -19,7 +19,7 @@ function selectMode(next){
  mode=next;const dry=mode==="dry";
  $("kills-input").hidden=dry;$("chests-input").hidden=!dry;
  $("key-mode").hidden=dry;$("world-mode").hidden=dry;
- $("slayer-option").hidden=dry;$("dry-note").hidden=!dry;
+ $("slayer-option").hidden=dry;
  $("loot-panel").hidden=dry;$("dry-panel").hidden=!dry;
  for(const [id,selected] of [["loot",!dry],["dry",dry]]){
   $("mode-"+id).classList.toggle("is-active",selected);
@@ -78,12 +78,8 @@ function stat(label,value){
 }
 function lootResults(data){
  const summary=$("key-summary");summary.replaceChildren(
-  stat("Boss kills",data.kills),
-  stat("Kc on Slayer task",data.slayerKills),
-  stat("Boss-dropped keys",data.keysFromBoss),
-  stat("Chests opened",data.chestsOpened),
-  stat("Keys found in chests",data.chestKeysFound),
-  stat("Chests opened with chest keys",data.chestKeyOpenings)
+  stat("Keys from boss",data.keysFromBoss),
+  stat("Keys found in chests",data.chestKeysFound)
  );
  if(data.chestLimitReached){
   const notice=document.createElement("p");
