@@ -65,7 +65,7 @@ test("Elite combat achievements affect clue roll, Konar affects keys only while 
 test("Per-piece dry odds respect non-repeating sets, and any unique is 1/150",()=>{
  close(pieceOdds(1,1).exact,1/600);
  close(pieceOdds(1,1).expected,1/600);
- close(pieceOdds(1,2).exact,0);
+ assert.throws(()=>pieceOdds(1,2));
  const dry=calculateDry(1,{"noxious-pommel":1});
  close(dry.anyUnique.exact,1/150);
  close(dry.anyUnique.atLeastOne,1/150);
