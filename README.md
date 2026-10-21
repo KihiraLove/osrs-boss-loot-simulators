@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), and [Araxxor](https://oldschool.runescape.wiki/w/Araxxor). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), and [Barrows](https://oldschool.runescape.wiki/w/Barrows). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), or Araxxor at [`/araxxor/`](./araxxor/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), or Barrows at [`/barrows/`](./barrows/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Barrows (all six brothers)
+
+The [Barrows loot simulator and dry calculator](./barrows/) assume **all six original Barrows brothers** are slain before every chest. There are no brother selection controls. Each chest has **seven reward rolls**, with a **1/102 equipment chance per roll**. A successful equipment roll awards one of the **24 Barrows pieces** uniformly; the same named piece **cannot appear twice in one chest**, though several different pieces may drop at once. Across chests, duplicates remain possible. Because a later roll for the same piece is discarded instead of replaced, a specific piece has chance **1 − (1 − 1/2,448)^7 per chest**, approximately **1/350.14** (matching the Wiki). The chance of at least one equipment piece in a chest is `1 - (101/102)^7`, approximately **6.66%**.
+
+The simulator offers two **reward potential settings** while keeping all six brothers fixed: **880 (86.8% in-game, recommended for rune loot)**, which excludes bolt racks, key halves and the dragon med helm, and **1,012 (maximum potential)**, which includes them. For each non-equipment roll, a uniformly drawn reward-potential point selects coins, mind/chaos/death/blood runes, bolt racks, key halves or dragon med helm according to the Wiki's published reward-point bands. Intermediate common-loot quantities are linearly interpolated between the published minimum and maximum quantities for each band, so these stack quantities are an **approximation**; equipment chances and the common item category probabilities do not depend on this approximation. The optional **Hard Morytania Diary** checkbox increases awarded rune quantities by 50%, rounded down.
+
+Elite clues are separate **1/200 rolls on each of the seven attempts**, or **1/190** with Elite Combat Achievements, capped at **one elite clue per chest**. This simulator assumes clue eligibility rather than tracking currently owned clues, and does not model one-time miniquest items or other nonstandard account-specific effects.
+
+The dry calculator accepts an observed count for **every one of the 24 equipment pieces** and displays fewer-than, exactly, and more-than probabilities for each. The **Any Barrows equipment** summary counts the total **distinct awarded pieces per chest**, including possible multiple different pieces. It uses an exact chest-level distribution for up to 1,000 chests and a mean-matched binomial approximation for larger samples. The chance of at least one piece is always calculated exactly from all seven rolls. Individual named pieces are modelled as a maximum of one per chest because duplicate rolls are blocked; the calculator rejects impossible counts. Probabilities are marginal for each piece, not the joint probability of obtaining the entire recorded inventory. All item icons are local PNGs sourced from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db), with Dharok's helm on the homepage.
+
+Sources: [OSRS Wiki — Chest (Barrows)](https://oldschool.runescape.wiki/w/Chest_(Barrows)), [Barrows strategies](https://oldschool.runescape.wiki/w/Barrows/Strategies), and the [2026 Wiki snapshot](https://osrsindex.com/wiki/chest-barrows?site=osrs_wiki).
 
 ## Araxxor
 
@@ -126,7 +138,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, or http://localhost:8000/araxxor/ for Araxxor. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, or http://localhost:8000/barrows/ for Barrows. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -160,6 +172,9 @@ node --check amoxliatl/app.mjs
 node --check araxxor/simulator.mjs
 node --check araxxor/dry-calc.mjs
 node --check araxxor/app.mjs
+node --check barrows/simulator.mjs
+node --check barrows/dry-calc.mjs
+node --check barrows/app.mjs
 ```
 
 ## GitHub Pages
@@ -185,6 +200,8 @@ Abyssal Sire simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/s
 Amoxliatl simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/amoxliatl/
 
 Araxxor simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/araxxor/
+
+Barrows simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/barrows/
 
 ## Loot model
 
