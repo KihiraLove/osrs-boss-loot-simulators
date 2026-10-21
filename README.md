@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), and [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), and [Araxxor](https://oldschool.runescape.wiki/w/Araxxor). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), or Amoxliatl at [`/amoxliatl/`](./amoxliatl/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), or Araxxor at [`/araxxor/`](./araxxor/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Araxxor
+
+The [Araxxor simulator and dry calculator](./araxxor/) model the Old School RuneScape solo Slayer boss, with a **Harvest / Destroy** corpse decision above the kill count. **Harvest** rolls loot normally and has a **1/3,000 Nid** pet chance. **Destroy** forfeits all normal loot, including noxious pieces, fang, jar, head and supplies, but retains the elite clue scroll roll and increases **Nid to 1/1,500**. The dry calculator uses the selected mode, hides unobtainable Destroy rewards, and displays the mode-specific Nid odds.
+
+On Harvest, the primary unique pre-roll is **1/150**, selecting a noxious halberd piece or the araxyte fang with equal weight (any halberd piece **1/200**, fang **1/600**). The three named halberd pieces are **duplicate-protected until a complete trio**: each group of three successful piece rolls gives one blade, one point and one pommel in a random order. When the unique roll fails, one reward is chosen from the normal **115-ticket weighted table**, including a 15-ticket bundled supply outcome, tree-herb seed subtable and shared rare-drop-table branch. Supply outcomes grant an araxyte venom sac or super combat potion, a prayer potion and sharks or wild pies. The relative seed and rare table weights are normalized from published rates; item quantities and unmodified rare-drop-table conditions follow the OSRS Wiki. The normal main table is replaced by a successful unique pre-roll.
+
+Other Harvest drops roll independently: Araxyte head (**1/250**), Jar of venom (**1/1,500**), elite clue scroll (**1/50**, or **1/47** with Elite Combat Achievements), and Nid (**1/3,000**). A **Konar boss task** setting enables Brimstone keys at **1/40** when Harvesting. The optional **coagulated venom** checkbox adds one only when the player is eligible for the guaranteed *sub-1:15, not-yet-owned* reward; it is not given unconditionally per kill.
+
+The dry calculator displays fewer-than, exactly, and more-than probabilities for each signature reward, araxyte head, jar and Nid. Each halberd piece is calculated from the **1/200 shared piece-roll distribution**, accounting for nonrepeating pieces within each trio, rather than independently treating named pieces as ordinary 1/600 rolls. **Any signature unique** uses the mutually exclusive **1/150** table for the four main signature rewards; head, jar and pet are reported individually. The combined summary disappears in Destroy mode. All sprites are local PNGs from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db), including the Nid homepage icon.
+
+Sources: [OSRS Wiki — Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [OSRS Index Araxxor reference](https://osrsindex.com/wiki/araxxor?site=osrs_wiki), and [RuneTools drop table](https://runetools.com/bestiary/araxxor).
 
 ## Amoxliatl
 
@@ -114,7 +126,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, or http://localhost:8000/amoxliatl/ for Amoxliatl. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, or http://localhost:8000/araxxor/ for Araxxor. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -145,6 +157,9 @@ node --check sire/app.mjs
 node --check amoxliatl/simulator.mjs
 node --check amoxliatl/dry-calc.mjs
 node --check amoxliatl/app.mjs
+node --check araxxor/simulator.mjs
+node --check araxxor/dry-calc.mjs
+node --check araxxor/app.mjs
 ```
 
 ## GitHub Pages
@@ -168,6 +183,8 @@ Mad Angel simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/mad-
 Abyssal Sire simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/sire/
 
 Amoxliatl simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/amoxliatl/
+
+Araxxor simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/araxxor/
 
 ## Loot model
 
