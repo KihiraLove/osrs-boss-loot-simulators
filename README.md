@@ -3,13 +3,25 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), and [Brutus](https://oldschool.runescape.wiki/w/Brutus). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
+An unofficial, **frontend-only** collection of [Old School RuneScape](https://oldschool.runescape.wiki/) boss loot simulators. Includes [Doom of Mokhaiotl](https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl), [Phosani's Nightmare](https://oldschool.runescape.wiki/w/Phosani%27s_Nightmare), [Yama](https://oldschool.runescape.wiki/w/Yama), [Alchemical Hydra](https://oldschool.runescape.wiki/w/Alchemical_Hydra), [Cerberus](https://oldschool.runescape.wiki/w/Cerberus), [Mad Angel](https://oldschool.runescape.wiki/w/Mad_Angel), [Abyssal Sire](https://oldschool.runescape.wiki/w/Abyssal_Sire), [Amoxliatl](https://oldschool.runescape.wiki/w/Amoxliatl), [Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [Barrows](https://oldschool.runescape.wiki/w/Barrows), [Brutus](https://oldschool.runescape.wiki/w/Brutus), and [Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta). Hosted with GitHub Pages. No backend, build dependencies or runtime Wiki API calls.
 
 ## Boss selection
 
-The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), or Brutus at [`/brutus/`](./brutus/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
+The home page (`/`) is a boss picker with an icon for each supported boss. Select Doom at [`/doom/`](./doom/), Phosani's Nightmare at [`/phosani/`](./phosani/), Yama at [`/yama/`](./yama/), Alchemical Hydra at [`/hydra/`](./hydra/), Cerberus at [`/cerberus/`](./cerberus/), Mad Angel at [`/mad-angel/`](./mad-angel/), Abyssal Sire at [`/sire/`](./sire/), Amoxliatl at [`/amoxliatl/`](./amoxliatl/), Araxxor at [`/araxxor/`](./araxxor/), Barrows at [`/barrows/`](./barrows/), Brutus at [`/brutus/`](./brutus/), or Bryophyta at [`/bryophyta/`](./bryophyta/). Each simulator links back to the boss picker. New boss simulators can be added as separate subdirectories and linked from the home page without modifying Doom's calculations.
 
 All navigation and asset URLs are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository **will change its GitHub Pages URL**, however, and old Pages URLs do not redirect automatically.
+
+## Bryophyta — separate boss and chest rewards
+
+The [Bryophyta loot simulator and dry calculator](./bryophyta/) use the post-**25 June 2025** reward system. Defeating Bryophyta rolls the **boss's own 128-ticket table** and independent tertiary rewards, including a **mossy key at 1/16** (**1/8** with a moss giant Slayer task). The chest is separate: it requires one completed kill and one mossy key, and has its own **118-ticket loot table**, with **Bryophyta's essence at 1/118**, a guaranteed beginner clue scroll, and an independent **1/16 mossy-key tertiary roll**. Essence is never awarded directly from the boss. Both Members and Free-to-play tables are supported.
+
+In **Pre-obtained keys** mode, entering N kills simulates exactly N kills **and N chest openings**, independently of how many mossy keys the boss drops. In **Boss obtained keys** mode, N kills are always simulated but chests are opened **only using keys dropped by the boss in that simulation** (normally around N/16; around N/8 on task). Mossy keys from opened chests appear among chest rewards but are **not automatically spent**, since Boss obtained keys mode intentionally uses only boss-sourced keys. The summary reports boss kills, boss-obtained keys, opened chests, and chest-obtained keys; separate loot grids show boss and chest rewards.
+
+The **dry calculator** asks **only for the number of chest openings**. It shows expected quantities and the probabilities of zero, exactly one, or at least one **Bryophyta's essence** and **mossy key from the chest**, using their chest rates alone. It never counts boss kills or keys dropped by the boss, and does not ask for obtained-item counts. The applicable formula for at least one reward is `1 − (1 − p)^chests`.
+
+Boss and chest loot use distinct Members/F2P weighted drop tables. Seed, herb and gem branch probabilities are simulated as weighted subtables; some relative subtable weights are derived from rounded published effective rates. Guaranteed giant bones on Members worlds are shown for completeness although they are buried directly from the ground in-game. Clue-scroll ownership, ring-of-wealth effects and other account-specific exclusions are not tracked. All item icons are bundled locally.
+
+Sources: [OSRS Wiki — Bryophyta](https://oldschool.runescape.wiki/w/Bryophyta), [Chest (Bryophyta's lair)](https://oldschool.runescape.wiki/w/Chest_(Bryophyta%27s_lair)), and [the July 2025 mossy key updates](https://osrsindex.com/wiki/mossy-key?site=osrs_wiki).
 
 ## Brutus
 
@@ -150,7 +162,7 @@ Serve the repository root using any static HTTP server:
 python3 -m http.server 8000
 ```
 
-Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, or http://localhost:8000/brutus/ for Brutus. JavaScript modules may not work from a `file://` URL.
+Then visit http://localhost:8000/ for the boss picker, http://localhost:8000/doom/ for Doom, http://localhost:8000/phosani/ for Phosani's Nightmare, http://localhost:8000/yama/ for Yama, http://localhost:8000/hydra/ for Alchemical Hydra, http://localhost:8000/cerberus/ for Cerberus, http://localhost:8000/mad-angel/ for Mad Angel, http://localhost:8000/sire/ for Abyssal Sire, http://localhost:8000/amoxliatl/ for Amoxliatl, http://localhost:8000/araxxor/ for Araxxor, http://localhost:8000/barrows/ for Barrows, http://localhost:8000/brutus/ for Brutus, or http://localhost:8000/bryophyta/ for Bryophyta. JavaScript modules may not work from a `file://` URL.
 
 ## Tests
 
@@ -190,6 +202,9 @@ node --check barrows/app.mjs
 node --check brutus/simulator.mjs
 node --check brutus/dry-calc.mjs
 node --check brutus/app.mjs
+node --check bryophyta/simulator.mjs
+node --check bryophyta/dry-calc.mjs
+node --check bryophyta/app.mjs
 ```
 
 ## GitHub Pages
@@ -219,6 +234,8 @@ Araxxor simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/araxxo
 Barrows simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/barrows/
 
 Brutus simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/brutus/
+
+Bryophyta simulator: https://kihiralove.github.io/osrs-boss-loot-simulators/bryophyta/
 
 ## Loot model
 
