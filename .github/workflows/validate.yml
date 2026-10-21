@@ -36,3 +36,6 @@ jobs:
           node --check mad-angel/simulator.mjs
           node --check mad-angel/dry-calc.mjs
           node --check mad-angel/app.mjs
+          node --check chaos-fanatic/simulator.mjs
+          node --check chaos-fanatic/dry-calc.mjs
+          node --check chaos-fanatic/app.mjs

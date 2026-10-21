@@ -111,6 +111,9 @@ jobs:
           node --check chaos-elemental/simulator.mjs
           node --check chaos-elemental/dry-calc.mjs
           node --check chaos-elemental/app.mjs
+          node --check chaos-fanatic/simulator.mjs
+          node --check chaos-fanatic/dry-calc.mjs
+          node --check chaos-fanatic/app.mjs
       - name: Record published revision
         if: steps.revision.outputs.deploy == 'true'
         run: printf '%s\n' "$GITHUB_SHA" > deployment-revision.txt
