@@ -45,6 +45,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [The Hueycoatl](./hueycoatl/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/hueycoatl/) |
 | [King Black Dragon](./king-black-dragon/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/king-black-dragon/) |
 | [Kraken](./kraken/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/kraken/) |
+| [Maggot King](./maggot-king/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/maggot-king/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
