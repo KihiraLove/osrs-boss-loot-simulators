@@ -31,6 +31,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Chaos Elemental](./chaos-elemental/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chaos-elemental/) |
 | [Corporeal Beast](./corporeal-beast/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/corporeal-beast/) |
 | [Chaos Fanatic](./chaos-fanatic/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chaos-fanatic/) |
+| [Crazy Archaeologist](./crazy-archaeologist/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/crazy-archaeologist/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
