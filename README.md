@@ -48,6 +48,8 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Maggot King](./maggot-king/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/maggot-king/) |
 | [Moons of Peril](./moons-of-peril/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/moons-of-peril/) |
 
+| [Phantom Muspah](./phantom-muspah/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/phantom-muspah/) |
+
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
 ## Local development
