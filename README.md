@@ -36,6 +36,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Deranged Archaeologist](./deranged-archaeologist/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/deranged-archaeologist/) |
 | [Duke Sucellus](./duke-sucellus/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/duke-sucellus/) |
 | [Vardorvis](./vardorvis/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/vardorvis/) |
+| [The Leviathan](./leviathan/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/leviathan/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
