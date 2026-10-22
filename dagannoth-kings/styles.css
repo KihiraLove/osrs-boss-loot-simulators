@@ -1,0 +1,16 @@
+.phosani-kills{margin-bottom:12px}.phosani-kills input{max-width:145px}
+.king-kills{display:grid;gap:6px}
+.phosani-option{display:flex;align-items:center;gap:8px;margin:10px 0;color:var(--muted);font-size:.8rem;line-height:1.45}
+.phosani-option input{width:16px;height:16px;accent-color:var(--accent)}
+.phosani-icon{width:36px;height:32px;flex:0 0 36px;display:inline-flex;align-items:center;justify-content:center;background:var(--panel-2);border:1px solid var(--border-soft);font:700 10px/1 Georgia,serif;color:var(--accent-strong)}
+.phosani-icon img{width:36px;height:32px;object-fit:contain;image-rendering:pixelated}
+.loot-icon .phosani-icon{background:transparent;border:0}
+.dry-result-heading .phosani-icon{width:42px;height:42px;flex-basis:42px}
+.dry-result-heading .phosani-icon img{width:42px;height:42px}
+.king-results{margin:0 0 24px;padding-bottom:20px;border-bottom:1px solid var(--border-soft)}
+.king-results:last-child{border-bottom:0;margin-bottom:0}
+.king-results>h3{color:var(--accent-strong);font-size:1.15rem;margin:4px 0 15px}
+.king-results h4{font-size:.9rem;margin:16px 0 10px}
+.king-dry-inputs{margin:20px 0}.king-dry-inputs>h4{margin-bottom:12px}
+.king-dry-grid{display:grid;gap:12px}
+@media(max-width:390px){.phosani-kills{flex-wrap:wrap}}
