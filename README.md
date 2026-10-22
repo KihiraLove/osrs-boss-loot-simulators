@@ -56,6 +56,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Tempoross reward pool](./tempoross/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/tempoross/) |
 | [Wintertodt Reward Cart](./wintertodt/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/wintertodt/) |
 | [Thermonuclear Smoke Devil](./thermonuclear-smoke-devil/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/thermonuclear-smoke-devil/) |
+| [Vorkath](./vorkath/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/vorkath/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
