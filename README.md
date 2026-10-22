@@ -45,6 +45,8 @@ Serve the repository root with any static HTTP server (no package installation o
 python3 -m http.server 8000
 ```
 
+For Dagannoth Kings, run `node dagannoth-kings/sync-sprites.mjs` once before serving locally to download the extra OSRS item sprites. The Pages workflow also downloads these images automatically and attempts to commit them to the repository.
+
 Visit http://localhost:8000/ to choose a boss, or http://localhost:8000/chaos-fanatic/ to open a simulator directly. Modules do not work reliably from a `file://` URL.
 
 ## Tests
