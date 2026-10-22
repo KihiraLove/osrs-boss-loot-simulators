@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11100d">
+<meta name="description" content="Nex loot simulator and approximate dry calculator based on received nihil shards rather than kill count or team size.">
+<title>Nex | Loot Simulator</title>
+<link rel="icon" type="image/png" href="../assets/items/nexling.png">
+<link rel="stylesheet" href="../styles.css"><link rel="stylesheet" href="./styles.css">
+<script type="module" src="./app.mjs"></script>
+</head>
+<body>
+<nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../">← All simulators</a></nav>
+<a class="skip-link" href="#main">Skip to simulator</a>
+<header class="site-header">
+<div class="brand-mark"><img src="../assets/items/nexling.png" alt="" width="42" height="42"></div>
+<h1>Nex <span>Loot Simulator</span></h1>
+<a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi">
+<img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true" width="24" height="24">
+<span class="kofi-banner-label">Support me on Ko-fi</span></a>
+</header>
+<div class="mode-switch" role="group" aria-label="Calculator mode">
+<button id="mode-loot" type="button" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+<button id="mode-dry" type="button" class="mode-button" aria-pressed="false">Dry calculator</button>
+</div>
+<main id="main" class="layout">
+<section class="panel controls-panel" aria-labelledby="plan-heading">
+<div class="section-heading"><h2 id="plan-heading">Your nihil shards</h2></div>
+<form id="simulator-form" novalidate>
+<label class="depth-field phosani-kills"><span>Nihil shards received</span>
+<input id="shard-count" type="number" min="0" max="1000000" step="1" value="1000" inputmode="numeric" aria-label="Nihil shards received from Nex loot only"></label>
+<p class="estimate-note">Enter only shards obtained from Nex, not from Ancient Prison minions or shards bought or traded. No team size or KC is required.</p>
+<label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (elite clues: 1/45)</label>
+<div id="dry-fields" class="dry-fields" hidden>
+<h3>Rare drops received</h3><div id="dry-inputs" class="dry-inputs"></div>
+</div>
+<p id="validation-message" class="validation-message" role="alert" hidden></p>
+<div class="action-row">
+<button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+<button type="button" class="secondary-action" id="clear-button">Clear</button>
+</div>
+</form>
+</section>
+<section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
+<div class="section-heading"><h2 id="results-heading">Estimated loot</h2></div>
+<div id="empty-state" class="empty-state"><div class="empty-orb">
+<img src="../assets/items/nexling.png" alt="" width="62" height="62"></div>
+<h3>Nothing simulated yet</h3>
+<p>Enter the number of nihil shards you received from Nex to simulate estimated rewards.</p></div>
+<div id="results-content" hidden>
+<div class="estimate-summary">
+<div><span>Shards received</span><strong id="summary-shards">0</strong></div>
+<div><span>Contribution-equivalent kills (approx.)</span><strong id="summary-exposure">0</strong></div>
+<div><span>Expected uniques (approx.)</span><strong id="summary-uniques">0</strong></div>
+</div>
+<div class="subheading"><h3>Simulated unique rewards</h3></div><div id="unique-grid" class="unique-grid"></div>
+<div class="subheading inventory-title"><h3>Nihil shards &amp; other special drops</h3></div>
+<div id="special-grid" class="loot-grid"></div>
+<div class="subheading inventory-title"><h3>Illustrative common loot</h3></div>
+<p class="estimate-note">The Wiki does not publish numeric common-drop weights. Common loot quantities are illustrative, not predictions of your actual drops.</p>
+<div id="loot-grid" class="loot-grid"></div>
+</div>
+</section>
+<section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+<div class="section-heading"><h2 id="dry-heading">Nihil-shard dry calculator</h2></div>
+<div id="dry-empty" class="empty-state">
+<div class="empty-orb"><img src="../assets/items/nexling.png" alt="" width="62" height="62"></div>
+<h3>How lucky were your rares?</h3>
+<p>Enter the nihil shards you received and your rare-drop totals. Results use contribution-equivalent exposure, not KC.</p>
+</div>
+<div id="dry-results" hidden>
+<p class="estimate-note" id="dry-exposure"></p>
+<div id="dry-results-grid" class="dry-results-grid"></div>
+</div>
+</section>
+</main>
+<footer><div class="footer-meta">
+<p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Nex" target="_blank" rel="noopener noreferrer">OSRS Wiki — Nex</a> and <a href="https://oldschool.runescape.wiki/w/Nihil_shard" target="_blank" rel="noopener noreferrer">Nihil shard</a>.</p>
+<p>Shard-based results are estimates: drops come in irregular bundles, team contributions and MVP bonuses vary, and nihil shards can be obtained from Ancient Prison monsters other than Nex.</p>
+<p>No data is stored, collected, or sold by this site.</p></div>
+<div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+</footer>
+</body></html>
