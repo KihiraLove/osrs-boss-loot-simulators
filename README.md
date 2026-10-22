@@ -38,6 +38,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Vardorvis](./vardorvis/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/vardorvis/) |
 | [The Leviathan](./leviathan/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/leviathan/) |
 | [The Whisperer](./whisperer/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/whisperer/) |
+| [The Gauntlet](./gauntlet/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/gauntlet/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
