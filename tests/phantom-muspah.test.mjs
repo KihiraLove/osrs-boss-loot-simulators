@@ -36,8 +36,23 @@ test("A Venator shard suppresses all other normal and tertiary loot",()=>{
 });
 test("Supply bundle replaces one standard roll and contains all three groups",()=>{
  let idx=0;
- const vals=[.1,.5, 0,0,0,0,0,0,0, 0,0,0,0];
- const x=simulate(1,{rng:()=>vals[idx++]??.99,konarTask:true}).drops;
+ // Two essence draws, the supplies branch, three paired supply draws,
+ // the remaining ordinary roll, pet, hard clue, elite clue, and Konar key.
+ const vals=[
+  .1,.5, // essence roll and quantity
+  0, // choose the supplies bundle
+  0,0, // shark and quantity
+  0,0, // ancient brew and quantity
+  0,0, // super restore and quantity
+  0, // ordinary-table roll
+  0, // pet
+  0, // hard clue
+  0, // elite clue
+  0  // brimstone key
+ ];
+ const rng=()=>{if(idx>=vals.length)throw new Error("RNG fixture exhausted");return vals[idx++];};
+ const x=simulate(1,{rng,konarTask:true}).drops;
+ assert.equal(idx,vals.length);
  assert.equal(x["ancient-essence"],570);
  assert.equal(x.shark,4);
  assert.equal(x["ancient-brew-3"],1);
