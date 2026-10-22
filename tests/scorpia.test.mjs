@@ -34,7 +34,7 @@ test("Shard pre-roll replaces normal loot and prevents pet roll",()=>{
  assert.equal(shard.drops["ensouled-scorpion-head"],1);
  assert.equal(shard.drops["clue-scroll-hard"],1);
  let calls=0;
- const second=simulate(1,{rng:()=>[1/256+0.001,1,1,1][calls++]??0.99});
+ const second=simulate(1,{rng:()=>[1/256+0.001,0.99,0.99,0.99][calls++]??0.99});
  assert.equal(second.drops["malediction-shard-3"],1);
  assert.equal(second.drops["odium-shard-3"],undefined);
 });
