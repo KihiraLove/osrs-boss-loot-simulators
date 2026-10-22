@@ -47,13 +47,13 @@ test("Feathers determine quantities of mind runes and bodyguard ammunition",()=>
  let next=0;
  // First kill: Kree feather, main roll, pet, elite clue, long bone,
  // curved bone, then Kilisa feather & main roll.
- const seq=[0,0.5,0.5,0.5,0.5,0.5,0.5,0.03];
+ const seq=[0,0.5,0.5,0.5,0.5,0.5,0,0.03];
  const y=simulate(1,{rng:()=>seq[next++]??0.5});
  assert.equal(y.bySource.kilisa["steel-arrow"],91);
  assert.equal(y.bySource.kilisa.feather,1);
 });
 test("Kree main table paired potion roll and conditional key rewards",()=>{
- const pre=BOSS_MAIN.reduce((n,row)=>row[0]==="@potions"?n+row[4]/2: n+row[4],0);
+ const pre=BOSS_MAIN.slice(0,BOSS_MAIN.findIndex(row=>row[0]==="@potions")).reduce((n,row)=>n+row[4],0)+BOSS_MAIN.find(row=>row[0]==="@potions")[4]/2;
  let idx=0;
  const x=simulate(1,{rng:()=>idx++===1?pre/127:0.5});
  assert.equal(x.bySource.kree["ranging-potion-3"],3);
