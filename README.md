@@ -61,6 +61,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [General Graardor](./general-graardor/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/general-graardor/) |
 | [Commander Zilyana](./commander-zilyana/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/commander-zilyana/) |
 | [Kree'arra](./kree-arra/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/kree-arra/) |
+| [K'ril Tsutsaroth](./kril-tsutsaroth/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/kril-tsutsaroth/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
