@@ -51,6 +51,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Royal Titans](./royal-titans/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/royal-titans/) |
 | [Sarachnis](./sarachnis/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/sarachnis/) |
 | [Scorpia](./scorpia/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/scorpia/) |
+| [Shellbane Gryphon](./shellbane-gryphon/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/shellbane-gryphon/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
