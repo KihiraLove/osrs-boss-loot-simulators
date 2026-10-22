@@ -374,7 +374,7 @@ footer p { margin: 0; }
   footer { align-items: flex-start; flex-direction: column; }
 }
 
-/* Boss picker: only a centered icon link until more simulators are added. */
+/* Boss picker: seven tiles per row on desktop, responsive below. */
 body.boss-selection-page {
   display: grid;
   place-items: center;
@@ -382,18 +382,18 @@ body.boss-selection-page {
   min-height: 100dvh;
 }
 .boss-picker {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 24px;
-  width: min(100% - 32px, 900px);
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 16px;
+  width: min(calc(100% - 32px), 1240px);
+  align-items: stretch;
 }
 .boss-tile {
   display: grid;
   place-items: center;
-  width: 156px;
-  height: 156px;
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
   border: 1px solid var(--border);
   background: var(--panel-2);
   box-shadow: var(--shadow);
@@ -407,8 +407,22 @@ body.boss-selection-page {
   display: block;
   width: 96px;
   height: 96px;
+  max-width: 75%;
+  max-height: 75%;
   object-fit: contain;
   image-rendering: pixelated;
+}
+@media (max-width: 1040px) {
+  .boss-picker { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 800px) {
+  .boss-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 620px) {
+  .boss-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  .boss-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .simulator-navigation {
   width: min(1500px, calc(100% - 32px));
