@@ -33,7 +33,7 @@ test("A room clear rolls all four monsters and separates all inventories",()=>{
 test("Boss uniques and paired potion rolls work",()=>{
  for(const [n,expected] of [[0,"saradomin-sword"],[0.5,"saradomins-light"],[0.75,"armadyl-crossbow"],[0.875,"saradomin-hilt"]]){
   let calls=0;
-  const r=simulate(1,{rng:()=>calls++===1?n:0.99});
+  const r=simulate(1,{rng:()=>{const i=calls++;return i===0?0:i===1?n:0.99;}});
   assert.equal(r.bySource.zilyana[expected],1,expected);
  }
  let sum=0,point=null;
