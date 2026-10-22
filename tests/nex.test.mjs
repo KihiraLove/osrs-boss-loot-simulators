@@ -35,7 +35,7 @@ test("Simulator preserves actual shard total and never manufactures shard loot",
  assert.equal(a.common["nihil-shard"],undefined);
  assert.equal(a.rares["nihil-shard"],undefined);
  close(a.exposure,400/SHARDS_PER_KILL);
- assert.equal(a.estimatedCommonRolls,Math.floor(a.exposure*2)+1);
+ assert.equal(a.estimatedCommonRolls,Math.floor(a.exposure*2)+(0.5<a.exposure*2%1?1:0));
  for(const id of Object.keys(a.drops))assert.ok(ITEMS[id],id);
 });
 test("Dry chances are Poisson in shard-derived contribution exposure",()=>{
