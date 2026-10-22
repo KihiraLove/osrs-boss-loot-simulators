@@ -19,7 +19,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
     environment:
@@ -117,6 +117,27 @@ jobs:
           node --check chaos-fanatic/simulator.mjs
           node --check chaos-fanatic/dry-calc.mjs
           node --check chaos-fanatic/app.mjs
+          node --check crazy-archaeologist/simulator.mjs
+          node --check crazy-archaeologist/dry-calc.mjs
+          node --check crazy-archaeologist/app.mjs
+          node --check dagannoth-kings/simulator.mjs
+          node --check dagannoth-kings/dry-calc.mjs
+          node --check dagannoth-kings/app.mjs
+          node --check dagannoth-kings/sync-sprites.mjs
+      - name: Download Dagannoth Kings local item sprites
+        if: steps.revision.outputs.deploy == 'true'
+        run: node dagannoth-kings/sync-sprites.mjs
+      - name: Commit local Dagannoth Kings sprites
+        if: steps.revision.outputs.deploy == 'true'
+        shell: bash
+        run: |
+          git add assets/items/
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'Add Dagannoth Kings local item sprites'
+            git push origin HEAD:main || echo 'Could not commit generated sprites; they are still included in this Pages artifact.'
+          fi
       - name: Record published revision
         if: steps.revision.outputs.deploy == 'true'
         run: printf '%s\n' "$GITHUB_SHA" > deployment-revision.txt
