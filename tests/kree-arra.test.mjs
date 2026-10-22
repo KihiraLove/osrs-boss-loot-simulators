@@ -47,7 +47,7 @@ test("Feathers determine quantities of mind runes and bodyguard ammunition",()=>
  let next=0;
  // First kill: Kree feather, main roll, pet, elite clue, long bone,
  // curved bone, then Kilisa feather & main roll.
- const seq=[0,0.5,0.5,0.5,0.5,0.5,0,0.03];
+ const seq=[0,0.04,0.5,0.5,0.5,0.5,0,0.03];
  const y=simulate(1,{rng:()=>seq[next++]??0.5});
  assert.equal(y.bySource.kilisa["steel-arrow"],91);
  assert.equal(y.bySource.kilisa.feather,1);
