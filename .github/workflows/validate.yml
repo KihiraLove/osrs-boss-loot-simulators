@@ -42,3 +42,10 @@ jobs:
           node --check chaos-fanatic/simulator.mjs
           node --check chaos-fanatic/dry-calc.mjs
           node --check chaos-fanatic/app.mjs
+          node --check crazy-archaeologist/simulator.mjs
+          node --check crazy-archaeologist/dry-calc.mjs
+          node --check crazy-archaeologist/app.mjs
+          node --check dagannoth-kings/simulator.mjs
+          node --check dagannoth-kings/dry-calc.mjs
+          node --check dagannoth-kings/app.mjs
+          node --check dagannoth-kings/sync-sprites.mjs
