@@ -50,9 +50,13 @@ test("Common loot is one exclusive weighted outcome per kill",()=>{
   for(const row of MAIN){if(row[0]===id)return (soFar+row[3]/2)/128;soFar+=row[3];}
   throw new Error("Not found "+id);
  };
- step=0;
- const coin=rollCommon(()=>[point("coins"),0.999][step++]);
- assert.deepEqual(coin,{id:"coins",quantity:19999});
+ // The coins range is inclusive 10,000–19,999. A 0.999 quantity roll
+ // selects 19,990; use a value closer to 1 to test the maximum.
+ for(const [fraction,quantity] of [[0,10000],[0.999,19990],[0.999999,19999]]){
+  step=0;
+  const coin=rollCommon(()=>[point("coins"),fraction][step++]);
+  assert.deepEqual(coin,{id:"coins",quantity});
+ }
  step=0;
  const gem=rollCommon(()=>[0.999,0.999,0.999][step++]);
  assert.deepEqual(gem,{id:"dragon-spear",quantity:1});
