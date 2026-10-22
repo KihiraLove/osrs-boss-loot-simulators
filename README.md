@@ -42,6 +42,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Grotesque Guardians](./grotesque-guardians/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/grotesque-guardians/) |
 | [Giant Mole](./giant-mole/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/giant-mole/) |
 | [Hespori](./hespori/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/hespori/) |
+| [The Hueycoatl](./hueycoatl/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/hueycoatl/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
