@@ -40,6 +40,8 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [The Whisperer](./whisperer/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/whisperer/) |
 | [The Gauntlet](./gauntlet/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/gauntlet/) |
 
+| [Grotesque Guardians](./grotesque-guardians/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/grotesque-guardians/) |
+
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
 ## Local development
