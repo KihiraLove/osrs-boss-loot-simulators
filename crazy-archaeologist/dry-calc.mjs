@@ -38,7 +38,7 @@ export function calculateDry(kills,received={}){
    atLeastOne:-Math.expm1(kills*Math.log1p(-item.rate))
   };
  }
- const shards=(received["odium-shard-1"]??0)+(received["malediction-shard-1"]??0);
+ const shards=(received["odium-shard-2"]??0)+(received["malediction-shard-2"]??0);
  const fedora=received["fedora"]??0;
  checkCount(shards,kills,"Total shards");
  const total=shards+fedora;
