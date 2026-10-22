@@ -53,6 +53,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 | [Scorpia](./scorpia/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/scorpia/) |
 | [Shellbane Gryphon](./shellbane-gryphon/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/shellbane-gryphon/) |
 | [Skotizo](./skotizo/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/skotizo/) |
+| [Tempoross reward pool](./tempoross/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/tempoross/) |
 
 All navigation and asset URLs on the site are relative so the site also works under a renamed GitHub Pages project path. Renaming the repository changes its Pages URL; old URLs do not redirect automatically.
 
