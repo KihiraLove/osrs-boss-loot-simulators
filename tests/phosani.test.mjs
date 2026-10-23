@@ -89,7 +89,7 @@ test("new simulator has its own route and both calculators",()=>{
   const home=read("index.html"),page=read("bosses/phosani/index.html"),app=read("bosses/phosani/app.mjs");
   assert.match(home,/href="bosses\/doom\/"/);
   assert.match(home,/href="bosses\/phosani\/"/);
-  assert.match(page,/href="\.\.\/\.\."/);
+  assert.match(page,/data-simulator-header/);
   assert.match(page,/id="mode-loot"/);
   assert.match(page,/id="mode-dry"/);
   assert.match(page,/src="(?:\.\/)?app\.mjs"/);
@@ -108,7 +108,7 @@ test("Phosani navigation and item graphics use the Little nightmare pet icon",()
   const home=read("index.html"),page=read("bosses/phosani/index.html"),app=read("bosses/phosani/app.mjs");
   assert.match(home,/href="bosses\/phosani\/"[\s\S]*?src="\.\/assets\/items\/little-nightmare\.png"/);
   assert.match(page,/rel="icon" type="image\/png" href="\.\.\/\.\.\/assets\/items\/little-nightmare\.png"/);
-  assert.match(page,/class="brand-mark"[\s\S]*?src="\.\.\/\.\.\/assets\/items\/little-nightmare\.png"/);
+  assert.match(page,/data-simulator-header data-title="Phosani's Nightmare" data-icon="little-nightmare"/);
   assert.match(app,/createItemIcon as icon/);
   assert.doesNotMatch(home+page+app,/phosani\.svg|https:\/\/oldschool\.runescape\.wiki\/images/);
 });

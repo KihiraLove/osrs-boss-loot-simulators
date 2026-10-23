@@ -124,7 +124,7 @@ test("Barrows page is fixed to six brothers, has both modes and local PNG icons"
  const home=read("index.html"),page=read("bosses/barrows/index.html"),app=read("bosses/barrows/app.mjs");
  assert.match(home,/href="bosses\/barrows\/"/);
  assert.match(home,/assets\/items\/dharoks-helm\.png/);
- assert.match(page,/All simulators/);
+ assert.match(page,/data-simulator-header data-title="Barrows" data-icon="dharoks-helm"/);
  assert.match(page,/aria-label="Completed Barrows chests with all six brothers defeated"/);
  assert.match(page,/id="chest-count"/);
  assert.match(page,/id="mode-loot"/);

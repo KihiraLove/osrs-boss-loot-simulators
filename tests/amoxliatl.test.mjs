@@ -86,7 +86,7 @@ test("Boss picker, calculator modes, and every reward icon are local",()=>{
  const home=read("index.html"),page=read("bosses/amoxliatl/index.html"),app=read("bosses/amoxliatl/app.mjs");
  assert.match(home,/href="bosses\/amoxliatl\/"/);
  assert.match(home,/assets\/items\/moxi\.png/);
- assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/data-simulator-header/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="elite-cas"/);

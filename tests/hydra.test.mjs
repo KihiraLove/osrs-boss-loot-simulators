@@ -93,7 +93,7 @@ test("standard categories and additional tables remain populated",()=>{
 test("Hydra has accessible homepage selector, both modes and local PNG for every reward",()=>{
  const home=read("index.html"),page=read("bosses/hydra/index.html"),app=read("bosses/hydra/app.mjs");
  assert.match(home,/href="bosses\/hydra\/"/);
- assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/data-simulator-header/);
  assert.match(page,/src="(?:\.\/)?app\.mjs"/);
  assert.match(page,/id="mode-loot"/);assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="hard-ca"/);assert.match(page,/id="elite-ca"/);

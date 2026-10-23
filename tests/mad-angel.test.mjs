@@ -104,7 +104,7 @@ test("homepage integration, two modes, and every item icon is locally backed by 
  const home=read("index.html"),page=read("bosses/mad-angel/index.html"),app=read("bosses/mad-angel/app.mjs");
  assert.match(home,/href="bosses\/mad-angel\/"/);
  assert.match(home,/src="\.\/assets\/items\/aggy\.png"/);
- assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/data-simulator-header/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="medium-cas"/);

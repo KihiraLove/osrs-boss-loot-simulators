@@ -1,3 +1,4 @@
+import "./header.mjs";
 import "./footer.mjs";
 
 const formatter = new Intl.NumberFormat("en-US");

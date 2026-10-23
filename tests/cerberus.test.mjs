@@ -98,7 +98,7 @@ test("cerberus route uses local pet sprite, two calculator modes, and optional t
  const home=read("index.html"),page=read("bosses/cerberus/index.html"),app=read("bosses/cerberus/app.mjs");
  assert.match(home,/href="bosses\/cerberus\/"/);
  assert.match(home,/src="\.\/assets\/items\/hellpuppy\.png"/);
- assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/data-simulator-header/);
  assert.match(page,/src="(?:\.\/)?app\.mjs"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
