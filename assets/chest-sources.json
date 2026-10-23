@@ -1,0 +1,246 @@
+{
+  "retrieved": "2026-10-23",
+  "credit": "Old School RuneScape artwork belongs to Jagex. Images downloaded from the OSRS Wiki; files are unmodified.",
+  "files": [
+    {
+      "file": "assets/items/chest-larrans.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Larran%27s_big_chest.png/284px-Larran%27s_big_chest.png?eb3ea",
+      "page": "https://oldschool.runescape.wiki/w/Larran%27s_big_chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-zombie-pirate.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Zombie_Pirate%27s_Locker_%28closed%29.png/250px-Zombie_Pirate%27s_Locker_%28closed%29.png?3e593",
+      "page": "https://oldschool.runescape.wiki/w/Zombie_Pirate%27s_Locker",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-brimstone.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Brimstone_chest.png/280px-Brimstone_chest.png?23463",
+      "page": "https://oldschool.runescape.wiki/w/Brimstone_chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-muddy.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Muddy_chest_%28closed%29.png/300px-Muddy_chest_%28closed%29.png?1f326",
+      "page": "https://oldschool.runescape.wiki/w/Muddy_chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-elven-crystal.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Elven_Crystal_Chest_%28closed%29.png/260px-Elven_Crystal_Chest_%28closed%29.png?a8edb",
+      "page": "https://oldschool.runescape.wiki/w/Elven_Crystal_Chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-grubby.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Grubby_Chest_%28closed%29.png/300px-Grubby_Chest_%28closed%29.png?357d2",
+      "page": "https://oldschool.runescape.wiki/w/Grubby_Chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-sinister.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Sinister_chest_%28closed%29.png/300px-Sinister_chest_%28closed%29.png?44291",
+      "page": "https://oldschool.runescape.wiki/w/Sinister_chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-dark.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Dark_Chest_%28closed%29.png/300px-Dark_Chest_%28closed%29.png?10a4b",
+      "page": "https://oldschool.runescape.wiki/w/Dark_Chest",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/chest-moon-key.png",
+      "source": "https://oldschool.runescape.wiki/images/thumb/Chest_%28moon_key%29.png/260px-Chest_%28moon_key%29.png?802ae",
+      "page": "https://oldschool.runescape.wiki/w/Chest_%28moon_key%29",
+      "kind": "chest"
+    },
+    {
+      "file": "assets/items/dagonhai-hat.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagon%27hai_hat.png?8d6a6",
+      "page": "https://oldschool.runescape.wiki/w/Dagon'hai_hat",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dagonhai-robe-top.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagon%27hai_robe_top.png?1c69a",
+      "page": "https://oldschool.runescape.wiki/w/Dagon'hai_robe_top",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dagonhai-robe-bottom.png",
+      "source": "https://oldschool.runescape.wiki/images/Dagon%27hai_robe_bottom.png?1c69a",
+      "page": "https://oldschool.runescape.wiki/w/Dagon'hai_robe_bottom",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/blighted-manta-ray.png",
+      "source": "https://oldschool.runescape.wiki/images/Blighted_manta_ray.png?31e5c",
+      "page": "https://oldschool.runescape.wiki/w/Blighted_manta_ray",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/adamant-seeds.png",
+      "source": "https://oldschool.runescape.wiki/images/Adamant_seeds.png?ae1bd",
+      "page": "https://oldschool.runescape.wiki/w/Adamant_seeds",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/teleport-anchoring-scroll.png",
+      "source": "https://oldschool.runescape.wiki/images/Teleport_anchoring_scroll.png?4518a",
+      "page": "https://oldschool.runescape.wiki/w/Teleport_anchoring_scroll",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/broken-dragon-hasta.png",
+      "source": "https://oldschool.runescape.wiki/images/Broken_dragon_hasta.png?d3955",
+      "page": "https://oldschool.runescape.wiki/w/Broken_dragon_hasta",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/mystic-hat-dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Mystic_hat_%28dusk%29.png?246bf",
+      "page": "https://oldschool.runescape.wiki/w/Mystic_hat_(dusk)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/mystic-robe-top-dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Mystic_robe_top_%28dusk%29.png?fc098",
+      "page": "https://oldschool.runescape.wiki/w/Mystic_robe_top_(dusk)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/mystic-robe-bottom-dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Mystic_robe_bottom_%28dusk%29.png?7fdca",
+      "page": "https://oldschool.runescape.wiki/w/Mystic_robe_bottom_(dusk)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/mystic-gloves-dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Mystic_gloves_%28dusk%29.png?8bd5a",
+      "page": "https://oldschool.runescape.wiki/w/Mystic_gloves_(dusk)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/mystic-boots-dusk.png",
+      "source": "https://oldschool.runescape.wiki/images/Mystic_boots_%28dusk%29.png?6ac0d",
+      "page": "https://oldschool.runescape.wiki/w/Mystic_boots_(dusk)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dragonstone-full-helm.png",
+      "source": "https://oldschool.runescape.wiki/images/Dragonstone_full_helm.png?5eb13",
+      "page": "https://oldschool.runescape.wiki/w/Dragonstone_full_helm",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dragonstone-platebody.png",
+      "source": "https://oldschool.runescape.wiki/images/Dragonstone_platebody.png?cc5f3",
+      "page": "https://oldschool.runescape.wiki/w/Dragonstone_platebody",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dragonstone-platelegs.png",
+      "source": "https://oldschool.runescape.wiki/images/Dragonstone_platelegs.png?5eb13",
+      "page": "https://oldschool.runescape.wiki/w/Dragonstone_platelegs",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dragonstone-gauntlets.png",
+      "source": "https://oldschool.runescape.wiki/images/Dragonstone_gauntlets.png?5eb13",
+      "page": "https://oldschool.runescape.wiki/w/Dragonstone_gauntlets",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dragonstone-boots.png",
+      "source": "https://oldschool.runescape.wiki/images/Dragonstone_boots.png?5eb13",
+      "page": "https://oldschool.runescape.wiki/w/Dragonstone_boots",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/crystal-acorn.png",
+      "source": "https://oldschool.runescape.wiki/images/Crystal_acorn_5.png?c55e3",
+      "page": "https://oldschool.runescape.wiki/w/Crystal_acorn",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/saradomin-brew-2.png",
+      "source": "https://oldschool.runescape.wiki/images/Saradomin_brew%282%29.png?c82f9",
+      "page": "https://oldschool.runescape.wiki/w/Saradomin_brew(2)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/super-restore-2.png",
+      "source": "https://oldschool.runescape.wiki/images/Super_restore%282%29.png?4f263",
+      "page": "https://oldschool.runescape.wiki/w/Super_restore(2)",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/orange-egg-sac.png",
+      "source": "https://oldschool.runescape.wiki/images/Orange_egg_sac.png?93ae0",
+      "page": "https://oldschool.runescape.wiki/w/Orange_egg_sac",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/blue-egg-sac.png",
+      "source": "https://oldschool.runescape.wiki/images/Blue_egg_sac.png?75625",
+      "page": "https://oldschool.runescape.wiki/w/Blue_egg_sac",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/green-dragon-leather.png",
+      "source": "https://oldschool.runescape.wiki/images/Green_dragon_leather.png?e75c0",
+      "page": "https://oldschool.runescape.wiki/w/Green_dragon_leather",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/blue-dragon-leather.png",
+      "source": "https://oldschool.runescape.wiki/images/Blue_dragon_leather.png?75625",
+      "page": "https://oldschool.runescape.wiki/w/Blue_dragon_leather",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/red-dragon-leather.png",
+      "source": "https://oldschool.runescape.wiki/images/Red_dragon_leather.png?219da",
+      "page": "https://oldschool.runescape.wiki/w/Red_dragon_leather",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/black-dragon-leather.png",
+      "source": "https://oldschool.runescape.wiki/images/Black_dragon_leather.png?0a33f",
+      "page": "https://oldschool.runescape.wiki/w/Black_dragon_leather",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/babydragon-bones.png",
+      "source": "https://oldschool.runescape.wiki/images/Babydragon_bones.png?2baad",
+      "page": "https://oldschool.runescape.wiki/w/Babydragon_bones",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/dark-key.png",
+      "source": "https://oldschool.runescape.wiki/images/Dark_key.png?4806b",
+      "page": "https://oldschool.runescape.wiki/w/Dark_key",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/helmet-of-the-moon.png",
+      "source": "https://oldschool.runescape.wiki/images/Helmet_of_the_moon.png?3e0c3",
+      "page": "https://oldschool.runescape.wiki/w/Helmet_of_the_moon",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/cabbage.png",
+      "source": "https://oldschool.runescape.wiki/images/Cabbage.png?56d17",
+      "page": "https://oldschool.runescape.wiki/w/Cabbage",
+      "kind": "item"
+    },
+    {
+      "file": "assets/items/moon-key.png",
+      "source": "https://oldschool.runescape.wiki/images/Moon_key.png?b0452",
+      "page": "https://oldschool.runescape.wiki/w/Moon_key",
+      "kind": "item"
+    }
+  ]
+}

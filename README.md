@@ -3,7 +3,7 @@
 [![Deploy GitHub Pages](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml/badge.svg)](https://github.com/KihiraLove/osrs-boss-loot-simulators/actions/workflows/pages.yml)
 [![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20me-29ABE0?logo=ko-fi&logoColor=white)](https://ko-fi.com/KihiraLove)
 
-**Frontend-only** collection of Old School RuneScape boss loot simulators and dry calculators, hosted on GitHub Pages. All calculations run locally in the browser. There is no backend, build system, or runtime OSRS Wiki API dependency.
+**Frontend-only** collection of Old School RuneScape boss and chest loot simulators and dry calculators, hosted on GitHub Pages. All calculations run locally in the browser. There is no backend, build system, or runtime OSRS Wiki API dependency.
 ## Boss simulators
 
 Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-boss-loot-simulators/), or use the documentation and direct links below.
@@ -69,6 +69,21 @@ Drop rates, specific options, calculations, and modeling assumptions are documen
 
 All navigation and asset URLs on the site are relative.
 
+## Chest simulators
+
+Each chest has a separate loot simulator and dry calculator. [Mechanics and source notes](shared/CHESTS.md) describe the tables and bundled rewards.
+
+| Chest documentation | Live simulator |
+| --- | --- |
+| [Larran's Chest](chests/larrans-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/larrans-chest/) |
+| [Zombie Pirate Chest](chests/zombie-pirate-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/zombie-pirate-chest/) |
+| [Brimstone Chest](chests/brimstone-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/brimstone-chest/) |
+| [Muddy Chest](chests/muddy-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/muddy-chest/) |
+| [Elven Crystal Chest](chests/elven-crystal-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/elven-crystal-chest/) |
+| [Grubby Chest](chests/grubby-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/grubby-chest/) |
+| [Dark Chest](chests/dark-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/dark-chest/) |
+| [Chest (moon key)](chests/moon-key-chest/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/moon-key-chest/) |
+
 ## Local development
 
 All pages use the root `styles.css`, which contains the shared theme and boss-specific styles. Body classes scope overrides that differ between simulators. Shared image paths, input behavior, and rendering helpers live in `shared/ui.mjs`.
@@ -101,5 +116,5 @@ It also supports manual deployment from **Actions → Deploy GitHub Pages → Ru
 
 ## Sources and assets
 
-Boss mechanics are documented and linked to the [OSRS Wiki](https://oldschool.runescape.wiki/) from the relevant [boss README](#boss-simulators). Local item PNG sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db). Old School RuneScape and game artwork belong to Jagex.
+Boss mechanics are documented and linked to the [OSRS Wiki](https://oldschool.runescape.wiki/) from the relevant [boss README](#boss-simulators). Most local item PNG sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db). The new chest scenery images and additional reward sprites are downloaded from the OSRS Wiki; [asset sources](assets/chest-sources.json) record their URLs. Old School RuneScape and game artwork belong to Jagex.
 This project's license applies to its own code, not the game assets.

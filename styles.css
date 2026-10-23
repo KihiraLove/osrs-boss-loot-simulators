@@ -374,20 +374,33 @@ footer p { margin: 0; }
   footer { align-items: flex-start; flex-direction: column; }
 }
 
-/* Boss picker: nine smaller tiles per row on desktop, responsive below. */
+/* Grouped boss picker, with tiles two-thirds of their previous size. */
 body.boss-selection-page {
   display: grid;
   place-items: center;
   min-height: 100vh;
   min-height: 100dvh;
+  padding: 24px 0;
 }
 .boss-picker {
+  --picker-columns: 12;
+  --tile-gap: 8px;
+  --picker-width: min(calc((100vw - 32px) * 2 / 3), calc(1240px * 2 / 3));
+  --tile-size: calc((var(--picker-width) - (var(--picker-columns) - 1) * var(--tile-gap)) / var(--picker-columns));
   display: grid;
-  grid-template-columns: repeat(9, minmax(0, 1fr));
-  gap: 12px;
-  width: min(calc(100% - 32px), 1240px);
-  align-items: stretch;
+  gap: 16px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  align-items: start;
 }
+.boss-group-row { display: flex; align-items: flex-start; gap: calc(var(--tile-size) + 2 * var(--tile-gap)); }
+.boss-group { --group-columns: var(--picker-columns); width: calc(var(--group-columns) * var(--tile-size) + (var(--group-columns) - 1) * var(--tile-gap)); min-width: 0; }
+.boss-group--godwars { --group-columns: 5; }
+.boss-group--dt2 { --group-columns: 4; }
+.boss-group--semi-slayer { --group-columns: 6; }
+.boss-group--skilling { --group-columns: 3; }
+.boss-group > .room-hint { font-family: inherit; font-weight: 400; }
+.boss-group-tiles { display: grid; grid-template-columns: repeat(var(--group-columns), minmax(0, 1fr)); gap: var(--tile-gap); }
 .boss-tile {
   display: grid;
   place-items: center;
@@ -405,27 +418,29 @@ body.boss-selection-page {
 }
 .boss-tile img {
   display: block;
-  width: 72px;
-  height: 72px;
+  width: 48px;
+  height: 48px;
   max-width: 75%;
   max-height: 75%;
   object-fit: contain;
   image-rendering: pixelated;
 }
 @media (max-width: 1120px) {
-  .boss-picker { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .boss-picker { --picker-columns: 7; }
+  .boss-group-row { display: contents; }
+  .boss-group { --group-columns: var(--picker-columns); }
 }
 @media (max-width: 860px) {
-  .boss-picker { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .boss-picker { --picker-columns: 5; }
 }
 @media (max-width: 640px) {
-  .boss-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .boss-picker { --picker-columns: 4; }
 }
 @media (max-width: 500px) {
-  .boss-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .boss-picker { --picker-columns: 3; }
 }
 @media (max-width: 360px) {
-  .boss-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .boss-picker { --picker-columns: 2; }
 }
 .simulator-navigation {
   width: min(1500px, calc(100% - 32px));

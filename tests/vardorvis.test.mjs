@@ -126,11 +126,10 @@ test("Kill validation, RNG and option checks",()=>{
  assert.throws(()=>simulate(1,{rng:null}));
 });
 
-test("Page navigation, 7-column desktop grid and all local item sprites",()=>{
+test("Page navigation and all local item sprites",()=>{
  const home=source("index.html"),page=source("bosses/vardorvis/index.html");
- const app=source("bosses/vardorvis/app.mjs"),css=source("styles.css");
+ const app=source("bosses/vardorvis/app.mjs");
  assert.match(home,/href="bosses\/vardorvis\/"/);
- assert.match(css,/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\),false\)/);
  assert.doesNotMatch(app,/konar-task/);
  for(const id of ["kill-count","perfect","mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
