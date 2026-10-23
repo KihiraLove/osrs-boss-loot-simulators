@@ -1,20 +1,11 @@
 import {DRY_ITEMS,validatePulls} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=p=>Math.max(0,Math.min(1,p));
+import { distributionOdds as summary, binomial } from "../../shared/distributions.mjs";
+
 function valid(n,max,label){
  if(!Number.isSafeInteger(n)||n<0||n>max)
   throw new RangeError(label+" must be a whole number from 0 to "+max+".");
 }
-function summary(d,count){
- let fewer=0,exact=0;
- for(let i=0;i<d.values.length;i++){
-  const amount=d.from+i;
-  if(amount<count)fewer+=d.values[i];
-  else if(amount===count)exact+=d.values[i];
- }
- return {count,expected:d.expected,fewer:clamp(fewer),exact:clamp(exact),
-  more:clamp(1-fewer-exact)};
-}
+
 // The pool cannot award a SECOND fish barrel or tackle box once acquired.
 // Only the first success matters; later hits become 25 soaked pages.
 export function oneTimeOdds(pulls,count,rate){

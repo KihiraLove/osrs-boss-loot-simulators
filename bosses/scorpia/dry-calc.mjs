@@ -1,20 +1,11 @@
 import {DRY_ITEMS,ANY_SHARD_CHANCE,validateKills} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { distributionOdds as odds, binomial } from "../../shared/distributions.mjs";
 const clamp=p=>Math.max(0,Math.min(1,p));
 function valid(n,max,label){
  if(!Number.isSafeInteger(n)||n<0||n>max)
   throw new RangeError(label+" must be a whole number from 0 to "+max+".");
 }
-function odds(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i;
-  if(n<count)fewer+=dist.values[i];
-  else if(n===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 // A shard excludes ordinary loot, including the Dragon 2h sword,
 // and the offspring pet roll. On non-shard kills, ordinary loot and
 // the pet can BOTH happen: 0, 1, or 2 collection-log drops per kill.

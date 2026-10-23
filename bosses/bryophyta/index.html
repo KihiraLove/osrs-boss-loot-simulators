@@ -19,11 +19,11 @@
 <section class="panel controls-panel" aria-labelledby="plan-heading">
 <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
 <form id="simulator-form" novalidate>
-<label class="depth-field phosani-kills" id="kills-input"><span>Completed boss kills</span>
+<label class="depth-field count-field" id="kills-input"><span>Completed boss kills</span>
 <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Bryophyta kills"></label>
-<label class="depth-field phosani-kills" id="slayer-option"><span>Of which on task</span>
+<label class="depth-field count-field" id="slayer-option"><span>Of which on task</span>
 <input id="slayer-kills" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Of which on task"></label>
-<label class="depth-field phosani-kills" id="chests-input" hidden><span>Opened chests</span>
+<label class="depth-field count-field" id="chests-input" hidden><span>Opened chests</span>
 <input id="chest-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Number of chest openings"></label>
 <fieldset class="bryophyta-choice" id="key-mode"><legend></legend>
 <label><input name="key-mode" type="radio" value="preobtained" checked> Pre-obtained keys</label>
@@ -34,7 +34,7 @@
 <label><input name="world" type="radio" value="f2p"> Free-to-play</label>
 </fieldset>
 
-<label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+<label class="calculator-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
         <p id="validation-message" class="validation-message" role="alert" hidden></p>
 <div class="action-row">
 <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>

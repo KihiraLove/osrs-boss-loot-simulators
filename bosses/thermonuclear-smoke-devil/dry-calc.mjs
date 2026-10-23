@@ -1,28 +1,6 @@
 import {DRY_ITEMS,PRE_RATE,validateKills} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=n=>Math.max(0,Math.min(1,n));
-function countCheck(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i;
-  if(n<count)fewer+=dist.values[i];
-  else if(n===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
-function convolution(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  const p=a.values[i];if(!p)continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=p*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+import { validateDropCount as countCheck, distributionOdds as stats, convolveDistributions as convolution, binomial } from "../../shared/distributions.mjs";
+
 // One pre-roll can succeed per kill, but jar and pet independently coexist.
 export function calculateDry(kills,received={}){
  validateKills(kills);

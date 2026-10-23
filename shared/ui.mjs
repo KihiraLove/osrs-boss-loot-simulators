@@ -33,7 +33,7 @@ export function createItemImage(item) {
 
 export function createItemIcon(item, { textFallback = false } = {}) {
   const wrapper = document.createElement("span");
-  wrapper.className = "phosani-icon";
+  wrapper.className = "item-icon";
   const image = createItemImage(item);
   if (textFallback) {
     wrapper.title = item.name;
@@ -44,6 +44,19 @@ export function createItemIcon(item, { textFallback = false } = {}) {
   }
   wrapper.append(image);
   return wrapper;
+}
+
+export function createDryField(item, { name = item.dryName ?? item.name, step = 1 } = {}) {
+  const label = document.createElement("label");
+  label.className = "dry-field";
+  const title = document.createElement("span");
+  title.textContent = name;
+  const input = document.createElement("input");
+  input.type = "number"; input.min = "0"; input.step = String(step); input.value = "0";
+  input.inputMode = "numeric"; input.dataset.id = item.id;
+  input.setAttribute("aria-label", (item.dryName ?? item.name) + " received");
+  label.append(createItemIcon(item), title, input);
+  return label;
 }
 
 export function clearInputsOnClick(form) {

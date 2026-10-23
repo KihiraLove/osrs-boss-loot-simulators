@@ -1,13 +1,8 @@
 # Obor
 
-[Open Obor simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/obor/) · [All simulators](../../README.md)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/obor/) · [All simulators](../../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Obor) · [Wiki source 2](https://oldschool.runescape.wiki/w/Chest_(Obor%27s_lair))
 
-## Mechanics and drop rates
+Boss kills and giant-key chest openings are separate. The Hill giant club drops from the chest at 1/118.
 
-[Obor's simulator and dry calculator](./) use the **June–July 2025** loot system. Obor's boss-kill loot is separate from the giant-key chest's loot. The boss rolls the **135-ticket** common drop table and has an independent **1/16 giant-key roll** on Members and F2P worlds, with guaranteed giant bones or big bones respectively. The original high-value rewards moved into the chest, which has a **118-ticket** primary table, yielding the **Hill giant club at 1/118 per chest**, plus a separate independent **1/16 giant-key chance**. The chest also always yields a beginner clue scroll and an ensouled giant head.
-
-The simulator has the same two key modes as Bryophyta: **Pre-obtained keys** simulates N boss kills and exactly N chest openings; **Key obtained form boss** simulates N boss kills, spends boss keys on chests and then spends any giant keys found inside those chests on additional chest openings. Every extra chest's loot goes into the same chest loot list. Boss kills and chest openings remain separate counters internally; the UI displays **Keys from boss** and **Keys found in chests** above the highlighted Hill giant club unique. The recursive chest-key loop has a 1,000,000-opening safeguard for pathological random sequences. Other giant keys found in pre-obtained mode are shown in loot but do not increase openings.
-
-The chest-only **dry calculator** takes a number of chest openings and calculates the expected number of Hill giant clubs and chest-dropped giant keys and the probabilities of zero, exactly one, or at least one of each. It does not use boss kills or key mode. Both Members and free-to-play main tables are modelled; the boss's herb/seed subtables use published rounded rates and the eight unlisted weight units in the 135-ticket ordinary table are treated as an empty reward. The in-game first-time gate unlock (requiring a giant key which is not consumed) is assumed to be completed. Obor does **not** gain a higher key-drop chance while on Slayer task, unlike Bryophyta. In-game HiScores killcount increases when the chest is opened; simulator inputs represent actual boss kills independently of HiScores chest count.
-
-Drops: [OSRS Wiki — Obor](https://oldschool.runescape.wiki/w/Obor), [Obor reference snapshot](https://danielpgleason.com/osrs/reference/obor-2c2dffe9/), and [Obor's chest rates](https://reldo.org/a/obor-chest/). All reward sprites are local PNG assets; no runtime Wiki requests are required.
+- Pre-obtained keys open one chest per kill. In boss-obtained mode, keys from kills and subsequent chests fund more openings, capped at 1,000,000.
+- The dry calculator uses chest openings, not kills. Members and Free-to-play rewards are supported. Eight unspecified ordinary-table tickets are treated as empty; existing keys and prior gate unlocks are not tracked.

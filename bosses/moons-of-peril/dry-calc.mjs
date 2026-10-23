@@ -1,20 +1,7 @@
 import {UNIQUE,MOON_RATE,validateKills} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { validateDropCount as validCount, distributionOdds as stats, binomial } from "../../shared/distributions.mjs";
 const clamp=x=>Math.max(0,Math.min(1,x));
-function validCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i,p=dist.values[i];
-  if(n<count)fewer+=p;
-  else if(n===count)exact+=p;
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 // The shared binomial utility limits n to 1m kills. All three moons
 // contribute a total of 3*n independent chances, potentially >1m.
 function totalUniqueDistribution(kills){

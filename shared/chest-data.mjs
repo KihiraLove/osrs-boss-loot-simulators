@@ -54,7 +54,6 @@ const brimstoneRares = ["Broken dragon hasta", "Mystic hat (dusk)", "Mystic robe
 const dragonstoneArmour = ["Dragonstone full helm", "Dragonstone platebody", "Dragonstone platelegs", "Dragonstone gauntlets", "Dragonstone boots"];
 const darkRares = ["Shield left half", "Dragon plateskirt", "Dragon platelegs"];
 const muddyBonus = ["Blighted manta ray", "Blighted karambwan", "Blighted ancient ice sack", "Blighted anglerfish", "Blighted super restore(4)", "Larran's key"];
-const sinisterHerbs = ["Grimy ranarr weed", "Grimy harralander", "Grimy irit leaf", "Grimy avantoe", "Grimy kwuarm", "Grimy torstol"];
 
 export const CHESTS = {
   "larrans-chest": {
@@ -133,12 +132,6 @@ export const CHESTS = {
         row(6, "Crystal key"), row(6, "Dragon bones", 10), row(6, "Red dragonhide", 10), row(8, "Grimy toadflax", 10), row(8, "Grimy ranarr weed", 10), row(7, "Grimy snapdragon", 10), row(7, "Grimy torstol", 5), row(8, "Coins", 10000)]),
       table([row(1, "Orange egg sac"), row(1, "Blue egg sac"), [23]])
     ]
-  },
-  "sinister-chest": {
-    title: "Sinister Chest", wiki: wiki("Sinister_chest"), deterministic: true,
-    dryIds: ids(sinisterHerbs),
-    note: "Every sinister key gives the same six-herb bundle. Rewards are guaranteed, so there is no random dry streak.",
-    rewards: () => sinisterHerbs.map((name, index) => item(name, index === 0 ? 3 : index === 1 ? 2 : 1))
   },
   "dark-chest": {
     title: "Dark Chest", wiki: wiki("Dark_Chest"),

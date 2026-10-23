@@ -1,10 +1,7 @@
-import {convolveDistributions,distributionOdds} from "../../shared/distributions.mjs";
-import {DRY_ITEMS,HALBERD,MAX_KILLS,validateKills,validateMode,rateOf} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { validateDropCount as check, convolveDistributions, distributionOdds, binomial } from "../../shared/distributions.mjs";
+import { DRY_ITEMS, HALBERD, validateKills, validateMode, rateOf } from "./simulator.mjs";
+
 const clamp=x=>Math.max(0,Math.min(1,x));
-function check(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)throw new RangeError(label+" must be between 0 and "+max+".");
-}
 
 // A halberd hit occurs at 1/200 per kill; first three hits are a
 // random permutation of the pieces, then a fresh permutation begins.

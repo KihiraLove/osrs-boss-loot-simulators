@@ -1,14 +1,7 @@
-import {DRY_ITEMS,MAX_RUNS,validateRuns,validateWave,ratesUpTo} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { DRY_ITEMS, validateRuns, validateWave, ratesUpTo } from "./simulator.mjs";
+import { convolveDistributions as convolve, binomial } from "../../shared/distributions.mjs";
 const clamp=x=>Math.max(0,Math.min(1,x));
-function convolve(a,b){
- const v=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  const p=a.values[i];if(!p)continue;
-  for(let j=0;j<b.values.length;j++)v[i+j]+=p*b.values[j];
- }
- return {from:a.from+b.from,values:v,expected:a.expected+b.expected};
-}
+
 const point=()=>({from:0,values:Float64Array.of(1),expected:0});
 function sumBinomials(runs,probs){
  let out=point();

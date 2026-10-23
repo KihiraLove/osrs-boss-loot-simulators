@@ -109,6 +109,7 @@ test("Phosani navigation and item graphics use the Little nightmare pet icon",()
   assert.match(home,/href="bosses\/phosani\/"[\s\S]*?src="\.\/assets\/items\/little-nightmare\.png"/);
   assert.match(page,/rel="icon" type="image\/png" href="\.\.\/\.\.\/assets\/items\/little-nightmare\.png"/);
   assert.match(page,/data-simulator-header data-title="Phosani's Nightmare" data-icon="little-nightmare"/);
-  assert.match(app,/createItemIcon as icon/);
+  assert.match(app,/createDryField/);
+  assert.match(read("shared/ui.mjs"),/label\.append\(createItemIcon\(item\), title, input\)/);
   assert.doesNotMatch(home+page+app,/phosani\.svg|https:\/\/oldschool\.runescape\.wiki\/images/);
 });

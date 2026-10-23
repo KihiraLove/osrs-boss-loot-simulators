@@ -1,15 +1,4 @@
-import {
-  setupRingOptions,
-  clearInputsOnClick,
-  createItemImage as icon,
-  showError as errorText,
-  resetPanels as reset,
-  parseNumber as numberInput,
-  createOutcome as oddsCell,
-  probabilityText as percent,
-  byId as $,
-  formatNumber as format
-} from "../../shared/ui.mjs";
+import { createDryField, setupRingOptions, clearInputsOnClick, createItemImage as icon, showError as errorText, resetPanels as reset, parseNumber as numberInput, createOutcome as oddsCell, probabilityText as percent, byId as $, formatNumber as format } from "../../shared/ui.mjs";
 import {ITEMS,DRY_IDS,SIGNATURE_IDS,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
@@ -33,15 +22,7 @@ function setMode(next){
  errorText("");
 }
 
-function dryField(item){
- const label=document.createElement("label");label.className="dry-field";
- const name=document.createElement("span");name.textContent=item.name;
- const input=document.createElement("input");
- input.type="number";input.min="0";input.step="1";input.value="0";input.inputMode="numeric";
- input.dataset.id=item.id;input.setAttribute("aria-label",item.name+" received");
- label.append(icon(item),name,input);dryInputs.append(label);
-}
-for(const id of DRY_IDS)dryField(ITEMS[id]);
+for(const id of DRY_IDS)dryInputs.append(createDryField(ITEMS[id]));
 function uniqueCard(item,qty){
  const card=document.createElement("div");card.className="unique-card"+(qty?" found":"");
  const name=document.createElement("strong");name.textContent=item.name;

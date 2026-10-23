@@ -17,8 +17,10 @@ test("calculator pages share one footer and omit retired settings", () => {
   const removedIds = ["konar-task", "krystilia-task", "frozen-door", "quest-ribs", "coagulated-venom",
     "charged-ice", "awakened", "include-cape", "clue-step", "owns-barrel", "owns-tackle-box",
     "owned-gloves", "owned-torches"];
-  for (const boss of bosses) {
-    const html = read(`bosses/${boss}/index.html`);
+  const pages = ["bosses", "chests"].flatMap(category => readdirSync(new URL(`../${category}/`, import.meta.url), { withFileTypes: true })
+    .filter(entry => entry.isDirectory()).map(entry => `${category}/${entry.name}`));
+  for (const boss of pages) {
+    const html = read(`${boss}/index.html`);
     for (const id of removedIds) assert.ok(!html.includes(`id="${id}"`), `${boss}: ${id}`);
     assert.doesNotMatch(html, /name="slayer-task"|\(gem table\)|50% more standard loot|Combat Achievements \(/);
     assert.doesNotMatch(html, /\\'|github\.com/);

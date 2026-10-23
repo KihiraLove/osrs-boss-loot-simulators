@@ -1,20 +1,7 @@
 import {DRY_ITEMS,validateKills,vestigeHitRate,rateOf} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { validateDropCount as validateCount, distributionOdds as stats, binomial } from "../../shared/distributions.mjs";
 const clamp=p=>Math.max(0,Math.min(1,p));
-function validateCount(n,max,name){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(name+" received must be a whole number from 0 to "+max+".");
-}
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const drops=dist.from+i;
-  if(drops<count)fewer+=dist.values[i];
-  else if(drops===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 // Ultor vestiges are awarded on every THIRD independent vestige-table hit.
 // An individual kill has a 3/1088 normal (9/1088 awakened) hit probability.
 // This is floor(Binomial(kills,p)/3), NOT Binomial(kills,1/1088).

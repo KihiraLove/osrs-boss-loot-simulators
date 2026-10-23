@@ -1,30 +1,6 @@
-import {
- PRIMARY,PET,DRY_ITEMS,PRIMARY_RATE,validateKills
-} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=x=>Math.min(1,Math.max(0,x));
-function validCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
-function convolution(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  const v=a.values[i];if(!v)continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=v*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
-function odds(distribution,count){
- let fewer=0,exact=0;
- for(let i=0;i<distribution.values.length;i++){
-  const n=distribution.from+i;
-  if(n<count)fewer+=distribution.values[i];
-  if(n===count)exact+=distribution.values[i];
- }
- return {count,expected:distribution.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+import { PET, DRY_ITEMS, PRIMARY_RATE, validateKills } from "./simulator.mjs";
+import { validateDropCount as validCount, convolveDistributions as convolution, distributionOdds as odds, binomial } from "../../shared/distributions.mjs";
+
 function atLeastOne(vetion,calvarion,pc,pa){
  return -Math.expm1(vetion*Math.log1p(-pc)+calvarion*Math.log1p(-pa));
 }

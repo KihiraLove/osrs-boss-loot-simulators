@@ -1,20 +1,6 @@
 import {UNIQUE,DRY_ITEMS,validateKills,validateMode,rateOf} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=n=>Math.max(0,Math.min(1,n));
-function countCheck(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
-function summarize(dist,k){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const num=dist.from+i;
-  if(num<k)fewer+=dist.values[i];
-  else if(num===k)exact+=dist.values[i];
- }
- return {count:k,expected:dist.expected,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+import { validateDropCount as countCheck, distributionOdds as summarize, binomial } from "../../shared/distributions.mjs";
+
 function combine(a,b){
  const values=new Float64Array(a.values.length+b.values.length-1);
  for(let i=0;i<a.values.length;i++){

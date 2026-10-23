@@ -1,28 +1,6 @@
 import {BUCKET_RATE,DRY_ITEMS,petRate,validateKills,validateFarmingLevel} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=n=>Math.max(0,Math.min(1,n));
-function validCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const actual=dist.from+i;
-  if(actual<count)fewer+=dist.values[i];
-  else if(actual===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),exact:clamp(exact),
-  more:clamp(1-fewer-exact)};
-}
-function convolve(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  if(!a.values[i])continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=a.values[i]*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+import { validateDropCount as validCount, distributionOdds as stats, convolveDistributions as convolve, binomial } from "../../shared/distributions.mjs";
+
 export function calculateDry(kills,received={},farmingLevel=99){
  validateKills(kills);validateFarmingLevel(farmingLevel);
  if(!received||typeof received!=="object"||Array.isArray(received))

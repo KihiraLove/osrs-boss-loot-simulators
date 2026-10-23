@@ -1,15 +1,4 @@
-import {
-  clearInputsOnClick,
-  createItemIcon as icon,
-  parseNumber as parse,
-  showError as setError,
-  resetPanels as reset,
-  createLootCard as lootCard,
-  probabilityText as percent,
-  createOutcome as outcome,
-  byId as $,
-  formatNumber as format
-} from "../../shared/ui.mjs";
+import { createDryField, clearInputsOnClick, createItemIcon as icon, parseNumber as parse, showError as setError, resetPanels as reset, createLootCard as lootCard, probabilityText as percent, createOutcome as outcome, byId as $, formatNumber as format } from "../../shared/ui.mjs";
 import {UNIQUE,DRY_ITEMS,ITEMS,MAX_KILLS,simulate,rateOf} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
@@ -33,15 +22,8 @@ function setMode(next){
  $("action-label").textContent=dry?"Calculate chances":"Simulate loot";
  setError("");
 }
-function dryField(item){
- const label=document.createElement("label");label.className="dry-field";
- const title=document.createElement("span");title.textContent=item.name;
- const input=document.createElement("input");input.type="number";input.min="0";input.step="1";
- input.value="0";input.inputMode="numeric";input.dataset.id=item.id;
- input.setAttribute("aria-label",item.name+" received");
- label.append(icon(item),title,input);dryInputs.append(label);
-}
-for(const item of DRY_ITEMS)dryField(item);
+
+for(const item of DRY_ITEMS)dryInputs.append(createDryField(item));
 function uniqueCard(item,count){
  const card=document.createElement("div");card.className="unique-card"+(count?" found":"");
  const title=document.createElement("strong");title.textContent=item.name;

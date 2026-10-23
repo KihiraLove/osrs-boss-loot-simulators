@@ -1,13 +1,8 @@
 # Alchemical Hydra
 
-[Open Alchemical Hydra simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/hydra/) · [All simulators](../../README.md)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/hydra/) · [All simulators](../../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Alchemical_Hydra)
 
-## Mechanics and drop rates
+Enter Alchemical Hydra kills. A sequential special-reward roll can replace the first of two ordinary drops.
 
-The [Alchemical Hydra simulator and dry calculator](./) use the boss's own drop mechanics, not those of ordinary hydras. Every kill yields **2 Hydra bones** and up to two ordinary drops; the first standard roll can be replaced by one success from a **sequential** special-drop chain: dragon thrownaxe, dragon knife, Hydra's claw, Hydra tail, Hydra leather, or one brimstone ring piece. The second roll is always standard. Conditional success rates yield effective rates of approximately 1/2,000 thrownaxes, 1/2,001 knives, 1/1,001 claw, 1/513 tail, 1/514 leather and 1/181.1 for *the next* brimstone piece. Pieces are distributed in fixed **eye → fang → heart → eye ...** order, not independently. Independent tertiary rolls include brimstone keys, both clue scroll tiers, Alchemical hydra heads, Jar of chemicals, and the Ikkle hydra pet. Hard and Elite Combat Achievement checkboxes apply the corresponding clue-rate boosts.
-
-The drop-table source lists two regular loot rolls with a nominal denominator of 101, but summing the displayed category weights (including herb, seed and rare-drop table branches) yields **120 rather than 101**. To avoid invalid probabilities, this implementation normalizes the published weights as **relative weights**; standard-loot frequencies are therefore approximate rather than an exact 1/101 implementation. Herb and seed subtables use their listed relative rates, and the shared rare drop table is represented using its published relative rates, including Nothing. Normal-loot quantities are those of the published table. The simulator assumes elite and hard clue slots are free (does not model already-held clues), and rolls independent tertiary items each kill.
-
-The dry calculator accepts counts for the claw, tail, leather, each brimstone-ring piece, Hydra heads, jar, and pet. Ring-piece odds correctly derive from the *number of sequential ring successes*: zero hearts on the first or second successful ring-piece roll, for instance. The **Any signature unique** summary counts the claw, tail, leather and ring-piece outcomes (not thrownaxe/knife or tertiary rolls), at most one per kill. Like the other simulators, it runs entirely in the browser. All reward sprites, including the Ikkle hydra home icon, are local PNGs from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db).
-
-Drop mechanics and quantities: [Alchemical Hydra on the OSRS Wiki](https://oldschool.runescape.wiki/w/Alchemical_Hydra), corroborated with [Reldo](https://reldo.org/a/alchemical-hydra/) and [KURU](https://kuru.co.kr/en/verticals/osrs/monster/alchemical-hydra/).
+- Brimstone ring pieces cycle eye → fang → heart. Their dry odds follow that sequence, starting with no pieces; they are not independent drops.
+- Published ordinary weights total 120 despite a nominal denominator of 101, so the simulator normalizes them as relative weights. Hard/Elite Combat Achievements and Ring of wealth are supported.

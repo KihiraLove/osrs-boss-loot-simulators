@@ -1,5 +1,5 @@
 import {
-  byId as $, clearInputsOnClick, createItemIcon, createUniqueCard,
+  byId as $, clearInputsOnClick, createDryField, createUniqueCard,
   createLootCard, createDryCard, formatNumber, parseNumber, resetPanels, showError
 } from "./ui.mjs";
 
@@ -10,18 +10,7 @@ export function setupChestCalculator(calculator) {
   const readOptions = () => ({ fishingLevel: config.fishing ? parseNumber($("fishing-level"), 99, "Fishing level") : 99,
     members: $("members-world")?.checked ?? true });
 
-  for (const item of DRY_ITEMS) {
-    const label = document.createElement("label");
-    label.className = "dry-field";
-    const name = document.createElement("span");
-    name.textContent = item.name;
-    const input = document.createElement("input");
-    input.type = "number"; input.min = "0"; input.step = "1"; input.value = "0";
-    input.inputMode = "numeric"; input.dataset.id = item.id;
-    input.setAttribute("aria-label", item.name + " received");
-    label.append(createItemIcon(item), name, input);
-    dryInputs.append(label);
-  }
+  for (const item of DRY_ITEMS) dryInputs.append(createDryField(item));
 
   function setMode(next) {
     mode = next;
@@ -43,8 +32,7 @@ export function setupChestCalculator(calculator) {
     const tracked = new Set(config.dryIds);
     for (const item of DRY_ITEMS) {
       const { chance, quantity } = dropInfo(item.id, options);
-      const rarity = chance === 0 ? "Members only" : chance === 1 ? "Guaranteed × " + quantity
-        : (quantity > 1 ? quantity + " per reward · " : "") + "1 in " + (1 / chance).toLocaleString("en-US", { maximumFractionDigits: 2 });
+      const rarity = chance === 0 ? "Members only" : (quantity > 1 ? quantity + " per reward · " : "") + "1 in " + (1 / chance).toLocaleString("en-US", { maximumFractionDigits: 2 });
       unique.append(createUniqueCard(item, result.drops[item.id] ?? 0, rarity));
     }
     for (const [id, count] of Object.entries(result.drops).filter(([id]) => !tracked.has(id))

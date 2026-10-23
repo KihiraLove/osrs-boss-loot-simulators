@@ -1,9 +1,8 @@
 # Grubby Chest
 
-[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/grubby-chest/) · [OSRS Wiki source](https://oldschool.runescape.wiki/w/Grubby_Chest)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chests/grubby-chest/) · [Chest guides](../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Grubby_Chest)
 
-Each opening gives two food rolls, one potion roll and one main reward, with a separate chance of an egg sac.
+Each opening gives two food rolls, one potion roll and one main roll. Linked food and potion items arrive as bundles.
 
-This page has its own loot simulator and dry calculator. The [shared chest tables](../../shared/chest-data.mjs), [calculation engine](../../shared/chest-calculator.mjs) and [UI](../../shared/chest-app.mjs) keep common behavior in one place. See [chest mechanics and sources](../../shared/CHESTS.md) for probabilities, bundles and modeling assumptions.
-
-Chest artwork is downloaded from the OSRS Wiki and served locally; see [asset sources](../../assets/chest-sources.json).
+- Crystal key: 6/100. Orange and blue egg sacs are modeled as mutually exclusive bonus outcomes at 1/25 each, separate from ordinary rewards, consistent with the [reward transcript](https://oldschool.runescape.wiki/w/Transcript:Grubby_Chest).
+- The dry calculator tracks both egg sacs and crystal keys.

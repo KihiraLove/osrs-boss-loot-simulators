@@ -1,19 +1,8 @@
+import { distributionOdds, validateDropCount as countCheck, binomial } from "../../shared/distributions.mjs";
 import {DRY_ITEMS,SIGNATURE,PREROLL,rateOf,validateKills} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-function countCheck(n,max){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError("Drop counts must be whole numbers within the possible range.");
-}
-function summary(dist,observed,unit=1){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const amount=(dist.from+i)*unit,probability=dist.values[i];
-  if(amount<observed)fewer+=probability;
-  else if(amount===observed)exact+=probability;
- }
- return {count:observed,expected:dist.expected*unit,
-  fewer:Math.max(0,Math.min(1,fewer)),exact:Math.max(0,Math.min(1,exact)),
-  more:Math.max(0,Math.min(1,1-fewer-exact))};
+
+function summary(dist, count, unit = 1) {
+  return distributionOdds(dist, count, value => value * unit);
 }
 const RARE_CHANCE=PREROLL.filter(item=>SIGNATURE.some(s=>s.id===item.id))
  .reduce((sum,item)=>sum+item.rate,0);

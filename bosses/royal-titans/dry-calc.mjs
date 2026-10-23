@@ -1,29 +1,7 @@
-import {binomial} from "../phosani/dry-calc.mjs";
-import {MODES,PRIMARY,PET,DRY_ITEMS,rateOf,primaryRate,validateKills,validateOptions} from "./simulator.mjs";
+import { validateDropCount as checkCount, convolveDistributions as convolve, distributionOdds as summary, binomial } from "../../shared/distributions.mjs";
+import { MODES, PET, DRY_ITEMS, rateOf, primaryRate, validateKills, validateOptions } from "./simulator.mjs";
 const clamp=p=>Math.max(0,Math.min(1,p));
-function checkCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number from 0 to "+max+".");
-}
-function convolve(a,b){
- if(a.values.length===1&&a.from===0)return {...b};
- if(b.values.length===1&&b.from===0)return {...a};
- const out=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  const v=a.values[i];if(v===0)continue;
-  for(let j=0;j<b.values.length;j++)out[i+j]+=v*b.values[j];
- }
- return {from:a.from+b.from,values:out,expected:a.expected+b.expected};
-}
-function summary(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=i+dist.from;
-  if(n<count)fewer+=dist.values[i];
-  else if(n===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 export function calculateDry(soloKills,duoKills,received={},options={}){
  validateKills(soloKills,"Solo KC");validateKills(duoKills,"Duo KC");
  if(!received||typeof received!=="object"||Array.isArray(received))

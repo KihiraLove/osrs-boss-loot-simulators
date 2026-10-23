@@ -1,15 +1,4 @@
-import {
-  createUniqueCard,
-  clearInputsOnClick,
-  createItemIcon as icon,
-  parseNumber,
-  showError,
-  resetPanels,
-  createLootCard as lootCard,
-  createDryCard,
-  byId as $,
-  formatNumber as format
-} from "../../shared/ui.mjs";
+import { createDryField, createUniqueCard, clearInputsOnClick, parseNumber, showError, resetPanels, createLootCard as lootCard, createDryCard, byId as $, formatNumber as format } from "../../shared/ui.mjs";
 import {
   UNIQUE, DRY_ITEMS, ITEMS as ITEM_BY_ID, MAX_KILLS, simulate, rateOf
 } from "./simulator.mjs";
@@ -34,19 +23,8 @@ function setMode(next) {
   $("action-label").textContent=isDry?"Calculate chances":"Simulate loot";
   showError("");
 }
-function dryField(item) {
-  const label=document.createElement("label");
-  label.className="dry-field";
-  const name=document.createElement("span");
-  name.textContent=item.name;
-  const input=document.createElement("input");
-  input.type="number";input.min="0";input.step="1";input.value="0";
-  input.inputMode="numeric";input.dataset.id=item.id;
-  input.setAttribute("aria-label",item.name+" received");
-  label.append(icon(item),name,input);
-  dryInputs.append(label);
-}
-for(const item of DRY_ITEMS)dryField(item);
+
+for(const item of DRY_ITEMS)dryInputs.append(createDryField(item));
 
 function uniqueCard(item,count) {
   return createUniqueCard(item, count, item.id==="venator-vestige"?(("3 hits at ")+"1/256"):(item.id==="scarred-tablet"?"First only":item.id==="smoke-quartz"?"Variable rate":"1/"+format(Math.round(1/rateOf(item.id,false)))));

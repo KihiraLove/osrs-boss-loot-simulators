@@ -1,24 +1,10 @@
-import {DRY_IDS,RING_IDS,PREROLL,TERTIARY,validateKills,preRollRates} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { distributionOdds as stats, validateDropCount as checkCount, binomial } from "../../shared/distributions.mjs";
+import { DRY_IDS, RING_IDS, TERTIARY, validateKills, preRollRates } from "./simulator.mjs";
+
 const sig=new Set(["hydras-claw","hydra-tail","hydra-leather","ring-piece"]);
 export const SIGNATURE_CHANCE=Object.entries(preRollRates())
  .filter(([id])=>sig.has(id)).reduce((s,[,p])=>s+p,0);
-function checkCount(k,max){
- if(!Number.isSafeInteger(k)||k<0||k>max)
-  throw new RangeError("Enter a non-negative drop count within the possible range.");
-}
-function stats(d,count,transform=k=>k){
- let fewer=0,exact=0,expected=0;
- for(let i=0;i<d.values.length;i++){
-  const k=transform(i+d.from),v=d.values[i];
-  expected+=k*v;
-  if(k<count)fewer+=v;
-  else if(k===count)exact+=v;
- }
- return {count,expected,fewer:Math.max(0,Math.min(1,fewer)),
-  exact:Math.max(0,Math.min(1,exact)),
-  more:Math.max(0,Math.min(1,1-fewer-exact))};
-}
+
 // Ring fragments are not independent! They cycle eye -> fang -> heart.
 // Every completed three-piece cycle awards one of each.
 export function ringCountFromHits(totalHits,id){

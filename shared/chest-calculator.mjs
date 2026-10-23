@@ -1,6 +1,5 @@
 import { ITEMS } from "./chest-data.mjs";
-import { binomial } from "../bosses/phosani/dry-calc.mjs";
-import { distributionOdds } from "./distributions.mjs";
+import { binomial, distributionOdds } from "./distributions.mjs";
 
 export const MAX_OPENINGS = 1_000_000;
 export function validateOpenings(count) {

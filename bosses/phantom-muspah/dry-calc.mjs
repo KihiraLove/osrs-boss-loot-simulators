@@ -1,13 +1,6 @@
 import {DRY_ITEMS,validateKills,rateOf} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=x=>Math.min(1,Math.max(0,x));
-function odds(d,count){
- let fewer=0,exact=0;
- for(let i=0;i<d.values.length;i++){
-  const n=d.from+i;if(n<count)fewer+=d.values[i];else if(n===count)exact+=d.values[i];
- }
- return {count,expected:d.expected,fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+import { distributionOdds as odds, binomial } from "../../shared/distributions.mjs";
+
 export function calculateDry(kills,received={}){
  validateKills(kills);
  if(!received||typeof received!=="object"||Array.isArray(received))

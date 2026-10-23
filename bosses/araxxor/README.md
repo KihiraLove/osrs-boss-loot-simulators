@@ -1,15 +1,8 @@
 # Araxxor
 
-[Open Araxxor simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/araxxor/) · [All simulators](../../README.md)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/araxxor/) · [All simulators](../../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Araxxor)
 
-## Mechanics and drop rates
+Enter Harvest and Destroy counts together. Harvest gives normal loot; Destroy keeps clue and pet rolls but forfeits other rewards.
 
-The [Araxxor simulator and dry calculator](./) model the Old School RuneScape solo Slayer boss, with separate counts for **Harvested corpses** and **Destroyed corpses**. **Harvest** rolls loot normally and has a **1/3,000 Nid** pet chance. **Destroy** forfeits all normal loot, including noxious pieces, fang, jar, head and supplies, but retains the elite clue scroll roll and increases **Nid to 1/1,500**. Both counts contribute to one combined result. The dry calculator convolves the two Nid distributions while other rewards use only the harvested count.
-
-On Harvest, the primary unique pre-roll is **1/150**, selecting a noxious halberd piece or the araxyte fang with equal weight (any halberd piece **1/200**, fang **1/600**). The three named halberd pieces are **duplicate-protected until a complete trio**: each group of three successful piece rolls gives one blade, one point and one pommel in a random order. When the unique roll fails, one reward is chosen from the normal **115-ticket weighted table**, including a 15-ticket bundled supply outcome, tree-herb seed subtable and shared rare-drop-table branch. Supply outcomes grant an araxyte venom sac or super combat potion, a prayer potion and sharks or wild pies. The relative seed and rare table weights are normalized from published rates; item quantities follow the OSRS Wiki. The Ring of wealth option removes empty outcomes inside the shared gem and mega-rare tables. The normal main table is replaced by a successful unique pre-roll.
-
-Other Harvest drops roll independently: Araxyte head (**1/250**), Jar of venom (**1/1,500**), elite clue scroll (**1/50**, or **1/47** with Elite Combat Achievements), and Nid (**1/3,000**).
-
-The dry calculator displays fewer-than, exactly, and more-than probabilities for each signature reward, araxyte head, jar and Nid. Each halberd piece is calculated from the **1/200 shared piece-roll distribution**, accounting for nonrepeating pieces within each trio, rather than independently treating named pieces as ordinary 1/600 rolls. **Any signature unique** uses the mutually exclusive **1/150** table for the four main signature rewards; head, jar and pet are reported individually. All sprites are local PNGs from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db), including the Nid homepage icon.
-
-Sources: [OSRS Wiki — Araxxor](https://oldschool.runescape.wiki/w/Araxxor), [OSRS Index Araxxor reference](https://osrsindex.com/wiki/araxxor?site=osrs_wiki), and [RuneTools drop table](https://runetools.com/bestiary/araxxor).
+- Nid is 1/3,000 when harvesting and 1/1,500 when destroying. The combined pet result uses both rates.
+- Noxious pieces avoid duplicates until a full set is complete. Dry odds use harvested kills for non-pet rewards and begin with an empty collection.

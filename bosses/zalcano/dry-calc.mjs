@@ -1,24 +1,11 @@
+import { distributionOdds, convolveDistributions as convolution, binomial } from "../../shared/distributions.mjs";
 import {UNIQUE,validateKills,parameters} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+
 const clamp=x=>Math.max(0,Math.min(1,x));
-function odds(dist,count,p,kills){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const value=dist.from+i;
-  if(value<count)fewer+=dist.values[i];
-  else if(value===count)exact=dist.values[i];
- }
- return {count,expected:dist.expected,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact),
-  atLeastOne:-Math.expm1(kills*Math.log1p(-p))};
+function odds(dist, count, p, kills) {
+  return { ...distributionOdds(dist, count), atLeastOne: -Math.expm1(kills * Math.log1p(-p)) };
 }
-function convolution(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++)
-  for(let j=0;j<b.values.length;j++)
-   values[i+j]+=a.values[i]*b.values[j];
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+
 export function calculateDry(kills,received={},opts={}){
  validateKills(kills);
  if(!received||typeof received!=="object"||Array.isArray(received))

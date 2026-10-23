@@ -21,27 +21,27 @@ function fishChance(node, id) {
   return node.entries.reduce((sum, entry) => sum + entry.weight / node.total * entry.rewards.reduce((sum, reward) => sum + fishChance(reward, id), 0), 0);
 }
 
-test("nine separate chest calculators are linked in the Chests group with local Wiki artwork", async () => {
+test("eight separate chest calculators are linked in the Chests group with local Wiki artwork", async () => {
   const home = read("index.html");
   const group = home.match(/<section class="boss-group boss-group--chests"[\s\S]*?<\/section>/)?.[0];
   assert.ok(group);
   assert.match(group, /class="room-hint" id="group-chests">Chests<\/h2>/);
-  assert.equal((group.match(/class="boss-tile"/g) ?? []).length, 9);
-  assert.equal(Object.keys(CHESTS).length, 9);
+  assert.equal((group.match(/class="boss-tile"/g) ?? []).length, 8);
+  assert.equal(Object.keys(CHESTS).length, 8);
   assert.equal(CHESTS["larrans-chest"].title, "Larran's Chest");
   assert.match(CHESTS["larrans-chest"].wiki, /Larran%27s_big_chest$/);
   for (const config of Object.values(CHESTS)) {
-    assert.ok(group.includes(`href="bosses/${config.slug}/"`), config.slug);
-    const html = read(`bosses/${config.slug}/index.html`);
+    assert.ok(group.includes(`href="chests/${config.slug}/"`), config.slug);
+    const html = read(`chests/${config.slug}/index.html`);
     assert.ok(html.includes(`data-title="${config.title}"`));
     assert.match(html, /id="mode-dry"/);
-    const page = await import(`../bosses/${config.slug}/simulator.mjs`);
-    const dry = await import(`../bosses/${config.slug}/dry-calc.mjs`);
+    const page = await import(`../chests/${config.slug}/simulator.mjs`);
+    const dry = await import(`../chests/${config.slug}/dry-calc.mjs`);
     assert.equal(typeof page.simulate, "function");
     assert.equal(dry.calculateDry, page.calculateDry);
   }
   const sources = JSON.parse(read("assets/chest-sources.json"));
-  assert.equal(sources.files.filter(asset => asset.kind === "chest").length, 9);
+  assert.equal(sources.files.filter(asset => asset.kind === "chest").length, 8);
   for (const asset of sources.files) {
     assert.equal(new URL(asset.source).hostname, "oldschool.runescape.wiki");
     const png = readFileSync(new URL("../" + asset.file, import.meta.url));
@@ -146,16 +146,7 @@ test("Muddy dry odds count items in fixed bundles without inventing intermediate
   close(partial.fewer, 277 / 280); assert.equal(partial.exact, 0); close(partial.more, 3 / 280);
 });
 
-test("Sinister Chest has deterministic herb quantities and dry probabilities", () => {
-  const calculator = calculators["sinister-chest"];
-  const drops = calculator.simulate(10, { rng: () => { throw new Error("Guaranteed rewards cannot roll RNG"); } }).drops;
-  assert.deepEqual(drops, { "grimy-ranarr-weed": 30, "grimy-harralander": 20, "grimy-irit-leaf": 10, "grimy-avantoe": 10, "grimy-kwuarm": 10, "grimy-torstol": 10 });
-  for (const row of Object.values(calculator.calculateDry(10, drops))) {
-    assert.equal(row.fewer, 0); assert.equal(row.exact, 1); assert.equal(row.more, 0); assert.equal(row.atLeastOne, 1);
-  }
-  const absent = calculator.calculateDry(10)["grimy-ranarr-weed"];
-  assert.equal(absent.exact, 0); assert.equal(absent.more, 1); assert.equal(absent.expected, 30);
-});
+
 
 test("all chest simulations produce valid local rewards and agree with tracked dry expectations", () => {
   for (const calculator of Object.values(calculators)) {
@@ -192,7 +183,7 @@ test("chest calculators reject invalid openings, item counts, settings and rando
     const id = calculator.DRY_ITEMS[0].id, quantity = calculator.dropInfo(id).quantity;
     for (const count of [-1, .5, Infinity, "1", quantity * 10 + 1]) assert.throws(() => calculator.calculateDry(10, { [id]: count }));
     assert.throws(() => calculator.calculateDry(10, null));
-    if (!calculator.config.deterministic) for (const value of [1, -.1, NaN, null, "0"]) assert.throws(() => calculator.simulate(1, { rng: () => value }));
+    for (const value of [1, -.1, NaN, null, "0"]) assert.throws(() => calculator.simulate(1, { rng: () => value }));
   }
   for (const fishingLevel of [0, 100, 1.5, "99"]) assert.throws(() => calculators["brimstone-chest"].simulate(1, { fishingLevel }));
   assert.throws(() => calculators["muddy-chest"].simulate(1, { members: "yes" }));

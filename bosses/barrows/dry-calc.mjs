@@ -1,39 +1,8 @@
-import {MAX_CHESTS,ROLLS,UNIQUE_RATE,SPECIFIC_RATE,UNIQUE,validateChests} from "./simulator.mjs";
+import { binomial, distributionOdds as stats } from "../../shared/distributions.mjs";
+import { ROLLS, UNIQUE_RATE, SPECIFIC_RATE, UNIQUE, validateChests } from "./simulator.mjs";
 // Bounded exact recurrence about the binomial mode: handles up to
 // seven million independent equipment-roll trials without allocating
 // a full distribution or underflowing extreme lower-tail probabilities.
-function binomial(n,p){
- if(!Number.isSafeInteger(n)||n<0||n>MAX_CHESTS*ROLLS)
-  throw new RangeError("Invalid number of Barrows rolls.");
- if(p<0||p>1||!Number.isFinite(p))throw new RangeError("Invalid drop rate.");
- if(n===0||p===0)return {from:0,values:Float64Array.of(1),expected:0};
- if(p===1)return {from:n,values:Float64Array.of(1),expected:n};
- const expected=n*p;
- const radius=Math.ceil(10*Math.sqrt(n*p*(1-p))+15);
- const from=Math.max(0,Math.floor(expected-radius));
- const to=Math.min(n,Math.ceil(expected+radius));
- const mode=Math.max(from,Math.min(to,Math.floor((n+1)*p)));
- const values=new Float64Array(to-from+1);
- values[mode-from]=1;
- for(let k=mode-1;k>=from;k--)
-  values[k-from]=values[k+1-from]*(k+1)/(n-k)*(1-p)/p;
- for(let k=mode+1;k<=to;k++)
-  values[k-from]=values[k-1-from]*(n-k+1)/k*p/(1-p);
- const total=values.reduce((s,x)=>s+x,0);
- for(let i=0;i<values.length;i++)values[i]/=total;
- return {from,values,expected};
-}
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i;
-  if(n<count)fewer+=dist.values[i];
-  if(n===count)exact+=dist.values[i];
- }
- const clamp=x=>Math.max(0,Math.min(1,x));
- return {count,expected:dist.expected,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
 
 // Distribution of the number of distinct pieces given seven equipment
 // attempts. Each successful roll chooses one of 24 items uniformly and

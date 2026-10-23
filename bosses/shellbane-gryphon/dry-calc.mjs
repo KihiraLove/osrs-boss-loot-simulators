@@ -1,20 +1,6 @@
 import {DRY_ITEMS,validateKills} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=p=>Math.max(0,Math.min(1,p));
-function checkCount(n,max,name){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(name+" received must be a whole number between 0 and "+max+".");
-}
-function odds(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const value=dist.from+i;
-  if(value<count)fewer+=dist.values[i];
-  else if(value===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+import { validateDropCount as checkCount, distributionOdds as odds, binomial } from "../../shared/distributions.mjs";
+
 export function anyUniqueChance(kills){
  validateKills(kills);
  // Belle, jar, and pet are independent per kill; overlapping uniques

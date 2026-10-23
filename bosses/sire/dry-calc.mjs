@@ -1,20 +1,7 @@
-import {REWARDS,BLUDGEON,UNSIRED_RATE,validateKills,validateUnsired} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { REWARDS, UNSIRED_RATE, validateKills, validateUnsired } from "./simulator.mjs";
+import { validateDropCount as validCount, distributionOdds as odds, binomial } from "../../shared/distributions.mjs";
 const clamp=p=>Math.max(0,Math.min(1,p));
-function validCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a non-negative whole number no higher than "+max+".");
-}
-function odds(dist,count){
- let fewer=0,exact=0;
- for(let j=0;j<dist.values.length;j++){
-  const k=dist.from+j;
-  if(k<count)fewer+=dist.values[j];
-  else if(k===count)exact+=dist.values[j];
- }
- return {count,expected:dist.expected,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 // Pet can occur only once. Conditional on whether that first pet was rolled,
 // the other n or n-1 offers use the 123-ticket nonpet reward distribution.
 function rewardMix(n,weight){

@@ -1,31 +1,6 @@
-import {
- UNIQUE,DRY_ITEMS,validateKills,DRAGON_2H_CHANCE,PICKAXE_CHANCE,
- PET_CHANCE,PRIMARY_CHANCE
-} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-const clamp=x=>Math.max(0,Math.min(1,x));
-function checkCount(n,limit,label){
- if(!Number.isSafeInteger(n)||n<0||n>limit)
-  throw new RangeError(label+" must be a whole number from 0 to "+limit+".");
-}
-function summarize(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const k=dist.from+i;
-  if(k<count)fewer+=dist.values[i];
-  else if(k===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),
-  exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
-function convolution(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  if(a.values[i]===0)continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=a.values[i]*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+import { DRY_ITEMS, validateKills, PET_CHANCE, PRIMARY_CHANCE } from "./simulator.mjs";
+import { validateDropCount as checkCount, distributionOdds as summarize, convolveDistributions as convolution, binomial } from "../../shared/distributions.mjs";
+
 export function calculateDry(kills,received={}){
  validateKills(kills);
  if(!received||typeof received!=="object"||Array.isArray(received))

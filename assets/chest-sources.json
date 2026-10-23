@@ -39,12 +39,6 @@
       "kind": "chest"
     },
     {
-      "file": "assets/items/chest-sinister.png",
-      "source": "https://oldschool.runescape.wiki/images/thumb/Sinister_chest_%28closed%29.png/300px-Sinister_chest_%28closed%29.png?44291",
-      "page": "https://oldschool.runescape.wiki/w/Sinister_chest",
-      "kind": "chest"
-    },
-    {
       "file": "assets/items/chest-dark.png",
       "source": "https://oldschool.runescape.wiki/images/thumb/Dark_Chest_%28closed%29.png/300px-Dark_Chest_%28closed%29.png?10a4b",
       "page": "https://oldschool.runescape.wiki/w/Dark_Chest",

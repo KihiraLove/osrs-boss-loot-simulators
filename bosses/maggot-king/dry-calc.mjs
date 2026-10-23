@@ -1,10 +1,5 @@
-import {convolveDistributions,distributionOdds} from "../../shared/distributions.mjs";
+import { validateDropCount as checkCount, convolveDistributions, distributionOdds, binomial } from "../../shared/distributions.mjs";
 import {DRY_ITEMS,rateOf,validateKills,validateMode} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
-function checkCount(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" received must be a whole number between 0 and "+max+".");
-}
 
 function atLeastOne(n,p){return -Math.expm1(n*Math.log1p(-p));}
 export function calculateDry(kills,received={},mode="stomach"){

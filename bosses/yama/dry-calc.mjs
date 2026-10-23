@@ -1,11 +1,8 @@
 import {EQUIPMENT,DRY_ITEMS,validatePlan,itemRate,rates} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { validateDropCount as checkCount, convolveDistributions as convolve, binomial } from "../../shared/distributions.mjs";
 
 const clamp=p=>Math.max(0,Math.min(1,p));
-function checkCount(n,max){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError("Drop counts must be non-negative whole numbers no higher than possible drops.");
-}
+
 function prefixOf(dist){
  const prefix=new Float64Array(dist.values.length+1);
  for(let i=0;i<dist.values.length;i++)prefix[i+1]=prefix[i]+dist.values[i];
@@ -34,14 +31,7 @@ function mixedOdds(a,b,count,unitA=1,unitB=1){
 // Convolve the two contribution-specific equipment-success counts.
 // This is needed only for "Any equipment or Yami", as pet success has
 // a single rate shared by both contributions.
-function convolve(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  if(a.values[i]===0)continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=a.values[i]*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+
 // Each solo or duo kill supplies one exclusive equipment roll and a
 // separate independent Yami roll; a kill may grant both.
 export function anyRare(plan,count){

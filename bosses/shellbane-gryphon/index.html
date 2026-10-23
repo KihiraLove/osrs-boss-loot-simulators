@@ -20,15 +20,15 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
       <form id="simulator-form" novalidate>
-        <label class="depth-field phosani-kills"><span>Completed kills</span>
+        <label class="depth-field count-field"><span>Completed kills</span>
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Shellbane Gryphon kills">
         </label>
-        <label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
+        <label class="calculator-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
                         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
         </div>
-        <label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+        <label class="calculator-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
         <p id="validation-message" class="validation-message" role="alert" hidden></p>
         <div class="action-row">
           <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>

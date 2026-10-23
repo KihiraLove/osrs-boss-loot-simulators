@@ -20,7 +20,7 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
       <form id="simulator-form" novalidate>
-        <label class="depth-field phosani-kills"><span>Completed kills</span>
+        <label class="depth-field count-field"><span>Completed kills</span>
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Zalcano kills">
         </label>
         <p class="contribution-note">Zalcano rewards depend on participation. Values below represent your typical contribution per completed kill, not the whole team's damage.</p>
@@ -34,8 +34,8 @@
           <label class="depth-field"><span>Average HP damage</span>
             <input id="hp-damage" type="number" min="0" max="10000" step="1" value="125" inputmode="numeric"></label>
         </div>
-        <label class="phosani-option"><input id="mvp" type="checkbox"> MVP each kill (3 crystal shards, infernal ashes, +10% non-unique loot)</label>
-        <label class="phosani-option"><input id="xp-focus" type="checkbox"> XP-focused rewards (no ordinary resource loot; rares still roll)</label>
+        <label class="calculator-option"><input id="mvp" type="checkbox"> MVP each kill (3 crystal shards, infernal ashes, +10% non-unique loot)</label>
+        <label class="calculator-option"><input id="xp-focus" type="checkbox"> XP-focused rewards (no ordinary resource loot; rares still roll)</label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>

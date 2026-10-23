@@ -1,10 +1,7 @@
 import {DRY_ITEMS,PYRO_IDS,EFFECTIVE_RATES,rateOf,validatePulls} from "./simulator.mjs";
-import {binomial} from "../phosani/dry-calc.mjs";
+import { validateDropCount as check, binomial } from "../../shared/distributions.mjs";
 const clamp=p=>Math.min(1,Math.max(0,p));
-function check(n,max,label){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(label+" must be a whole number between 0 and "+max+".");
-}
+
 function summarize(dist,count,transform=n=>n){
  let exact=0,fewer=0,expected=0,atLeastOne=0;
  for(let i=0;i<dist.values.length;i++){

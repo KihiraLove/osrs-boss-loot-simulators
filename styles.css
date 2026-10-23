@@ -456,41 +456,41 @@ body.boss-selection-page {
 .back-link:hover { color: var(--accent-strong); }
 
 /* Shared boss controls and item icons. */
-.phosani-kills { margin-bottom: 12px; }
-.phosani-kills input { max-width: 145px; }
-.phosani-option {
+.count-field { margin-bottom: 12px; }
+.count-field input { max-width: 145px; }
+.calculator-option {
   display: flex; align-items: center; gap: 8px; margin: 12px 0 4px;
   color: var(--muted); font-size: .8rem; line-height: 1.45;
 }
-.phosani-option input { width: 16px; height: 16px; accent-color: var(--accent); }
-.phosani-icon {
+.calculator-option input { width: 16px; height: 16px; accent-color: var(--accent); }
+.item-icon {
   width: 36px; height: 32px; flex: 0 0 36px;
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--panel-2); border: 1px solid var(--border-soft);
   font: 700 11px/1 Georgia, serif; color: var(--accent-strong);
 }
-.phosani-icon img { display: block; width: 36px; height: 32px; object-fit: contain; image-rendering: pixelated; }
-.loot-icon .phosani-icon { background: transparent; border: 0; }
-.dry-result-heading .phosani-icon { width: 42px; height: 42px; flex-basis: 42px; }
-.dry-result-heading .phosani-icon img { width: 42px; height: 42px; }
+.item-icon img { display: block; width: 36px; height: 32px; object-fit: contain; image-rendering: pixelated; }
+.loot-icon .item-icon { background: transparent; border: 0; }
+.dry-result-heading .item-icon { width: 42px; height: 42px; flex-basis: 42px; }
+.dry-result-heading .item-icon img { width: 42px; height: 42px; }
 
 /* Preserve the controls and icon variants used by individual simulators. */
-:where(.boss-bryophyta, .boss-obor) .phosani-kills { margin-bottom: 14px; }
-:where(.boss-gauntlet) .phosani-kills input { max-width: 160px; }
-:where(.boss-dagannoth-kings) .phosani-option { margin: 10px 0; }
-:where(.boss-nex) .phosani-option { margin: 12px 0 14px; font-size: .82rem; line-height: inherit; }
+:where(.boss-bryophyta, .boss-obor) .count-field { margin-bottom: 14px; }
+:where(.boss-gauntlet) .count-field input { max-width: 160px; }
+:where(.boss-dagannoth-kings) .calculator-option { margin: 10px 0; }
+:where(.boss-nex) .calculator-option { margin: 12px 0 14px; font-size: .82rem; line-height: inherit; }
 :where(.boss-bryophyta, .boss-obor, .boss-callisto-artio, .boss-venenatis-spindel,
   .boss-vetion-calvarion, .boss-commander-zilyana, .boss-general-graardor,
-  .boss-kree-arra, .boss-kril-tsutsaroth, .boss-gauntlet, .boss-nex) .phosani-icon {
+  .boss-kree-arra, .boss-kril-tsutsaroth, .boss-gauntlet, .boss-nex) .item-icon {
   font: inherit; color: inherit;
 }
-:where(.boss-dagannoth-kings) .phosani-icon { font-size: 10px; }
-:where(.boss-dagannoth-kings, .boss-gauntlet, .boss-nex) .phosani-icon img { display: inline; }
+:where(.boss-dagannoth-kings) .item-icon { font-size: 10px; }
+:where(.boss-dagannoth-kings, .boss-gauntlet, .boss-nex) .item-icon img { display: inline; }
 @media (max-width: 390px) {
-  :where(body:not(.boss-bryophyta, .boss-obor)) .phosani-kills { flex-wrap: wrap; }
+  :where(body:not(.boss-bryophyta, .boss-obor)) .count-field { flex-wrap: wrap; }
 }
 @media (max-width: 530px) {
-  :where(.boss-nex) .phosani-kills { flex-wrap: wrap; }
+  :where(.boss-nex) .count-field { flex-wrap: wrap; }
 }
 
 /* Barrows grouped uniques. */
@@ -498,13 +498,13 @@ body.boss-selection-page {
 .barrows-unique-heading:first-child { margin-top: 0; }
 .barrows-uniques { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
 .boss-barrows.is-dry-mode .layout { grid-template-columns: minmax(0,1fr); }
-.boss-barrows.is-dry-mode .phosani-kills,
+.boss-barrows.is-dry-mode .count-field,
 .boss-barrows.is-dry-mode .action-row { max-width: 440px; }
 :where(.boss-barrows) #dry-inputs { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 12px; }
 .barrows-dry-group { min-width: 0; margin: 0; padding: 8px; border: 1px solid var(--border-soft); }
 .barrows-dry-group legend { padding: 0 4px; font-size: .9rem; font-weight: 700; color: var(--accent-strong); }
 .barrows-dry-group .dry-field { gap: 6px; padding: 8px 6px; }
-.barrows-dry-group .phosani-icon { flex: 0 0 36px; }
+.barrows-dry-group .item-icon { flex: 0 0 36px; }
 .barrows-dry-group .dry-field span { overflow-wrap: anywhere; }
 .barrows-dry-group .dry-field input { width: 56px; flex: 0 0 56px; }
 @media (max-width:1300px) {
@@ -707,8 +707,8 @@ body.boss-selection-page {
 /* Wintertodt skills. */
 .skill-levels h3 { font-size: .9rem; margin: 16px 0 8px; }
 .skill-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(145px,1fr)); gap: 8px; }
-.skill-grid .phosani-kills { display: flex; justify-content: space-between; gap: 6px; margin: 0; padding: 8px 6px; font-size: .84rem; }
-.skill-grid .phosani-kills input { flex: 0 0 48px; width: 48px; max-width: 48px; }
+.skill-grid .count-field { display: flex; justify-content: space-between; gap: 6px; margin: 0; padding: 8px 6px; font-size: .84rem; }
+.skill-grid .count-field input { flex: 0 0 48px; width: 48px; max-width: 48px; }
 @media (max-width:550px) {
   .skill-grid { grid-template-columns: 1fr; }
 }

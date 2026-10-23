@@ -1,9 +1,8 @@
 # Muddy Chest
 
-[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/muddy-chest/) · [OSRS Wiki source](https://oldschool.runescape.wiki/w/Muddy_chest)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chests/muddy-chest/) · [Chest guides](../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Muddy_chest)
 
-Every opening gives a ruby, two mithril bars and runes. Members worlds also have a 3/40 chance of a bonus reward. Enter individual item quantities in the dry calculator.
+Every opening gives one uncut ruby, two mithril bars, five law runes, five death runes and 15 chaos runes.
 
-This page has its own loot simulator and dry calculator. The [shared chest tables](../../shared/chest-data.mjs), [calculation engine](../../shared/chest-calculator.mjs) and [UI](../../shared/chest-app.mjs) keep common behavior in one place. See [chest mechanics and sources](../../shared/CHESTS.md) for probabilities, bundles and modeling assumptions.
-
-Chest artwork is downloaded from the OSRS Wiki and served locally; see [asset sources](../../assets/chest-sources.json).
+- Members worlds add at most one bonus: each blighted bundle is 3/280; Larran's key is 6/280. The bundles contain 25 manta rays, karambwans or ice sacks, 15 anglerfish, or three super restores. Free-to-play worlds have no bonus.
+- Enter individual item quantities in dry inputs. Bundles are counted together, not as independent item rolls.

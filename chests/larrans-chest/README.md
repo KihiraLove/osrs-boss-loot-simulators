@@ -1,9 +1,8 @@
 # Larran's Chest
 
-[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/larrans-chest/) · [OSRS Wiki source](https://oldschool.runescape.wiki/w/Larran%27s_big_chest)
+[Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/chests/larrans-chest/) · [Chest guides](../README.md) · [OSRS Wiki](https://oldschool.runescape.wiki/w/Larran%27s_big_chest)
 
-Uses Larran's big chest rewards. Fishing level affects the raw fish received.
+Uses Larran's big chest. Each Dagon'hai piece is 1/256; the three outcomes are mutually exclusive and replace ordinary loot.
 
-This page has its own loot simulator and dry calculator. The [shared chest tables](../../shared/chest-data.mjs), [calculation engine](../../shared/chest-calculator.mjs) and [UI](../../shared/chest-app.mjs) keep common behavior in one place. See [chest mechanics and sources](../../shared/CHESTS.md) for probabilities, bundles and modeling assumptions.
-
-Chest artwork is downloaded from the OSRS Wiki and served locally; see [asset sources](../../assets/chest-sources.json).
+- Otherwise roll the 60-ticket main table, including three fish tickets. Fishing level affects fish type; quantities use the big-chest multiplier.
+- Dry inputs count individual Dagon'hai pieces. See the [shared chest notes](../README.md) for fish estimates and rounding.

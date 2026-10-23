@@ -1,20 +1,10 @@
-import {binomial} from "../phosani/dry-calc.mjs";
+import { distributionOdds, validateDropCount as checkCount, convolveDistributions as convolve, binomial } from "../../shared/distributions.mjs";
+
 import {
  MODES,PRIMARY,DRY_ITEMS,validateCounts,rateOf,UNIQUE_CHANCE
 } from "./simulator.mjs";
 const clamp=n=>Math.max(0,Math.min(1,n));
-function checkCount(n,max,name){
- if(!Number.isSafeInteger(n)||n<0||n>max)
-  throw new RangeError(name+" must be a whole number from 0 to "+max+".");
-}
-function convolve(a,b){
- const values=new Float64Array(a.values.length+b.values.length-1);
- for(let i=0;i<a.values.length;i++){
-  const x=a.values[i];if(!x)continue;
-  for(let j=0;j<b.values.length;j++)values[i+j]+=x*b.values[j];
- }
- return {from:a.from+b.from,values,expected:a.expected+b.expected};
-}
+
 function combined(killsByMode,chance){
  let total={from:0,values:Float64Array.of(1),expected:0};
  for(const mode of MODES){
@@ -23,15 +13,8 @@ function combined(killsByMode,chance){
  }
  return total;
 }
-function stats(dist,count,multiplier=1){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const number=(dist.from+i)*multiplier;
-  if(number<count)fewer+=dist.values[i];
-  else if(number===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected*multiplier,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
+function stats(dist, count, multiplier = 1) {
+  return distributionOdds(dist, count, value => value * multiplier);
 }
 function atLeastOne(killsByMode,chance){
  return clamp(-Math.expm1(MODES.reduce((sum,mode)=>
