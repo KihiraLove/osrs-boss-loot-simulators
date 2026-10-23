@@ -121,8 +121,8 @@ test("all dry distributions normalize at small and large chest counts",()=>{
  assert.throws(()=>simulate(1,{potential:668}));
 });
 test("Barrows page is fixed to six brothers, has both modes and local PNG icons",()=>{
- const home=read("index.html"),page=read("barrows/index.html"),app=read("barrows/app.mjs");
- assert.match(home,/href="\.\/barrows\/"/);
+ const home=read("index.html"),page=read("bosses/barrows/index.html"),app=read("bosses/barrows/app.mjs");
+ assert.match(home,/href="bosses\/barrows\/"/);
  assert.match(home,/assets\/items\/dharoks-helm\.png/);
  assert.match(page,/All simulators/);
  assert.match(page,/Completed chests \(all 6 brothers\)/);

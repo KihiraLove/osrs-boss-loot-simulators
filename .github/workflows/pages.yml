@@ -19,7 +19,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       pages: write
       id-token: write
     environment:
@@ -53,91 +53,7 @@ jobs:
           node-version: '22'
       - name: Validate
         if: steps.revision.outputs.deploy == 'true'
-        run: |
-          node --test tests/*.test.mjs
-          node --check simulator.mjs
-          node --check app.mjs
-          node --check phosani/simulator.mjs
-          node --check phosani/dry-calc.mjs
-          node --check phosani/app.mjs
-          node --check yama/simulator.mjs
-          node --check yama/dry-calc.mjs
-          node --check yama/app.mjs
-          node --check hydra/simulator.mjs
-          node --check hydra/dry-calc.mjs
-          node --check hydra/app.mjs
-          node --check cerberus/simulator.mjs
-          node --check cerberus/dry-calc.mjs
-          node --check cerberus/app.mjs
-          node --check mad-angel/simulator.mjs
-          node --check mad-angel/dry-calc.mjs
-          node --check mad-angel/app.mjs
-          node --check sire/simulator.mjs
-          node --check sire/dry-calc.mjs
-          node --check sire/app.mjs
-          node --check amoxliatl/simulator.mjs
-          node --check amoxliatl/dry-calc.mjs
-          node --check amoxliatl/app.mjs
-          node --check araxxor/simulator.mjs
-          node --check araxxor/dry-calc.mjs
-          node --check araxxor/app.mjs
-          node --check barrows/simulator.mjs
-          node --check barrows/dry-calc.mjs
-          node --check barrows/app.mjs
-          node --check brutus/simulator.mjs
-          node --check brutus/dry-calc.mjs
-          node --check brutus/app.mjs
-          node --check bryophyta/simulator.mjs
-          node --check bryophyta/dry-calc.mjs
-          node --check bryophyta/app.mjs
-          node --check obor/simulator.mjs
-          node --check obor/dry-calc.mjs
-          node --check obor/app.mjs
-          node --check callisto-artio/simulator.mjs
-          node --check callisto-artio/dry-calc.mjs
-          node --check callisto-artio/app.mjs
-          node --check venenatis-spindel/simulator.mjs
-          node --check venenatis-spindel/dry-calc.mjs
-          node --check venenatis-spindel/app.mjs
-          node --check vetion-calvarion/simulator.mjs
-          node --check vetion-calvarion/dry-calc.mjs
-          node --check vetion-calvarion/app.mjs
-          node --check kalphite-queen/simulator.mjs
-          node --check kalphite-queen/dry-calc.mjs
-          node --check kalphite-queen/app.mjs
-          node --check scurrius/simulator.mjs
-          node --check scurrius/dry-calc.mjs
-          node --check scurrius/app.mjs
-          node --check chaos-elemental/simulator.mjs
-          node --check chaos-elemental/dry-calc.mjs
-          node --check chaos-elemental/app.mjs
-          node --check corporeal-beast/simulator.mjs
-          node --check corporeal-beast/dry-calc.mjs
-          node --check corporeal-beast/app.mjs
-          node --check chaos-fanatic/simulator.mjs
-          node --check chaos-fanatic/dry-calc.mjs
-          node --check chaos-fanatic/app.mjs
-          node --check crazy-archaeologist/simulator.mjs
-          node --check crazy-archaeologist/dry-calc.mjs
-          node --check crazy-archaeologist/app.mjs
-          node --check dagannoth-kings/simulator.mjs
-          node --check dagannoth-kings/dry-calc.mjs
-          node --check dagannoth-kings/app.mjs
-          node --check dagannoth-kings/sync-sprites.mjs
-      - name: Download Dagannoth Kings local item sprites
-        if: steps.revision.outputs.deploy == 'true'
-        run: node dagannoth-kings/sync-sprites.mjs
-      - name: Commit local Dagannoth Kings sprites
-        if: steps.revision.outputs.deploy == 'true'
-        shell: bash
-        run: |
-          git add assets/items/
-          if ! git diff --cached --quiet; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git commit -m 'Add Dagannoth Kings local item sprites'
-            git push origin HEAD:main || echo 'Could not commit generated sprites; they are still included in this Pages artifact.'
-          fi
+        run: node scripts/validate.mjs
       - name: Record published revision
         if: steps.revision.outputs.deploy == 'true'
         run: printf '%s\n' "$GITHUB_SHA" > deployment-revision.txt

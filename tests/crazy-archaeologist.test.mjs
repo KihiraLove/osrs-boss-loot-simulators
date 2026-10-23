@@ -106,8 +106,8 @@ test("High KC, zero KC, validation, options and RNG bounds",()=>{
  assert.throws(()=>calculateDry(1,null));
 });
 test("Crazy Archaeologist page and all item images are local",()=>{
- const home=source("index.html"),page=source("crazy-archaeologist/index.html"),app=source("crazy-archaeologist/app.mjs");
- assert.match(home,/href="\.\/crazy-archaeologist\/"/);
+ const home=source("index.html"),page=source("bosses/crazy-archaeologist/index.html"),app=source("bosses/crazy-archaeologist/app.mjs");
+ assert.match(home,/href="bosses\/crazy-archaeologist\/"/);
  assert.match(home,/assets\/items\/fedora\.png/);
  for(const id of ["kill-count","hard-cas","ring-of-wealth","mode-loot","mode-dry","unique-grid","loot-grid"])assert.ok(page.includes('id="'+id+'"'),id+" absent");
  assert.match(page,/name="slayer-task"/);

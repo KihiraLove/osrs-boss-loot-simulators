@@ -111,8 +111,8 @@ test("Reject invalid counts, modes and RNGs",()=>{
 
 test("All icons exist; page and homepage have correct links and controls",()=>{
  const home=source("index.html"),css=source("styles.css");
- const page=source("maggot-king/index.html"),app=source("maggot-king/app.mjs");
- assert.match(home,/href="\.\/maggot-king\/"/);
+ const page=source("bosses/maggot-king/index.html"),app=source("bosses/maggot-king/app.mjs");
+ assert.match(home,/href="bosses\/maggot-king\/"/);
  assert.match(home,/maggot-marquess\.png/);
  assert.match(css,/grid-template-columns:\s*repeat\(9,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(css,/width:\s*72px;\s*height:\s*72px/);

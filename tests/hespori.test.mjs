@@ -110,10 +110,10 @@ test("Validate bounds, RNG, and farming experience options",()=>{
 });
 test("Homepage, controls, docs, sprites and source are committed",()=>{
  const home=source("index.html");
- const page=source("hespori/index.html");
- const app=source("hespori/app.mjs");
- const readme=source("hespori/README.md");
- assert.match(home,/href="\.\/hespori\/"/);
+ const page=source("bosses/hespori/index.html");
+ const app=source("bosses/hespori/app.mjs");
+ const readme=source("bosses/hespori/README.md");
+ assert.match(home,/href="bosses\/hespori\/"/);
  assert.match(readme,/1\/35/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\),farmingLevel\)/);
  for(const id of ["mode-loot","mode-dry","kill-count","farming-level","farmer-outfit",

@@ -61,9 +61,9 @@ test("Zero and large KC, invalid counts and RNG",()=>{
 });
 test("Home link, three inputs, separate output sections and dry mode",()=>{
  const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
- const home=read("index.html"),page=read("dagannoth-kings/index.html");
- const app=read("dagannoth-kings/app.mjs");
- assert.match(home,/href="\.\/dagannoth-kings\/"/);
+ const home=read("index.html"),page=read("bosses/dagannoth-kings/index.html");
+ const app=read("bosses/dagannoth-kings/app.mjs");
+ assert.match(home,/href="bosses\/dagannoth-kings\/"/);
  for(const king of KINGS)assert.match(page,new RegExp('id="kills-'+king.id+'"'));
  for(const id of ["mode-loot","mode-dry","hard-cas","elite-cas","konar-task","quest-ribs"])
   assert.ok(page.includes('id="'+id+'"'));

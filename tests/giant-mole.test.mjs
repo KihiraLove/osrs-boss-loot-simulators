@@ -99,10 +99,10 @@ test("Input and RNG boundaries are rejected",()=>{
 
 test("Local sprites and page navigation exist",()=>{
  const index=source("index.html");
- const page=source("giant-mole/index.html");
- const app=source("giant-mole/app.mjs");
- const readme=source("giant-mole/README.md");
- assert.match(index,/href="\.\/giant-mole\/"/);
+ const page=source("bosses/giant-mole/index.html");
+ const app=source("bosses/giant-mole/app.mjs");
+ const readme=source("bosses/giant-mole/README.md");
+ assert.match(index,/href="bosses\/giant-mole\/"/);
  assert.match(index,/assets\/items\/baby-mole\.png/);
  for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","konar-task",
   "unique-grid","loot-grid","dry-inputs","dry-results-grid"])

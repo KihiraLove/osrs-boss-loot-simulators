@@ -94,9 +94,9 @@ test("Validation and RNG bounds",()=>{
  assert.throws(()=>calculateDry(1,[]));
 });
 test("Four visually independent panels, README, and local PNG sprites",()=>{
- const home=read("index.html"),html=read("general-graardor/index.html"),
-  app=read("general-graardor/app.mjs"),docs=read("general-graardor/README.md");
- assert.match(home,/href="\.\/general-graardor\/"/);
+ const home=read("index.html"),html=read("bosses/general-graardor/index.html"),
+  app=read("bosses/general-graardor/app.mjs"),docs=read("bosses/general-graardor/README.md");
+ assert.match(home,/href="bosses\/general-graardor\/"/);
  assert.match(read("README.md"),/general-graardor\/README\.md/);
  assert.match(docs,/three guards/);
  for(const source of SOURCES){

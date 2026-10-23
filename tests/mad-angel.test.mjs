@@ -101,15 +101,15 @@ test("dry outcomes sum to 100% at all tested kill counts",()=>{
  }
 });
 test("homepage integration, two modes, and every item icon is locally backed by PNG",()=>{
- const home=read("index.html"),page=read("mad-angel/index.html"),app=read("mad-angel/app.mjs");
- assert.match(home,/href="\.\/mad-angel\/"/);
+ const home=read("index.html"),page=read("bosses/mad-angel/index.html"),app=read("bosses/mad-angel/app.mjs");
+ assert.match(home,/href="bosses\/mad-angel\/"/);
  assert.match(home,/src="\.\/assets\/items\/aggy\.png"/);
- assert.match(page,/href="\.\.\/"/);
+ assert.match(page,/href="\.\.\/\.\."/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="medium-cas"/);
  assert.match(page,/id="sunstone-eligible"/);
- assert.match(page,/src="\.\.\/assets\/items\/aggy\.png"/);
+ assert.match(page,/src="\.\.\/\.\.\/assets\/items\/aggy\.png"/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(app,/oldschool\.runescape\.wiki\/images/);
  for(const item of Object.values(ITEMS)){

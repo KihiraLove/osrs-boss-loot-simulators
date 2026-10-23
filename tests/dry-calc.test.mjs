@@ -196,8 +196,8 @@ test("Any unique: zero eligible rolls and impossible counts remain well-defined"
 });
 
 test("UI has no preset buttons and includes the aggregate unique-drop result", () => {
-  const html = readFileSync(new URL("../index.html", import.meta.url), "utf-8");
-  const app = readFileSync(new URL("../app.mjs", import.meta.url), "utf-8");
+  const html = readFileSync(new URL("../bosses/doom/index.html", import.meta.url), "utf-8");
+  const app = readFileSync(new URL("../bosses/doom/app.mjs", import.meta.url), "utf-8");
   assert.ok(!html.includes("data-preset-depth"));
   assert.ok(!app.includes("data-preset-depth"));
   assert.ok(app.includes("Any unique drop"));

@@ -139,9 +139,9 @@ test("Invalid KC, options, RNG and received counts throw",()=>{
  assert.throws(()=>calculateDry(1,null));
 });
 test("Chaos Elemental page, options and local PNG item sprites",()=>{
- const home=source("index.html"),html=source("chaos-elemental/index.html");
- const app=source("chaos-elemental/app.mjs");
- assert.match(home,/href="\.\/chaos-elemental\/"/);
+ const home=source("index.html"),html=source("bosses/chaos-elemental/index.html");
+ const app=source("bosses/chaos-elemental/app.mjs");
+ assert.match(home,/href="bosses\/chaos-elemental\/"/);
  assert.match(home,/assets\/items\/pet-chaos-elemental\.png/);
  assert.match(html,/id="kill-count"/);
  assert.match(html,/id="elite-cas"/);

@@ -100,9 +100,9 @@ test("Validate kill counts, RNG bounds, option types and dry item counts",()=>{
  assert.throws(()=>calculateDry(1,{"muphin":-1}));
 });
 test("Homepage, simulator options and local sprites are present",()=>{
- const home=source("index.html"),page=source("phantom-muspah/index.html");
- const app=source("phantom-muspah/app.mjs"),docs=source("phantom-muspah/README.md");
- assert.match(home,/href="\.\/phantom-muspah\/"/);
+ const home=source("index.html"),page=source("bosses/phantom-muspah/index.html");
+ const app=source("bosses/phantom-muspah/app.mjs"),docs=source("bosses/phantom-muspah/README.md");
+ assert.match(home,/href="bosses\/phantom-muspah\/"/);
  assert.match(docs,/Venator shard/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  for(const id of ["kill-count","mode-loot","mode-dry","hard-cas","elite-cas","konar-task","charged-ice","unique-grid","loot-grid"])

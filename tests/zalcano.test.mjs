@@ -107,9 +107,9 @@ test("Invalid settings and drop-count inputs are rejected",()=>{
   "uncut-onyx":1,"zalcano-shard":1}));
 });
 test("Published site, interactive fields, documentation and every item sprite exist",()=>{
- const home=read("index.html"),html=read("zalcano/index.html");
- const app=read("zalcano/app.mjs"),readme=read("zalcano/README.md");
- assert.match(home,/href="\.\/zalcano\/"/);
+ const home=read("index.html"),html=read("bosses/zalcano/index.html");
+ const app=read("bosses/zalcano/app.mjs"),readme=read("bosses/zalcano/README.md");
+ assert.match(home,/href="bosses\/zalcano\/"/);
  assert.match(read("README.md"),/zalcano\/README\.md/);
  assert.match(readme,/contribution/);
  for(const id of ["team-size","relative-contribution","shield-damage","hp-damage",

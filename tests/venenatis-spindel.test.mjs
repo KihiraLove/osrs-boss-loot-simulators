@@ -110,8 +110,8 @@ test("Invalid KCs, received counts, and RNG values are rejected",()=>{
  assert.throws(()=>calculateDry(1,1,null));
 });
 test("Combined page uses two KCs, one inventory and local sprites",()=>{
- const home=read("index.html"),page=read("venenatis-spindel/index.html"),app=read("venenatis-spindel/app.mjs");
- assert.match(home,/href="\.\/venenatis-spindel\/"/);
+ const home=read("index.html"),page=read("bosses/venenatis-spindel/index.html"),app=read("bosses/venenatis-spindel/app.mjs");
+ assert.match(home,/href="bosses\/venenatis-spindel\/"/);
  assert.match(home,/assets\/items\/venenatis-spiderling\.png/);
  assert.match(page,/id="venenatis-kc"/);assert.match(page,/id="spindel-kc"/);
  assert.match(page,/id="mode-loot"/);assert.match(page,/id="mode-dry"/);

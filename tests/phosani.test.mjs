@@ -86,13 +86,13 @@ test("binomial distribution is normalized even at high n",()=>{
 });
 test("new simulator has its own route and both calculators",()=>{
   const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
-  const home=read("index.html"),page=read("phosani/index.html"),app=read("phosani/app.mjs");
-  assert.match(home,/href="\.\/doom\/"/);
-  assert.match(home,/href="\.\/phosani\/"/);
-  assert.match(page,/href="\.\.\/"/);
+  const home=read("index.html"),page=read("bosses/phosani/index.html"),app=read("bosses/phosani/app.mjs");
+  assert.match(home,/href="bosses\/doom\/"/);
+  assert.match(home,/href="bosses\/phosani\/"/);
+  assert.match(page,/href="\.\.\/\.\."/);
   assert.match(page,/id="mode-loot"/);
   assert.match(page,/id="mode-dry"/);
-  assert.match(page,/src="\.\/app\.mjs"/);
+  assert.match(page,/src="(?:\.\/)?app\.mjs"/);
   assert.match(app,/calculateDry/);
   assert.ok(SIGNATURE.length===8);
 });
@@ -105,10 +105,10 @@ test("all Phosani rewards have local valid PNG sprites",()=>{
 });
 test("Phosani navigation and item graphics use the Little nightmare pet icon",()=>{
   const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
-  const home=read("index.html"),page=read("phosani/index.html"),app=read("phosani/app.mjs");
-  assert.match(home,/href="\.\/phosani\/"[\s\S]*?src="\.\/assets\/items\/little-nightmare\.png"/);
-  assert.match(page,/rel="icon" type="image\/png" href="\.\.\/assets\/items\/little-nightmare\.png"/);
-  assert.match(page,/class="brand-mark"[\s\S]*?src="\.\.\/assets\/items\/little-nightmare\.png"/);
-  assert.match(app,/img\.src = "\.\.\/assets\/items\/" \+ item\.id \+ "\.png"/);
+  const home=read("index.html"),page=read("bosses/phosani/index.html"),app=read("bosses/phosani/app.mjs");
+  assert.match(home,/href="bosses\/phosani\/"[\s\S]*?src="\.\/assets\/items\/little-nightmare\.png"/);
+  assert.match(page,/rel="icon" type="image\/png" href="\.\.\/\.\.\/assets\/items\/little-nightmare\.png"/);
+  assert.match(page,/class="brand-mark"[\s\S]*?src="\.\.\/\.\.\/assets\/items\/little-nightmare\.png"/);
+  assert.match(app,/createItemIcon as icon/);
   assert.doesNotMatch(home+page+app,/phosani\.svg|https:\/\/oldschool\.runescape\.wiki\/images/);
 });

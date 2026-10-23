@@ -135,9 +135,9 @@ test("Validation rejects invalid KC, RNG and options",()=>{
 });
 
 test("All sprites, UI controls and navigation exist",()=>{
- const page=source("leviathan/index.html"),home=source("index.html");
- const app=source("leviathan/app.mjs"),docs=source("leviathan/README.md");
- assert.match(home,/href="\.\/leviathan\/"/);
+ const page=source("bosses/leviathan/index.html"),home=source("index.html");
+ const app=source("bosses/leviathan/app.mjs"),docs=source("bosses/leviathan/README.md");
+ assert.match(home,/href="bosses\/leviathan\/"/);
  assert.match(docs,/three-hit|three.hidden|third/i);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
  for(const id of ["mode-loot","mode-dry","kill-count","perfect","awakened","konar-task","unique-grid","loot-grid","vestige-progress"])

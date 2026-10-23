@@ -6,7 +6,7 @@ import { ITEMS, SPECIAL_ITEMS } from "../bosses/doom/simulator.mjs";
 const read = path => readFileSync(new URL("../" + path, import.meta.url), "utf-8");
 
 test("requested presentation text is absent from both static and dynamic UI", () => {
-  const visibleSources = read("doom/index.html") + "\n" + read("app.mjs");
+  const visibleSources = read("bosses/doom/index.html") + "\n" + read("bosses/doom/app.mjs");
   const removedPhrases = [
     "Planned delves",
     "drop rolls",
@@ -34,12 +34,12 @@ test("requested presentation text is absent from both static and dynamic UI", ()
 test("shortened item names still retain the correct IDs and drop rates", () => {
   assert.equal(SPECIAL_ITEMS.find(item => item.id === "eye-of-ayak").name, "Eye of ayak");
   assert.equal(ITEMS.find(item => item.id === "tooth-half-of-key").name, "Tooth half of key");
-  assert.ok(!read("simulator.mjs").includes("(uncharged)"));
-  assert.ok(!read("simulator.mjs").includes("(moon key)"));
+  assert.ok(!read("bosses/doom/simulator.mjs").includes("(uncharged)"));
+  assert.ok(!read("bosses/doom/simulator.mjs").includes("(moon key)"));
 });
 
 test("Ko-fi uses the BingoPlayerStats blue pill banner and bounded cup icon", () => {
-  const html = read("doom/index.html");
+  const html = read("bosses/doom/index.html");
   const css = read("styles.css");
   assert.match(html, /class="kofi-banner"/);
   assert.match(html, /href="https:\/\/ko-fi.com\/KihiraLove"/);
@@ -55,7 +55,7 @@ test("Ko-fi uses the BingoPlayerStats blue pill banner and bounded cup icon", ()
 });
 
 test("footer uses the BingoPlayerStats structure and privacy statement", () => {
-  const html = read("doom/index.html");
+  const html = read("bosses/doom/index.html");
   const css = read("styles.css");
   assert.match(html, /class="footer-meta"/);
   assert.match(html, /class="footer-actions"/);
@@ -74,12 +74,12 @@ test("README uses matching GitHub Pages CI status and Ko-fi badges", () => {
   assert.match(markdown, /https:\/\/ko-fi\.com\/KihiraLove/);
 });
 
-test("home page shows only a centered, accessible Doom boss tile", () => {
+test("home page includes a centered, accessible Doom boss tile", () => {
   const homepage = read("index.html");
   const css = read("styles.css");
   assert.match(homepage, /class="boss-selection-page"/);
   assert.match(homepage, /class="boss-picker"/);
-  assert.match(homepage, /class="boss-tile" href="\.\/doom\/"/);
+  assert.match(homepage, /class="boss-tile" href="bosses\/doom\/"/);
   assert.match(homepage, /aria-label="Open Doom of Mokhaiotl loot simulator"/);
   assert.match(homepage, /src="\.\/assets\/items\/dom\.png"/);
   assert.doesNotMatch(homepage, /id="simulator-form"|id="mode-loot"|src="\.\/app\.mjs"/);
@@ -87,12 +87,12 @@ test("home page shows only a centered, accessible Doom boss tile", () => {
 });
 
 test("Doom simulator is on a separate, repository-rename-safe path", () => {
-  const html = read("doom/index.html");
-  const app = read("app.mjs");
-  assert.match(html, /href="\.\.\/"[^>]*>← All simulators<\/a>/);
-  assert.match(html, /href="\.\.\/styles\.css"/);
-  assert.match(html, /src="\.\.\/app\.mjs"/);
-  assert.match(html, /src="\.\.\/assets\/items\/dom\.png"/);
+  const html = read("bosses/doom/index.html");
+  const app = read("bosses/doom/app.mjs");
+  assert.match(html, /href="\.\.\/\.\."[^>]*>← All simulators<\/a>/);
+  assert.match(html, /href="\.\.\/\.\.\/styles\.css"/);
+  assert.match(html, /src="app\.mjs"/);
+  assert.match(html, /src="\.\.\/\.\.\/assets\/items\/dom\.png"/);
   assert.match(html, /id="simulator-form"/);
-  assert.match(app, /new URL\("\.\/assets\/items\/" \+ id \+ "\.png", import\.meta\.url\)\.href/);
+  assert.match(app, /createItemImage as makeSprite/);
 });

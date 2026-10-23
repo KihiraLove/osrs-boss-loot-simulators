@@ -1,25 +1,22 @@
+import {
+  clearInputsOnClick,
+  createItemImage as icon,
+  showError as errorText,
+  resetPanels as reset,
+  parseNumber as numberInput,
+  createOutcome as oddsCell,
+  probabilityText as percent,
+  byId as $,
+  formatNumber as format
+} from "../../shared/ui.mjs";
 import {ITEMS,DRY_IDS,SIGNATURE_IDS,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const format=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form");
 const dryInputs=$("dry-inputs");
 const DISPLAY_UNIQUES=[...SIGNATURE_IDS,"alchemical-hydra-heads","jar-of-chemicals","ikkle-hydra"];
 let mode="loot";
-function icon(item){
- const img=document.createElement("img");
- img.src="../assets/items/"+item.id+".png";
- img.alt="";img.width=36;img.height=32;img.loading="lazy";
- return img;
-}
-function errorText(text){
- $("validation-message").textContent=text;
- $("validation-message").hidden=!text;
-}
-function reset(){
- $("empty-state").hidden=false;$("results-content").hidden=true;
- $("dry-empty").hidden=false;$("dry-results").hidden=true;
-}
+
 function setMode(next){
  mode=next;const dry=mode==="dry";
  $("dry-fields").hidden=!dry;
@@ -33,12 +30,7 @@ function setMode(next){
  $("action-label").textContent=dry?"Calculate chances":"Simulate loot";
  errorText("");
 }
-function numberInput(input,max,name){
- const text=input.value.trim();
- if(!/^(0|[1-9]\d*)$/.test(text)||!Number.isSafeInteger(Number(text))||Number(text)>max)
-  throw new RangeError("Enter a non-negative whole number up to "+format(max)+" for "+name+".");
- return Number(text);
-}
+
 function dryField(item){
  const label=document.createElement("label");label.className="dry-field";
  const name=document.createElement("span");name.textContent=item.name;
@@ -74,19 +66,7 @@ function renderLoot(result){
  for(const [id,qty] of entries)loot.append(lootCard(ITEMS[id],qty));
  $("empty-state").hidden=true;$("results-content").hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const n=p*100;
- if(n<.000001)return "<0.000001%";
- if(n>99.999999)return ">99.999999%";
- return n.toFixed(n<1?4:2)+"%";
-}
-function oddsCell(text,p){
- const c=document.createElement("div");c.className="dry-outcome";
- const caption=document.createElement("span");caption.textContent=text;
- const value=document.createElement("strong");value.textContent=percent(p);
- c.append(caption,value);return c;
-}
+
 function dryCard(name,item,result,combined=false){
  const card=document.createElement("section");card.className="dry-result-card"+(combined?" dry-total-card":"");
  const header=document.createElement("div");header.className="dry-result-heading";
@@ -139,3 +119,5 @@ form.addEventListener("submit",event=>{
   else renderLoot(simulate(kills,{hardCA:$("hard-ca").checked,eliteCA:$("elite-ca").checked}));
  }catch(e){errorText(e instanceof Error?e.message:"The calculation could not be completed.");}
 });
+
+clearInputsOnClick(form);

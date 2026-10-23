@@ -1,16 +1,18 @@
+import {
+  clearInputsOnClick,
+  createItemIcon,
+  showError as error,
+  probabilityText as percent,
+  createOutcome as line,
+  byId as $,
+  formatNumber as fmt
+} from "../../shared/ui.mjs";
 import {KINGS,UNIQUE,ITEMS,MAX_KILLS,simulate,rateOf} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form");let mode="loot";
-function icon(item){
- const outer=document.createElement("span");outer.className="phosani-icon";outer.title=item.name;
- const img=document.createElement("img");img.src="../assets/items/"+item.id+".png";img.alt="";
- img.width=36;img.height=32;img.loading="lazy";
- img.addEventListener("error",()=>{
-  img.remove();
-  outer.textContent=item.name.split(" ").slice(0,3).map(s=>s[0]).join("").toUpperCase();
- },{once:true});
- outer.append(img);return outer;
+function icon(item) {
+  return createItemIcon(item, { textFallback: true });
 }
 function parse(field,max,label){
  const raw=field.value.trim();
@@ -19,7 +21,7 @@ function parse(field,max,label){
  return +raw;
 }
 function counts(){return Object.fromEntries(KINGS.map(k=>[k.id,parse($("kills-"+k.id),MAX_KILLS,k.name)]));}
-function error(msg){$("validation-message").textContent=msg;$("validation-message").hidden=!msg;}
+
 function reset(){
  $("empty-state").hidden=false;$("loot-result").hidden=true;
  $("dry-empty").hidden=false;$("dry-result").hidden=true;
@@ -92,16 +94,7 @@ function renderLoot(results){
  }
  $("empty-state").hidden=true;root.hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const n=p*100;if(n<.000001)return "<0.000001%";if(n>99.999999)return ">99.999999%";
- return n.toFixed(n<1?4:2)+"%";
-}
-function line(text,value){
- const div=document.createElement("div");div.className="dry-outcome";
- const name=document.createElement("span");name.textContent=text;
- const n=document.createElement("strong");n.textContent=percent(value);div.append(name,n);return div;
-}
+
 function dryCard(item,result,combined=false){
  const card=document.createElement("section");card.className="dry-result-card"+(combined?" dry-total-card":"");
  const header=document.createElement("div");header.className="dry-result-heading";
@@ -151,3 +144,5 @@ form.addEventListener("submit",event=>{
   }));
  }catch(e){error(e instanceof Error?e.message:"Could not calculate the result.");}
 });
+
+clearInputsOnClick(form);

@@ -118,9 +118,9 @@ test("Probabilities remain normalized and validation rejects invalid inputs",()=
 });
 
 test("Homepage and controls are wired and sprites bundled",()=>{
- const page=text("hueycoatl/index.html"),home=text("index.html"),app=text("hueycoatl/app.mjs");
- const docs=text("hueycoatl/README.md");
- assert.match(home,/href="\.\/hueycoatl\/"/);
+ const page=text("bosses/hueycoatl/index.html"),home=text("index.html"),app=text("bosses/hueycoatl/app.mjs");
+ const docs=text("bosses/hueycoatl/README.md");
+ assert.match(home,/href="bosses\/hueycoatl\/"/);
  for(const id of ["kills-solo","kills-duo","kills-trio","hard-cas","mode-loot",
   "mode-dry","unique-grid","loot-grid","mode-summary","dry-inputs"])
   assert.ok(page.includes('id="'+id+'"'),"missing UI control "+id);

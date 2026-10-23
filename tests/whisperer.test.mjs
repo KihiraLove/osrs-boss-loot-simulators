@@ -132,10 +132,10 @@ test("Kills, options, and RNG input bounds",()=>{
 });
 
 test("Navigation, responsive homepage grid, UI fields, docs, and all local sprites",()=>{
- const home=source("index.html"),page=source("whisperer/index.html");
- const app=source("whisperer/app.mjs"),css=source("styles.css");
- const readme=source("whisperer/README.md");
- assert.match(home,/href="\.\/whisperer\/"/);
+ const home=source("index.html"),page=source("bosses/whisperer/index.html");
+ const app=source("bosses/whisperer/app.mjs"),css=source("styles.css");
+ const readme=source("bosses/whisperer/README.md");
+ assert.match(home,/href="bosses\/whisperer\/"/);
  assert.match(css,/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(page,/oldschool\.runescape\.wiki\/w\/The_Whisperer/);
  assert.match(readme,/Bellator vestige/);

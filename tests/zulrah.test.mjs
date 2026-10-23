@@ -69,10 +69,10 @@ test("Large kills and invalid inputs",()=>{
  assert.throws(()=>calculateDry(1,{"magic-fang":3}));
 });
 test("Site navigation, options, docs and local PNG sprites",()=>{
- assert.match(read("index.html"),/href="\.\/zulrah\/"/);
+ assert.match(read("index.html"),/href="bosses\/zulrah\/"/);
  assert.match(read("README.md"),/zulrah\/README\.md/);
- assert.match(read("zulrah/README.md"),/249-ticket/);
- const html=read("zulrah/index.html"),app=read("zulrah/app.mjs");
+ assert.match(read("bosses/zulrah/README.md"),/249-ticket/);
+ const html=read("bosses/zulrah/index.html"),app=read("bosses/zulrah/app.mjs");
  for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/kills\*\(item\.rolls===2\?2:1\)/);

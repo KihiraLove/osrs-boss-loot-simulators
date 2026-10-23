@@ -111,10 +111,10 @@ test("Dry chances are binomial for all four independently rolled rares",()=>{
 
 test("Homepage, options, docs and item sprites are present",()=>{
  const homepage=file("index.html");
- const page=file("kraken/index.html");
- const doc=file("kraken/README.md");
- const app=file("kraken/app.mjs");
- assert.match(homepage,/href="\.\/kraken\/"/);
+ const page=file("bosses/kraken/index.html");
+ const doc=file("bosses/kraken/README.md");
+ const app=file("bosses/kraken/app.mjs");
+ assert.match(homepage,/href="bosses\/kraken\/"/);
  assert.match(doc,/1\/512/);
  assert.match(doc,/1\/400/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);

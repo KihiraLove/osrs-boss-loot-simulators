@@ -74,8 +74,8 @@ test("Fewer/exact/more normalize at supported counts",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
 test("Sire route, modes, and all drop icons are local PNGs",()=>{
- const home=read("index.html"),page=read("sire/index.html"),app=read("sire/app.mjs");
- assert.match(home,/href="\.\/sire\/"/);
+ const home=read("index.html"),page=read("bosses/sire/index.html"),app=read("bosses/sire/app.mjs");
+ assert.match(home,/href="bosses\/sire\/"/);
  assert.match(home,/assets\/items\/abyssal-orphan\.png/);
  for(const id of ["mode-loot","mode-dry","unsired-count","opened-panel","rewards-grid","konar-task","elite-cas"])
   assert.ok(page.includes('id="'+id+'"'));

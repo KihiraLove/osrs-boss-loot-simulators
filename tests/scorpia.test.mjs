@@ -124,9 +124,9 @@ test("Kill limits and invalid RNG values are rejected",()=>{
  assert.throws(()=>simulate(1,{rng:null}));
 });
 test("README, home navigation, inputs and local sprite signatures",()=>{
- const home=read("index.html"),page=read("scorpia/index.html");
- const app=read("scorpia/app.mjs"),docs=read("scorpia/README.md");
- assert.match(home,/href="\.\/scorpia\/"/);
+ const home=read("index.html"),page=read("bosses/scorpia/index.html");
+ const app=read("bosses/scorpia/app.mjs"),docs=read("bosses/scorpia/README.md");
+ assert.match(home,/href="bosses\/scorpia\/"/);
  assert.match(docs,/1\/256/);
  assert.match(app,/result\.anyShard/);
  for(const id of ["kill-count","hard-cas","ring-of-wealth","task-fieldset",

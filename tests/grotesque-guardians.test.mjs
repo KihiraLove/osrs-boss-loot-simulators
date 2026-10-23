@@ -105,14 +105,14 @@ test("Kill and random source validation",()=>{
  assert.throws(()=>calculateDry(1,null));
 });
 test("Homepage, modes, options, docs, and all local icons",()=>{
- const index=source("index.html"),html=source("grotesque-guardians/index.html");
- const app=source("grotesque-guardians/app.mjs");
- assert.match(index,/href="\.\/grotesque-guardians\/"/);
+ const index=source("index.html"),html=source("bosses/grotesque-guardians/index.html");
+ const app=source("bosses/grotesque-guardians/app.mjs");
+ assert.match(index,/href="bosses\/grotesque-guardians\/"/);
  for(const id of ["kill-count","mode-loot","mode-dry","elite-cas","konar-task",
    "unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
- assert.match(source("grotesque-guardians/README.md"),/two independent main loot rolls/i);
+ assert.match(source("bosses/grotesque-guardians/README.md"),/two independent main loot rolls/i);
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...bytes.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id);

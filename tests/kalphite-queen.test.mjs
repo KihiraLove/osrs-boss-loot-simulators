@@ -117,8 +117,8 @@ test("Invalid KC, drop counts and RNG are rejected",()=>{
 });
 test("Kalphite Queen homepage, calculator options, and all local item icons exist",()=>{
  const home=read("index.html");
- const html=read("kalphite-queen/index.html"),app=read("kalphite-queen/app.mjs");
- assert.match(home,/href="\.\/kalphite-queen\/"/);
+ const html=read("bosses/kalphite-queen/index.html"),app=read("bosses/kalphite-queen/app.mjs");
+ assert.match(home,/href="bosses\/kalphite-queen\/"/);
  assert.match(home,/assets\/items\/kalphite-princess\.png/);
  assert.match(html,/id="kill-count"/);
  assert.match(html,/id="elite-cas"/);

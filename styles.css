@@ -439,3 +439,304 @@ body.boss-selection-page {
   text-decoration: none;
 }
 .back-link:hover { color: var(--accent-strong); }
+
+/* Shared boss controls and item icons. */
+.phosani-kills { margin-bottom: 12px; }
+.phosani-kills input { max-width: 145px; }
+.phosani-option {
+  display: flex; align-items: center; gap: 8px; margin: 12px 0 4px;
+  color: var(--muted); font-size: .8rem; line-height: 1.45;
+}
+.phosani-option input { width: 16px; height: 16px; accent-color: var(--accent); }
+.phosani-icon {
+  width: 36px; height: 32px; flex: 0 0 36px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--panel-2); border: 1px solid var(--border-soft);
+  font: 700 11px/1 Georgia, serif; color: var(--accent-strong);
+}
+.phosani-icon img { display: block; width: 36px; height: 32px; object-fit: contain; image-rendering: pixelated; }
+.loot-icon .phosani-icon { background: transparent; border: 0; }
+.dry-result-heading .phosani-icon { width: 42px; height: 42px; flex-basis: 42px; }
+.dry-result-heading .phosani-icon img { width: 42px; height: 42px; }
+
+/* Preserve the controls and icon variants used by individual simulators. */
+:where(.boss-bryophyta, .boss-obor) .phosani-kills { margin-bottom: 14px; }
+:where(.boss-gauntlet) .phosani-kills input { max-width: 160px; }
+:where(.boss-dagannoth-kings) .phosani-option { margin: 10px 0; }
+:where(.boss-nex) .phosani-option { margin: 12px 0 14px; font-size: .82rem; line-height: inherit; }
+:where(.boss-bryophyta, .boss-obor, .boss-callisto-artio, .boss-venenatis-spindel,
+  .boss-vetion-calvarion, .boss-commander-zilyana, .boss-general-graardor,
+  .boss-kree-arra, .boss-kril-tsutsaroth, .boss-gauntlet, .boss-nex) .phosani-icon {
+  font: inherit; color: inherit;
+}
+:where(.boss-dagannoth-kings) .phosani-icon { font-size: 10px; }
+:where(.boss-dagannoth-kings, .boss-gauntlet, .boss-nex) .phosani-icon img { display: inline; }
+@media (max-width: 390px) {
+  :where(body:not(.boss-bryophyta, .boss-obor)) .phosani-kills { flex-wrap: wrap; }
+}
+@media (max-width: 530px) {
+  :where(.boss-nex) .phosani-kills { flex-wrap: wrap; }
+}
+
+/* Araxxor corpse selection. */
+.araxxor-corpse { display: grid; gap: 8px; border: 0; padding: 0; margin: 0 0 16px; }
+.araxxor-corpse legend { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
+.araxxor-corpse label { padding: 10px; color: var(--muted); border: 1px solid var(--border); background: var(--panel-2); font-size: .84rem; cursor: pointer; }
+.araxxor-corpse label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); background: rgba(213,170,87,.08); }
+.araxxor-corpse input { width: 16px; height: 16px; margin-right: 6px; accent-color: var(--accent); vertical-align: middle; }
+
+/* Barrows reward potential and grouped uniques. */
+.barrows-potential { border: 0; padding: 0; margin: 14px 0; display: grid; gap: 8px; }
+.barrows-potential legend { color: var(--muted); font-size: .83rem; margin-bottom: 7px; }
+.barrows-potential label { padding: 11px 10px; border: 1px solid var(--border); background: var(--panel-2); font-size: .83rem; color: var(--muted); cursor: pointer; }
+.barrows-potential label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.barrows-potential input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+.barrows-unique-heading { margin: 16px 0 8px; color: var(--accent-strong); font-size: .94rem; }
+.barrows-unique-heading:first-child { margin-top: 0; }
+.barrows-uniques { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
+.barrows-dry-group { margin: 14px 0; }
+.barrows-dry-group h4 { margin: 0 0 6px; font-size: .83rem; color: var(--accent-strong); }
+@media (max-width:1100px) {
+  .barrows-uniques { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:560px) {
+  .barrows-uniques { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+:where(.boss-barrows) .overview-panel .unique-grid { display: block; }
+
+/* Brutus world selection. */
+.brutus-world { display: grid; gap: 9px; border: 0; padding: 0; margin: 0 0 14px; }
+.brutus-world legend { font-size: .82rem; color: var(--muted); margin-bottom: 9px; }
+.brutus-world label { padding: 11px 12px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); font-size: .84rem; cursor: pointer; }
+.brutus-world label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.brutus-world input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+
+/* Bryophyta key modes and summary. */
+.bryophyta-choice { display: grid; gap: 8px; border: 0; padding: 0; margin: 14px 0; }
+.bryophyta-choice legend { font-size: .83rem; color: var(--muted); margin-bottom: 8px; }
+.bryophyta-choice label { padding: 11px 12px; border: 1px solid var(--border); color: var(--muted); background: var(--panel-2); font-size: .83rem; cursor: pointer; }
+.bryophyta-choice label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.bryophyta-choice input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+.bryophyta-note { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+.bryophyta-summary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.bryophyta-stat { border: 1px solid var(--border-soft); padding: 12px; background: var(--panel-2); }
+.bryophyta-stat span { display: block; color: var(--muted); font-size: .76rem; }
+.bryophyta-stat strong { font-size: 1.1rem; color: var(--accent-strong); }
+.bryophyta-empty { font-size: .81rem; color: var(--muted); margin: 16px 0; }
+@media (max-width:490px) {
+  .bryophyta-summary { grid-template-columns: 1fr; }
+}
+.bryophyta-limit { grid-column: 1/-1; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+
+/* Giant boss chest rewards. */
+:where(.boss-bryophyta, .boss-obor) #unique-grid { margin-bottom: 14px; }
+
+/* Wilderness boss drop rates. */
+.boss-rates { display: block; margin-top: 5px; font-size: .72rem; line-height: 1.4; color: var(--muted); }
+.rare-rate { font-size: .72rem; color: var(--muted); line-height: 1.4; }
+
+/* Shared Slayer task selection. */
+.chaos-task { display: grid; gap: 8px; border: 0; padding: 0; margin: 12px 0 15px; }
+.chaos-task legend { font-size: .82rem; color: var(--muted); margin-bottom: 8px; }
+.chaos-task label { padding: 10px 12px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); font-size: .84rem; cursor: pointer; }
+.chaos-task label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.chaos-task input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+
+/* God Wars Dungeon boss and bodyguard loot windows. */
+.room-hint { font-size: .78rem; line-height: 1.5; color: var(--muted); margin: 8px 0 14px; }
+.loot-panel { min-width: 0; }
+.source-panels:not([hidden]) { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+.source-window { padding: 16px; min-width: 0; }
+.source-window .section-heading { margin-bottom: 14px; }
+.source-window h2 { font-size: 1.1rem; }
+.source-uniques { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; margin-bottom: 16px; }
+.source-uniques .unique-card { padding: 8px 4px; }
+.source-uniques .unique-card strong { font-size: .73rem; margin: 7px 0 4px; }
+.source-uniques .unique-card .count { font-size: 1rem; }
+.source-window .loot-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(135px,1fr)); gap: 7px; }
+.source-window .loot-item { padding: 7px; gap: 7px; }
+.source-window .loot-icon { flex-basis: 36px; width: 36px; height: 36px; }
+.source-window .loot-info span { font-size: .74rem; }
+#source-panels[hidden],#loot-panel[hidden],#dry-panel[hidden] { display: none; }
+@media (max-width:1160px) {
+  .source-panels:not([hidden]) { grid-template-columns: 1fr; }
+}
+@media (max-width:1160px) {
+  .source-uniques { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
+@media (max-width:390px) {
+  .source-uniques { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+/* Dagannoth Kings grouped results. */
+.king-kills { display: grid; gap: 6px; }
+.king-results { margin: 0 0 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-soft); }
+.king-results:last-child { border-bottom: 0; margin-bottom: 0; }
+.king-results>h3 { color: var(--accent-strong); font-size: 1.15rem; margin: 4px 0 15px; }
+.king-results h4 { font-size: .9rem; margin: 16px 0 10px; }
+.king-dry-inputs { margin: 20px 0; }
+.king-dry-inputs>h4 { margin-bottom: 12px; }
+.king-dry-grid { display: grid; gap: 12px; }
+
+/* Unique reward progress. */
+.vestige-progress { font-size: .8rem; color: var(--muted); margin: 12px 0 18px; }
+
+/* Fortis Colosseum settings and summary. */
+.fortis-select { min-width: 0; max-width: 100%; width: 100%; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 10px; }
+.fortis-settings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 12px 0 18px; }
+.fortis-settings label { display: flex; flex-direction: column; gap: 7px; color: var(--muted); font-size: .82rem; }
+.fortis-note { font-size: .82rem; color: var(--muted); line-height: 1.6; margin: 12px 0; }
+.fortis-summary { display: flex; flex-wrap: wrap; gap: 12px; margin: 15px 0; }
+.fortis-summary span { border: 1px solid var(--border); background: var(--panel-2); padding: 10px 14px; font-size: .81rem; }
+.fortis-summary strong { display: block; font-size: 1.15rem; color: var(--text); }
+@media (max-width:460px) {
+  .fortis-settings { grid-template-columns: 1fr; }
+}
+
+/* Gauntlet settings and combined chances. */
+.gauntlet-kills { display: grid; gap: 8px; }
+.gauntlet-option { display: flex; align-items: center; gap: 9px; margin: 12px 0; color: var(--muted); font-size: .82rem; line-height: 1.4; }
+.gauntlet-option input { width: 16px; height: 16px; accent-color: var(--accent); }
+.gauntlet-summary { color: var(--accent-strong); font-size: .86rem; margin: 0 0 15px; font-variant-numeric: tabular-nums; }
+.combined-chances { border: 1px solid var(--accent); background: rgba(213,170,87,.07); padding: 15px; border-radius: 10px; display: grid; gap: 13px; }
+.combined-chance { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+.combined-chance span { font-size: .84rem; color: var(--muted); }
+.combined-chance strong { font-size: 1.1rem; color: var(--accent-strong); font-variant-numeric: tabular-nums; }
+@media (max-width:390px) {
+  .combined-chance { flex-wrap: wrap; }
+}
+
+/* Hespori experience. */
+.farming-xp { font-size: .8rem; color: var(--muted); margin: 12px 0 18px; }
+
+/* Contribution-based kill inputs. */
+.huey-kills { display: grid; gap: 5px; margin-bottom: 10px; }
+.huey-kills label { margin-bottom: 7px; }
+@media (min-width:1300px) {
+  .huey-kills { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+}
+@media (min-width:1300px) {
+  .huey-kills label { display: grid; align-content: start; }
+}
+
+/* Alchemical Hydra controls. */
+.hydra-kills { margin-bottom: 12px; }
+.hydra-kills input { max-width: 145px; }
+.hydra-options { display: grid; gap: 9px; margin: 12px 0; }
+.hydra-options label { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: .82rem; line-height: 1.4; }
+.hydra-options input { width: 16px; height: 16px; flex: 0 0 16px; accent-color: var(--accent); }
+@media (max-width:390px) {
+  .hydra-kills { flex-wrap: wrap; }
+}
+
+/* Maggot King corpse selection. */
+.maggot-king-corpse { display: grid; gap: 8px; border: 0; padding: 0; margin: 0 0 16px; }
+.maggot-king-corpse legend { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
+.maggot-king-corpse label { padding: 10px; color: var(--muted); border: 1px solid var(--border); background: var(--panel-2); font-size: .84rem; cursor: pointer; }
+.maggot-king-corpse label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); background: rgba(213,170,87,.08); }
+.maggot-king-corpse input { width: 16px; height: 16px; margin-right: 6px; accent-color: var(--accent); vertical-align: middle; }
+
+/* Moons of Peril summary. */
+.moon-summary { color: var(--muted); font-size: .84rem; line-height: 1.5; margin: 14px 0; }
+
+/* Nex contribution estimates. */
+.estimate-note { font-size: .81rem; color: var(--muted); line-height: 1.55; margin: 8px 0 14px; }
+.estimate-summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; margin-bottom: 20px; }
+.estimate-summary>div { padding: 11px; border: 1px solid var(--border-soft); background: rgba(17,16,13,.68); }
+.estimate-summary span { display: block; font-size: .73rem; color: var(--muted); line-height: 1.35; min-height: 2.5em; }
+.estimate-summary strong { display: block; margin-top: 6px; color: var(--accent-strong); font-size: 1.15rem; font-variant-numeric: tabular-nums; }
+@media (max-width:530px) {
+  .estimate-summary { grid-template-columns: 1fr; }
+}
+@media (max-width:530px) {
+  .estimate-summary span { min-height: 0; }
+}
+
+/* Obor key modes and summary. */
+.obor-choice { display: grid; gap: 8px; border: 0; padding: 0; margin: 14px 0; }
+.obor-choice legend { font-size: .83rem; color: var(--muted); margin-bottom: 8px; }
+.obor-choice label { padding: 11px 12px; border: 1px solid var(--border); color: var(--muted); background: var(--panel-2); font-size: .83rem; cursor: pointer; }
+.obor-choice label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.obor-choice input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+.obor-note { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+.obor-summary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.obor-stat { border: 1px solid var(--border-soft); padding: 12px; background: var(--panel-2); }
+.obor-stat span { display: block; color: var(--muted); font-size: .76rem; }
+.obor-stat strong { font-size: 1.1rem; color: var(--accent-strong); }
+.obor-empty { font-size: .81rem; color: var(--muted); margin: 16px 0; }
+@media (max-width:490px) {
+  .obor-summary { grid-template-columns: 1fr; }
+}
+.obor-limit { grid-column: 1/-1; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+
+/* Royal Titans reward selection. */
+:where(.boss-royal-titans) .controls-panel select { max-width: 100%; min-height: 40px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 5px; padding: 7px 8px; margin-top: 5px; }
+
+/* Scurrius world selection. */
+.scurrius-world { display: grid; gap: 9px; border: 0; padding: 0; margin: 0 0 14px; }
+.scurrius-world legend { font-size: .82rem; color: var(--muted); margin-bottom: 9px; }
+.scurrius-world label { padding: 11px 12px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); font-size: .84rem; cursor: pointer; }
+.scurrius-world label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+.scurrius-world input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+
+/* Shellbane Gryphon unique summary. */
+.any-unique-summary { margin: 0 0 18px; color: var(--accent-strong); font-weight: 700; font-size: 1rem; }
+
+/* Abyssal Sire and unsired rewards. */
+.sire-output { min-width: 0; display: grid; gap: 22px; }
+.sire-kills { margin-bottom: 12px; }
+.sire-kills input { max-width: 145px; }
+.sire-option { display: flex; align-items: center; gap: 8px; margin: 10px 0; color: var(--muted); font-size: .83rem; line-height: 1.45; }
+.sire-option input { width: 16px; height: 16px; accent-color: var(--accent); }
+.sire-output .unique-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.sire-output .opened-panel .unique-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.opened-panel .muted { padding: 8px 2px; margin: 0; color: var(--muted); }
+.dry-fields .sire-kills { margin-top: 10px; }
+.dry-fields .sire-kills span { white-space: normal; }
+:where(.boss-sire) .dry-fields h3:not(:first-child) { margin-top: 16px; }
+.sire-output .dry-results-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+@media (max-width:1100px) {
+  .sire-output .unique-grid,.sire-output .opened-panel .unique-grid,.sire-output .dry-results-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+  .sire-output .unique-grid,.sire-output .opened-panel .unique-grid,.sire-output .dry-results-grid { grid-template-columns: 1fr; }
+}
+
+/* Skilling reward tier. */
+.fishing-tier { color: var(--muted); font-size: .82rem; margin: 12px 0 18px; }
+
+/* Wintertodt skills and starting items. */
+.skill-levels h3 { font-size: .9rem; margin: 16px 0 8px; }
+.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+.skill-grid .phosani-kills { display: flex; justify-content: space-between; gap: 8px; margin: 0; font-size: .84rem; }
+.skill-grid .phosani-kills input { width: 90px; max-width: 90px; }
+.starting-items { margin: 16px 0; }
+.starting-items .phosani-kills { display: flex; justify-content: space-between; gap: 8px; font-size: .83rem; }
+.starting-items .phosani-kills input { width: 90px; max-width: 90px; }
+@media (max-width:550px) {
+  .skill-grid { grid-template-columns: 1fr; }
+}
+
+/* Yama and chest rewards. */
+.yama-output { min-width: 0; display: grid; gap: 22px; }
+.yama-kill-inputs { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 12px; }
+.yama-kills { margin: 0; }
+.yama-kills input { max-width: 145px; }
+.opened-group+.opened-group { margin-top: 22px; }
+.opened-group .muted { padding: 8px 2px; margin: 0; }
+.yama-output .unique-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+@media (max-width:1100px) {
+  .yama-output .unique-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:600px) {
+  .yama-output .unique-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+/* Zalcano contribution inputs. */
+.contribution-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 14px 0; }
+.contribution-grid .depth-field { display: flex; flex-direction: column; gap: 7px; font-size: .78rem; }
+.contribution-grid input { width: 100%; min-width: 0; max-width: 100%; padding: 10px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+.contribution-note { color: var(--muted); font-size: .81rem; line-height: 1.6; margin: 10px 0 16px; }
+@media (max-width:480px) {
+  .contribution-grid { grid-template-columns: 1fr; }
+}

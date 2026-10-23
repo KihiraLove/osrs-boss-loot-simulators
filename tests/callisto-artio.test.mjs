@@ -107,9 +107,9 @@ test("Input validation rejects negative, fractional and impossible rare drop cou
  assert.throws(()=>rollUnique("not-boss",()=>0));
 });
 test("Combined website page and all required local sprites exist",()=>{
- const home=read("index.html"),page=read("callisto-artio/index.html");
- const app=read("callisto-artio/app.mjs");
- assert.match(home,/href="\.\/callisto-artio\/"/);
+ const home=read("index.html"),page=read("bosses/callisto-artio/index.html");
+ const app=read("bosses/callisto-artio/app.mjs");
+ assert.match(home,/href="bosses\/callisto-artio\/"/);
  assert.match(home,/assets\/items\/callisto-cub\.png/);
  assert.match(page,/id="callisto-kc"/);
  assert.match(page,/id="artio-kc"/);

@@ -1,26 +1,21 @@
+import {
+  createUniqueCard,
+  clearInputsOnClick,
+  createItemIcon as icon,
+  parseNumber as readInt,
+  showError,
+  createLootCard as lootCard,
+  probabilityText as pct,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as fmt
+} from "../../shared/ui.mjs";
 import {SOURCES,UNIQUE,DRY_ITEMS,ITEMS,MAX_KILLS,simulate,rateOf} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const fmt=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form"),dryInputs=$("dry-inputs");
 let mode="loot";
-function icon(item){
- const box=document.createElement("span");box.className="phosani-icon";
- const image=document.createElement("img");
- image.src="../assets/items/"+item.id+".png";image.alt="";
- image.loading="lazy";image.width=36;image.height=32;
- box.append(image);return box;
-}
-function readInt(input,max,name){
- const value=input.value.trim();
- if(!/^(0|[1-9]\d*)$/.test(value)||!Number.isSafeInteger(Number(value))||Number(value)>max)
-  throw new RangeError("Enter a non-negative whole number up to "+fmt(max)+" for "+name+".");
- return Number(value);
-}
-function showError(message){
- $("validation-message").textContent=message;
- $("validation-message").hidden=!message;
-}
+
 function reset(){
  $("empty-state").hidden=false;$("source-panels").hidden=true;
  $("dry-empty").hidden=false;$("dry-results").hidden=true;
@@ -48,23 +43,11 @@ for(const item of DRY_ITEMS){
  input.setAttribute("aria-label",item.name+" received");
  field.append(icon(item),text,input);dryInputs.append(field);
 }
-function uniqueCard(item,count,source){
- const card=document.createElement("div");
- card.className="unique-card"+(count?" found":"");
- const name=document.createElement("strong");name.textContent=item.name;
- const amount=document.createElement("span");amount.className="count";amount.textContent="× "+fmt(count);
- const rarity=document.createElement("span");rarity.className="rarity";
- const p=rateOf(item.id,source);rarity.textContent=p?"1/"+fmt(Math.round(1/p)):"";
- card.append(icon(item),name,amount,rarity);return card;
+function uniqueCard(item,count,source) {
+  const p = rateOf(item.id,source);
+  return createUniqueCard(item, count, p?"1/"+fmt(Math.round(1/p)):"");
 }
-function lootCard(item,count){
- const card=document.createElement("div");card.className="loot-item";
- const frame=document.createElement("div");frame.className="loot-icon";frame.append(icon(item));
- const details=document.createElement("div");details.className="loot-info";
- const countText=document.createElement("strong");countText.textContent="× "+fmt(count);
- const name=document.createElement("span");name.textContent=item.name;
- details.append(countText,name);card.append(frame,details);return card;
-}
+
 function renderSource(section,source,drops){
  const uniqueGrid=section.querySelector(".source-uniques");
  const lootGrid=section.querySelector(".source-loot");
@@ -89,18 +72,7 @@ function renderLoot(result){
  }
  $("empty-state").hidden=true;$("source-panels").hidden=false;
 }
-function pct(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const v=p*100;if(v<.000001)return "<0.000001%";
- if(v>99.999999)return ">99.999999%";
- return v.toFixed(v<1?4:2)+"%";
-}
-function outcome(name,p){
- const row=document.createElement("div");row.className="dry-outcome";
- const label=document.createElement("span");label.textContent=name;
- const value=document.createElement("strong");value.textContent=pct(p);
- row.append(label,value);return row;
-}
+
 function renderDry(results){
  const grid=$("dry-results-grid");grid.replaceChildren();
  for(const item of DRY_ITEMS){
@@ -151,3 +123,5 @@ form.addEventListener("submit",event=>{
    frozenDoor:$("frozen-door").checked}));
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate the results.");}
 });
+
+clearInputsOnClick(form);

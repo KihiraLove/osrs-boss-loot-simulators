@@ -90,9 +90,9 @@ test("Input validation and correct per-monster option types",()=>{
  assert.throws(()=>calculateDry(1,[]));
 });
 test("Navigation, four distinct windows, documentation and local sprites",()=>{
- const home=read("index.html"),page=read("commander-zilyana/index.html");
- const script=read("commander-zilyana/app.mjs"),docs=read("commander-zilyana/README.md");
- assert.match(home,/href="\.\/commander-zilyana\/"/);
+ const home=read("index.html"),page=read("bosses/commander-zilyana/index.html");
+ const script=read("bosses/commander-zilyana/app.mjs"),docs=read("bosses/commander-zilyana/README.md");
+ assert.match(home,/href="bosses\/commander-zilyana\/"/);
  assert.match(read("README.md"),/commander-zilyana\/README\.md/);
  assert.match(docs,/three bodyguards/);
  for(const source of SOURCES)

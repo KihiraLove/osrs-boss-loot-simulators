@@ -126,10 +126,10 @@ test("Reject invalid kill counts, options, random values and received counts",()
 test("Browser UI combines both modes and has all required local item sprites",()=>{
  const home=source("index.html");
  const readme=source("README.md");
- const html=source("gauntlet/index.html");
- const app=source("gauntlet/app.mjs");
- assert.match(home,/href="\.\/gauntlet\/"/);
- assert.match(readme,/\[The Gauntlet\]\(\.\/gauntlet\/README\.md\)/);
+ const html=source("bosses/gauntlet/index.html");
+ const app=source("bosses/gauntlet/app.mjs");
+ assert.match(home,/href="bosses\/gauntlet\/"/);
+ assert.match(readme,/\[The Gauntlet\]\(bosses\/gauntlet\/README\.md\)/);
  assert.match(app,/calculateDry\(n\.regular,n\.corrupted,readReceived\(n\.regular\+n\.corrupted\)\)/);
  assert.match(app,/simulate\(n\.regular,n\.corrupted/);
  for(const id of ["regular-kills","corrupted-kills","elite-cas","include-cape",

@@ -105,9 +105,9 @@ test("Input and option validation",()=>{
  assert.throws(()=>calculateDry(1,[]));
 });
 test("Navigation, 4 source windows, README and all local sprites",()=>{
- const home=read("index.html"),html=read("kree-arra/index.html");
- const app=read("kree-arra/app.mjs"),docs=read("kree-arra/README.md");
- assert.match(home,/href="\.\/kree-arra\/"/);
+ const home=read("index.html"),html=read("bosses/kree-arra/index.html");
+ const app=read("bosses/kree-arra/app.mjs"),docs=read("bosses/kree-arra/README.md");
+ assert.match(home,/href="bosses\/kree-arra\/"/);
  assert.match(read("README.md"),/kree-arra\/README\.md/);
  assert.match(docs,/bodyguards/);
  for(const s of SOURCES)assert.match(html,new RegExp('data-source="'+s.id+'"'));

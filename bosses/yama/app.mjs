@@ -1,15 +1,19 @@
+import {
+  clearInputsOnClick,
+  createItemImage as icon,
+  showError,
+  parseNumber as parse,
+  probabilityText as percent,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as format
+} from "../../shared/ui.mjs";
 import {BOSS_UNIQUES,DRY_ITEMS,ITEM_MAP,MAX_KILLS,validatePlan,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const format=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form");
 let mode="loot";
-function icon(item){
- const image=document.createElement("img");
- image.src="../assets/items/"+item.id+".png";
- image.alt="";image.loading="lazy";image.width=36;image.height=32;
- return image;
-}
+
 function field(item){
  const label=document.createElement("label");label.className="dry-field";
  const name=document.createElement("span");name.textContent=item.name;
@@ -23,10 +27,7 @@ function clearOutput(){
  $("empty-state").hidden=false;$("results-content").hidden=true;
  $("opened-panel").hidden=true;$("dry-empty").hidden=false;$("dry-results").hidden=true;
 }
-function showError(message){
- $("validation-message").textContent=message;
- $("validation-message").hidden=!message;
-}
+
 function setMode(next){
  mode=next;
  const dry=mode==="dry";
@@ -39,12 +40,7 @@ function setMode(next){
  $("action-label").textContent=dry?"Calculate chances":"Simulate loot";
  showError("");
 }
-function parse(input,max,label){
- const raw=input.value.trim();
- if(!/^(0|[1-9]\d*)$/.test(raw)||!Number.isSafeInteger(Number(raw))||Number(raw)>max)
-  throw new RangeError("Enter a non-negative whole number up to "+format(max)+" for "+label+".");
- return Number(raw);
-}
+
 function readPlan(){
  const solo=parse($("solo-kills"),MAX_KILLS,"solo kills");
  const duo=parse($("duo-kills"),MAX_KILLS,"duo kills");
@@ -83,19 +79,7 @@ function renderLoot(result){
  $("dossier-empty").hidden=result.dossierCount>0;
  $("empty-state").hidden=true;$("results-content").hidden=false;$("opened-panel").hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const value=100*p;
- if(value<.000001)return "<0.000001%";
- if(value>99.999999)return ">99.999999%";
- return value.toFixed(value<1?4:2)+"%";
-}
-function outcome(label,value){
- const cell=document.createElement("div");cell.className="dry-outcome";
- const caption=document.createElement("span");caption.textContent=label;
- const number=document.createElement("strong");number.textContent=percent(value);
- cell.append(caption,number);return cell;
-}
+
 function dryCard(title,item,result,combined=false){
  const card=document.createElement("section");card.className="dry-result-card"+(combined?" dry-total-card":"");
  const head=document.createElement("div");head.className="dry-result-heading";
@@ -148,3 +132,5 @@ form.addEventListener("submit",event=>{
   else renderLoot(simulate(plan));
  }catch(error){showError(error instanceof Error?error.message:"Could not calculate.");}
 });
+
+clearInputsOnClick(form);

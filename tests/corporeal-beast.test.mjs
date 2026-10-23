@@ -103,8 +103,8 @@ test("Inputs and RNG are strictly validated",()=>{
  assert.throws(()=>calculateDry(1,{"pet-dark-core":2}));
 });
 test("Solo simulator page and all drop items have real local PNGs",()=>{
- const home=read("index.html"),html=read("corporeal-beast/index.html");
- assert.match(home,/href="\.\/corporeal-beast\/"/);
+ const home=read("index.html"),html=read("bosses/corporeal-beast/index.html");
+ assert.match(home,/href="bosses\/corporeal-beast\/"/);
  assert.match(html,/Completed solo kills/);
  assert.doesNotMatch(html,/name="slayer-task"|group-size|team-size|contribution/i);
  for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","ring-of-wealth",
@@ -113,7 +113,7 @@ test("Solo simulator page and all drop items have real local PNGs",()=>{
   const png=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...png.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id+" needs local PNG");
  }
- const readme=read("corporeal-beast/README.md");
+ const readme=read("bosses/corporeal-beast/README.md");
  assert.match(readme,/solo kills only/);
  assert.match(read("README.md"),/corporeal-beast\/README.md/);
 });

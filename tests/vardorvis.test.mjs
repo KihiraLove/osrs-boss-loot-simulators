@@ -127,9 +127,9 @@ test("Kill validation, RNG and option checks",()=>{
 });
 
 test("Page navigation, 7-column desktop grid and all local item sprites",()=>{
- const home=source("index.html"),page=source("vardorvis/index.html");
- const app=source("vardorvis/app.mjs"),css=source("styles.css");
- assert.match(home,/href="\.\/vardorvis\/"/);
+ const home=source("index.html"),page=source("bosses/vardorvis/index.html");
+ const app=source("bosses/vardorvis/app.mjs"),css=source("styles.css");
+ assert.match(home,/href="bosses\/vardorvis\/"/);
  assert.match(css,/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
  assert.match(app,/konar-task/);

@@ -128,9 +128,9 @@ test("Invalid pull counts, levels, ownership and RNG inputs are rejected",()=>{
 });
 
 test("Page, documentation, homepage links and every item sprite are included",()=>{
- const home=source("index.html"),page=source("wintertodt/index.html");
- const app=source("wintertodt/app.mjs"),docs=source("wintertodt/README.md");
- assert.match(home,/href="\.\/wintertodt\/"/);
+ const home=source("index.html"),page=source("bosses/wintertodt/index.html");
+ const app=source("bosses/wintertodt/app.mjs"),docs=source("bosses/wintertodt/README.md");
+ assert.match(home,/href="bosses\/wintertodt\/"/);
  assert.match(app,/calculateDry\(pulls,readReceived\(pulls\)\)/);
  assert.match(docs,/October 2024/i);
  for(const id of ["pull-count","level-woodcutting","level-mining","level-fishing","level-crafting",

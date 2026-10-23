@@ -95,16 +95,16 @@ test("fewer, exact, and more normalize at high kill counts",()=>{
  }
 });
 test("cerberus route uses local pet sprite, two calculator modes, and optional task toggles",()=>{
- const home=read("index.html"),page=read("cerberus/index.html"),app=read("cerberus/app.mjs");
- assert.match(home,/href="\.\/cerberus\/"/);
+ const home=read("index.html"),page=read("bosses/cerberus/index.html"),app=read("bosses/cerberus/app.mjs");
+ assert.match(home,/href="bosses\/cerberus\/"/);
  assert.match(home,/src="\.\/assets\/items\/hellpuppy\.png"/);
- assert.match(page,/href="\.\.\/"/);
- assert.match(page,/src="\.\/app\.mjs"/);
+ assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/src="(?:\.\/)?app\.mjs"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="konar-task"/);
  assert.match(page,/id="elite-cas"/);
- assert.match(page,/src="\.\.\/assets\/items\/hellpuppy\.png"/);
+ assert.match(page,/src="\.\.\/\.\.\/assets\/items\/hellpuppy\.png"/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(home+page+app,/oldschool\.runescape\.wiki\/images/);
  for(const item of Object.values(ITEMS)){

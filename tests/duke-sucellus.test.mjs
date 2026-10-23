@@ -119,10 +119,10 @@ test("Kill limits, option types and random generator are checked",()=>{
 });
 test("Homepage, controls, docs and all item PNG sprites are present",()=>{
  const home=source("index.html");
- const page=source("duke-sucellus/index.html");
- const app=source("duke-sucellus/app.mjs");
- const docs=source("duke-sucellus/README.md");
- assert.match(home,/href="\.\/duke-sucellus\/"/);
+ const page=source("bosses/duke-sucellus/index.html");
+ const app=source("bosses/duke-sucellus/app.mjs");
+ const docs=source("bosses/duke-sucellus/README.md");
+ assert.match(home,/href="bosses\/duke-sucellus\/"/);
  for(const id of ["kill-count","perfect","awakened","konar-task","mode-loot",
    "mode-dry","unique-grid","loot-grid","vestige-progress"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");

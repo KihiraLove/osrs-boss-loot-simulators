@@ -101,9 +101,9 @@ test("Kill count, options, RNG are validated",()=>{
 });
 
 test("Home, Sarachnis UI controls and local item assets",()=>{
- const home=source("index.html"),page=source("sarachnis/index.html");
- const app=source("sarachnis/app.mjs"),readme=source("sarachnis/README.md");
- assert.match(home,/href="\.\/sarachnis\/"/);
+ const home=source("index.html"),page=source("bosses/sarachnis/index.html");
+ const app=source("bosses/sarachnis/app.mjs"),readme=source("bosses/sarachnis/README.md");
+ assert.match(home,/href="bosses\/sarachnis\/"/);
  assert.match(readme,/1\/384/);
  for(const id of ["kill-count","hard-cas","elite-cas","konar-task",
   "mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs"])

@@ -105,9 +105,9 @@ test("Zero kills and invalid numbers/options/RNG are rejected appropriately",()=
  assert.throws(()=>simulate(1,{rng:null}));
 });
 test("Page, local icons, and README integration",()=>{
- const home=src("index.html"),page=src("shellbane-gryphon/index.html");
- const app=src("shellbane-gryphon/app.mjs"),readme=src("shellbane-gryphon/README.md");
- assert.match(home,/href="\.\/shellbane-gryphon\/"/);
+ const home=src("index.html"),page=src("bosses/shellbane-gryphon/index.html");
+ const app=src("bosses/shellbane-gryphon/app.mjs"),readme=src("bosses/shellbane-gryphon/README.md");
+ assert.match(home,/href="bosses\/shellbane-gryphon\/"/);
  assert.match(readme,/two separate ordinary loot rolls/i);
  for(const id of ["kill-count","elite-cas","konar-task","clue-step",
   "mode-loot","mode-dry","unique-grid","loot-grid","dry-any-unique"]){

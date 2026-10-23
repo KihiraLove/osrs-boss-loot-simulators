@@ -119,9 +119,9 @@ test("All dry distributions are normalized, including maximum KC",()=>{
  assert.throws(()=>calculateDry(1,{"eclipse-atlatl":1.5}));
 });
 test("All item sprites, navigation and restricted full-clear form present",()=>{
- const home=file("index.html"),page=file("moons-of-peril/index.html");
- const app=file("moons-of-peril/app.mjs"),readme=file("moons-of-peril/README.md");
- assert.match(home,/href="\.\/moons-of-peril\/"/);
+ const home=file("index.html"),page=file("bosses/moons-of-peril/index.html");
+ const app=file("bosses/moons-of-peril/app.mjs"),readme=file("bosses/moons-of-peril/README.md");
+ assert.match(home,/href="bosses\/moons-of-peril\/"/);
  assert.match(page,/all 3 moons defeated/i);
  for(const id of ["kill-count","mode-loot","mode-dry","unique-grid","loot-grid",
   "dry-inputs","completion-chance","loot-summary"])

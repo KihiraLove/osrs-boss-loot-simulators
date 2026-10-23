@@ -124,11 +124,11 @@ test("Invalid kill counts, random numbers, world types and modes are rejected",(
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
 test("Obor page matches current Bryophyta UX but never invents Slayer key boosts",()=>{
- const home=read("index.html"),html=read("obor/index.html"),app=read("obor/app.mjs"),css=read("obor/styles.css");
+ const home=read("index.html"),html=read("bosses/obor/index.html"),app=read("bosses/obor/app.mjs"),css=read("styles.css");
  for(const klass of ["obor-choice","obor-summary","obor-stat","obor-empty","obor-limit"])
   assert.match(css,new RegExp("\\."+klass+"\\b"));
- assert.doesNotMatch(css,/\.bryophyta-/);
- assert.match(home,/href="\.\/obor\/"/);
+ assert.match(html,/href="\.\.\/\.\.\/styles\.css"/);
+ assert.match(home,/href="bosses\/obor\/"/);
  assert.match(home,/assets\/items\/hill-giant-club\.png/);
  assert.match(html,/id="mode-loot"/);
  assert.match(html,/id="mode-dry"/);

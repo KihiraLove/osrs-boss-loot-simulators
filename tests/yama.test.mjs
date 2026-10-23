@@ -154,8 +154,8 @@ test("dry results are normalized and preserve expected counts up to a million ki
 });
 
 test("Yama has two kill inputs, no contribution radio, and local assets",()=>{
- const home=read("index.html"),page=read("yama/index.html"),app=read("yama/app.mjs");
- assert.match(home,/href="\.\/yama\/"/);
+ const home=read("index.html"),page=read("bosses/yama/index.html"),app=read("bosses/yama/app.mjs");
+ assert.match(home,/href="bosses\/yama\/"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="solo-kills"/);

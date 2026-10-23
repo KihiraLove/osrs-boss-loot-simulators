@@ -105,9 +105,9 @@ test("Invalid kill counts, flags and RNG are rejected",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
 test("Local sprite assets, navigation, controls and boss README exist",()=>{
- const home=file("index.html"),html=file("king-black-dragon/index.html");
- const app=file("king-black-dragon/app.mjs"),docs=file("king-black-dragon/README.md");
- assert.match(home,/href="\.\/king-black-dragon\/"/);
+ const home=file("index.html"),html=file("bosses/king-black-dragon/index.html");
+ const app=file("bosses/king-black-dragon/app.mjs"),docs=file("bosses/king-black-dragon/README.md");
+ assert.match(home,/href="bosses\/king-black-dragon\/"/);
  assert.match(docs,/dragon pickaxe/i);
  for(const id of ["mode-loot","mode-dry","kill-count","monkey-madness-2",
   "elite-cas","konar-task","dry-inputs","unique-grid","loot-grid"]){

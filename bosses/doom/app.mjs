@@ -1,4 +1,12 @@
 import {
+  clearInputsOnClick,
+  formatNumber as number,
+  probabilityText,
+  createOutcome,
+  showError,
+  createItemImage as makeSprite
+} from "../../shared/ui.mjs";
+import {
   SPECIAL_ITEMS, ITEM_DETAILS, MAX_DEPTH,
   gearDenominator, domDenominator, simulate, validatePlan
 } from "./simulator.mjs";
@@ -7,12 +15,10 @@ import { calculateDryResults } from "./dry-calc.mjs";
 const inputs = document.getElementById("depth-inputs");
 const form = document.getElementById("simulator-form");
 const clearButton = document.getElementById("clear-button");
-const validationMessage = document.getElementById("validation-message");
 const emptyState = document.getElementById("empty-state");
 const resultsContent = document.getElementById("results-content");
 const uniqueGrid = document.getElementById("unique-grid");
 const lootGrid = document.getElementById("loot-grid");
-const formatter = new Intl.NumberFormat("en-US");
 const lootModeButton = document.getElementById("mode-loot");
 const dryModeButton = document.getElementById("mode-dry");
 const lootPanel = document.getElementById("loot-panel");
@@ -25,7 +31,6 @@ const dryResultsGrid = document.getElementById("dry-results-grid");
 const actionLabel = document.getElementById("action-label");
 let mode = "loot";
 
-function number(value) { return formatter.format(value); }
 function depthLabel(depth) { return depth === MAX_DEPTH ? "9+" : String(depth); }
 
 function makeDepthField(depth) {
@@ -79,24 +84,8 @@ function readDryCounts() {
   return counts;
 }
 
-function probabilityText(probability) {
-  if (probability === 0) return "0%";
-  if (probability === 1) return "100%";
-  const value = probability * 100;
-  if (value < 0.000001) return "<0.000001%";
-  if (value > 99.999999) return ">99.999999%";
-  return value.toFixed(value < 1 ? 4 : 2) + "%";
-}
-
 function addProbabilityCell(container, label, probability) {
-  const cell = document.createElement("div");
-  cell.className = "dry-outcome";
-  const title = document.createElement("span");
-  title.textContent = label;
-  const value = document.createElement("strong");
-  value.textContent = probabilityText(probability);
-  cell.append(title, value);
-  container.append(cell);
+  container.append(createOutcome(label, probability));
 }
 
 function renderDryResultCard(result, name, spriteId, combined = false) {
@@ -180,21 +169,6 @@ function readPlan() {
     }
     return { depth: Number(input.dataset.depth), count };
   }).filter(row => row.count > 0);
-}
-
-function showError(message) {
-  validationMessage.textContent = message;
-  validationMessage.hidden = !message;
-}
-
-function makeSprite(id) {
-  const image = document.createElement("img");
-  image.src = new URL("./assets/items/" + id + ".png", import.meta.url).href;
-  image.alt = "";
-  image.loading = "lazy";
-  image.width = 36;
-  image.height = 32;
-  return image;
 }
 
 function renderUniqueCards(result) {
@@ -296,3 +270,5 @@ form.addEventListener("submit", event => {
     showError(error instanceof Error ? error.message : "The simulation could not be completed.");
   }
 });
+
+clearInputsOnClick(form);

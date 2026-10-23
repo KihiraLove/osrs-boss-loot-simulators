@@ -94,9 +94,9 @@ test("Input count and option validation",()=>{
  assert.throws(()=>calculateDry(10,{"nihil-horn":1_000_001}));
 });
 test("Navigation, purely shard-based form, docs, sprites and template integration",()=>{
- const home=read("index.html"),page=read("nex/index.html");
- const app=read("nex/app.mjs"),docs=read("nex/README.md");
- assert.match(home,/href="\.\/nex\/"/);
+ const home=read("index.html"),page=read("bosses/nex/index.html");
+ const app=read("bosses/nex/app.mjs"),docs=read("bosses/nex/README.md");
+ assert.match(home,/href="bosses\/nex\/"/);
  assert.match(read("README.md"),/nex\/README\.md/);
  assert.match(docs,/nihil shards/);
  assert.ok(page.includes('id="shard-count"'));

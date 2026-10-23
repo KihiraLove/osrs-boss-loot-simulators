@@ -1,25 +1,18 @@
+import {
+  clearInputsOnClick,
+  createItemImage as icon,
+  parseNumber as parse,
+  showError,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as format
+} from "../../shared/ui.mjs";
 import {REWARDS,ITEMS,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const format=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form");
 let mode="loot";
-function icon(item){
- const img=document.createElement("img");
- img.src="../assets/items/"+item.id+".png";img.alt="";
- img.loading="lazy";img.width=36;img.height=32;
- return img;
-}
-function parse(input,max,label){
- const raw=input.value.trim(),n=Number(raw);
- if(!/^(0|[1-9]\d*)$/.test(raw)||!Number.isSafeInteger(n)||n>max)
-  throw new RangeError("Enter a non-negative whole number up to "+format(max)+" for "+label+".");
- return n;
-}
-function showError(message){
- $("validation-message").textContent=message;
- $("validation-message").hidden=!message;
-}
+
 function resetPanels(){
  $("empty-state").hidden=false;$("results-content").hidden=true;$("opened-panel").hidden=true;
  $("dry-empty").hidden=false;$("dry-results").hidden=true;
@@ -76,19 +69,7 @@ function renderLoot(result){
  $("rewards-empty").hidden=result.unsired>0;
  $("empty-state").hidden=true;$("results-content").hidden=false;$("opened-panel").hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const n=100*p;
- if(n<.000001)return "<0.000001%";
- if(n>99.999999)return ">99.999999%";
- return n.toFixed(n<1?4:2)+"%";
-}
-function outcome(label,p){
- const row=document.createElement("div");row.className="dry-outcome";
- const title=document.createElement("span");title.textContent=label;
- const number=document.createElement("strong");number.textContent=percent(p);
- row.append(title,number);return row;
-}
+
 function dryCard(item,stats){
  const card=document.createElement("section");card.className="dry-result-card";
  const heading=document.createElement("div");heading.className="dry-result-heading";
@@ -135,3 +116,5 @@ form.addEventListener("submit",event=>{
   }else renderLoot(simulate(kills,{eliteCAs:$("elite-cas").checked,konarTask:$("konar-task").checked}));
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
+
+clearInputsOnClick(form);

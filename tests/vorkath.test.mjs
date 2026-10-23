@@ -83,9 +83,9 @@ test("Validate kills, options and random generator",()=>{
 });
 test("UI, navigation, docs and all local PNG sprites",()=>{
  const index=source("index.html");
- const ui=source("vorkath/index.html"),app=source("vorkath/app.mjs");
- const docs=source("vorkath/README.md");
- assert.match(index,/href="\.\/vorkath\/"/);
+ const ui=source("bosses/vorkath/index.html"),app=source("bosses/vorkath/app.mjs");
+ const docs=source("bosses/vorkath/README.md");
+ assert.match(index,/href="bosses\/vorkath\/"/);
  assert.match(docs,/50th/);
  for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry",
   "unique-grid","loot-grid","dry-inputs","dry-results-grid"])

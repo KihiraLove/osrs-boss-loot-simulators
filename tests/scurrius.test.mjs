@@ -111,8 +111,8 @@ test("Invalid kills, mode, RNG and claimed rare counts are rejected",()=>{
  assert.deepEqual({...simulate(0).drops},{});
 });
 test("Scurrius HTML, MVP selector and local item images are complete",()=>{
- const html=read("scurrius/index.html"),app=read("scurrius/app.mjs"),home=read("index.html");
- assert.match(home,/href="\.\/scurrius\/"/);
+ const html=read("bosses/scurrius/index.html"),app=read("bosses/scurrius/app.mjs"),home=read("index.html");
+ assert.match(home,/href="bosses\/scurrius\/"/);
  assert.match(home,/assets\/items\/scurry\.png/);
  assert.match(html,/id="kill-count"/);
  assert.match(html,/name="encounter-mode"/);

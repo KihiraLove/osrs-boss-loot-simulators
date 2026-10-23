@@ -153,8 +153,8 @@ test("Input validation rejects invalid modes, worlds and counts",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
 test("Page shows independent loot sections, exactly two key modes and chest-only dry count",()=>{
- const home=read("index.html"),html=read("bryophyta/index.html"),app=read("bryophyta/app.mjs");
- assert.match(home,/href="\.\/bryophyta\/"/);
+ const home=read("index.html"),html=read("bosses/bryophyta/index.html"),app=read("bosses/bryophyta/app.mjs");
+ assert.match(home,/href="bosses\/bryophyta\/"/);
  assert.match(home,/assets\/items\/bryophytas-essence\.png/);
  assert.match(html,/id="mode-loot"/);assert.match(html,/id="mode-dry"/);
  assert.match(html,/value="preobtained"/);assert.match(html,/value="boss"/);

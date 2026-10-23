@@ -1,26 +1,28 @@
+import {
+  clearInputsOnClick,
+  createItemIcon as icon,
+  showError,
+  resetPanels as reset,
+  createLootCard as lootCard,
+  probabilityText as percent,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as fmt
+} from "../../shared/ui.mjs";
 import {UNIQUE,DRY_ITEMS,ITEMS,MAX_SHARDS,UNIQUE_RATE,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const fmt=n=>new Intl.NumberFormat("en-US").format(n);
+
 const formatEstimate=n=>n.toLocaleString("en-US",{maximumFractionDigits:1});
 const form=$("simulator-form"),dryInputs=$("dry-inputs");
 let mode="loot";
-function icon(item){
- const span=document.createElement("span");span.className="phosani-icon";
- const img=document.createElement("img");img.src="../assets/items/"+item.id+".png";
- img.alt="";img.loading="lazy";img.width=36;img.height=32;span.append(img);return span;
-}
+
 function parseNumber(input,limit,label){
  const raw=input.value.trim();
  if(!/^(0|[1-9]\d*)$/.test(raw)||!Number.isSafeInteger(Number(raw))||Number(raw)>limit)
   throw new RangeError("Enter a whole number between 0 and "+fmt(limit)+" for "+label+".");
  return Number(raw);
 }
-function showError(value){$("validation-message").textContent=value;$("validation-message").hidden=!value;}
-function reset(){
- $("empty-state").hidden=false;$("results-content").hidden=true;
- $("dry-empty").hidden=false;$("dry-results").hidden=true;
-}
+
 function setMode(next){
  mode=next;
  const isDry=mode==="dry";
@@ -53,14 +55,7 @@ function rareCard(item,count){
  rate.textContent="1/"+fmt(Math.round(1/item.rate))+" per full-team equivalent";
  card.append(icon(item),name,qty,rate);return card;
 }
-function lootCard(item,count){
- const card=document.createElement("div");card.className="loot-item";
- const frame=document.createElement("div");frame.className="loot-icon";frame.append(icon(item));
- const detail=document.createElement("div");detail.className="loot-info";
- const countText=document.createElement("strong");countText.textContent="× "+fmt(count);
- const name=document.createElement("span");name.textContent=item.name;
- detail.append(countText,name);card.append(frame,detail);return card;
-}
+
 function fillDrops(grid,drops){
  grid.replaceChildren();
  const entries=Object.entries(drops).filter(([,qty])=>qty>0)
@@ -81,19 +76,7 @@ function renderLoot(result){
  fillDrops($("loot-grid"),result.common);
  $("empty-state").hidden=true;$("results-content").hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const v=p*100;
- if(v<.000001)return "<0.000001%";
- if(v>99.999999)return ">99.999999%";
- return v.toFixed(v<1?4:2)+"%";
-}
-function outcome(label,p){
- const row=document.createElement("div");row.className="dry-outcome";
- const name=document.createElement("span");name.textContent=label;
- const value=document.createElement("strong");value.textContent=percent(p);
- row.append(name,value);return row;
-}
+
 function dryCard(item,result,combined=false){
  const card=document.createElement("section");
  card.className="dry-result-card"+(combined?" dry-total-card":"");
@@ -145,3 +128,5 @@ form.addEventListener("submit",event=>{
   else renderLoot(simulate(shards,{eliteCAs:$("elite-cas").checked}));
  }catch(e){showError(e instanceof Error?e.message:"Could not calculate the result.");}
 });
+
+clearInputsOnClick(form);

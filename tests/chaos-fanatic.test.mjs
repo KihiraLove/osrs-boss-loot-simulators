@@ -120,8 +120,8 @@ test("High KC, zero KC, bounds, RNG and options",()=>{
  assert.throws(()=>calculateDry(1,null));
 });
 test("Chaos Fanatic page, controls and every item has a local PNG",()=>{
- const home=source("index.html"),page=source("chaos-fanatic/index.html"),app=source("chaos-fanatic/app.mjs");
- assert.match(home,/href="\.\/chaos-fanatic\/"/);
+ const home=source("index.html"),page=source("bosses/chaos-fanatic/index.html"),app=source("bosses/chaos-fanatic/app.mjs");
+ assert.match(home,/href="bosses\/chaos-fanatic\/"/);
  assert.match(home,/assets\/items\/odium-shard-1\.png/);
  assert.match(page,/id="kill-count"/);
  assert.match(page,/id="hard-cas"/);

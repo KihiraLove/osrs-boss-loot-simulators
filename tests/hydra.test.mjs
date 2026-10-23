@@ -91,13 +91,13 @@ test("standard categories and additional tables remain populated",()=>{
  assert.equal(weight,120); // Source list exceeds 101, hence relative normalization.
 });
 test("Hydra has accessible homepage selector, both modes and local PNG for every reward",()=>{
- const home=read("index.html"),page=read("hydra/index.html"),app=read("hydra/app.mjs");
- assert.match(home,/href="\.\/hydra\/"/);
- assert.match(page,/href="\.\.\/"/);
- assert.match(page,/src="\.\/app\.mjs"/);
+ const home=read("index.html"),page=read("bosses/hydra/index.html"),app=read("bosses/hydra/app.mjs");
+ assert.match(home,/href="bosses\/hydra\/"/);
+ assert.match(page,/href="\.\.\/\.\."/);
+ assert.match(page,/src="(?:\.\/)?app\.mjs"/);
  assert.match(page,/id="mode-loot"/);assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="hard-ca"/);assert.match(page,/id="elite-ca"/);
- assert.match(page,/src="\.\.\/assets\/items\/ikkle-hydra\.png"/);
+ assert.match(page,/src="\.\.\/\.\.\/assets\/items\/ikkle-hydra\.png"/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(home+page+app,/oldschool\.runescape\.wiki\/images/);
  for(const item of Object.values(ITEMS)){

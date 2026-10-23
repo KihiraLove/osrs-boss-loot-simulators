@@ -122,14 +122,14 @@ test("Invalid runs, waves, input and impossible reported drops are rejected",()=
  assert.throws(()=>calculateDry(1,12,null));
 });
 test("Navigation, controls, README and local item images are present",()=>{
- const html=read("fortis-colosseum/index.html");
- assert.match(read("index.html"),/href="\.\/fortis-colosseum\/"/);
+ const html=read("bosses/fortis-colosseum/index.html");
+ assert.match(read("index.html"),/href="bosses\/fortis-colosseum\/"/);
  assert.match(read("README.md"),/fortis-colosseum\/README\.md/);
  for(const id of ["run-count","wave-reached","quiver-trade","mode-loot",
   "mode-dry","unique-grid","loot-grid","dry-results-grid","dry-inputs",
   "summary-echo","dry-note","dry-quivers"])
   assert.ok(html.includes('id="'+id+'"'),id);
- assert.match(read("fortis-colosseum/app.mjs"),/calculateDry\(runs,wave/);
+ assert.match(read("bosses/fortis-colosseum/app.mjs"),/calculateDry\(runs,wave/);
  for(const item of Object.values(ITEMS)){
   const png=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...png.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id);

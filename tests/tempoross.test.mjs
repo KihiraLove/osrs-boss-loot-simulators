@@ -146,9 +146,9 @@ test("Inputs and generator are validated",()=>{
 });
 
 test("Tempoross page, README, homepage, and local PNG icons",()=>{
- const home=source("index.html"),page=source("tempoross/index.html");
- const app=source("tempoross/app.mjs"),docs=source("tempoross/README.md");
- assert.match(home,/href="\.\/tempoross\/"/);
+ const home=source("index.html"),page=source("bosses/tempoross/index.html");
+ const app=source("bosses/tempoross/app.mjs"),docs=source("bosses/tempoross/README.md");
+ assert.match(home,/href="bosses\/tempoross\/"/);
  assert.match(app,/calculateDry\(pulls,readReceived\(pulls\)\)/);
  assert.match(docs,/reward permits/i);
  for(const id of ["pull-count","fishing-level","owns-barrel","owns-tackle-box",

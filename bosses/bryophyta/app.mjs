@@ -1,7 +1,16 @@
+import {
+  clearInputsOnClick,
+  showError,
+  createItemIcon as icon,
+  createLootCard as lootCard,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as fmt
+} from "../../shared/ui.mjs";
 import {ITEMS,ESSENCE,KEY,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const form=$("simulator-form"),fmt=n=>new Intl.NumberFormat("en-US").format(n);
+
+const form=$("simulator-form");
 let mode="loot";
 const setting=name=>form.querySelector('input[name="'+name+'"]:checked').value;
 function count(id,label){
@@ -10,7 +19,7 @@ function count(id,label){
   throw new RangeError(label+" must be a whole number from 0 to "+fmt(MAX_KILLS)+".");
  return n;
 }
-function showError(message){$("validation-message").textContent=message;$("validation-message").hidden=!message;}
+
 function clearResults(){
  $("empty-state").hidden=false;$("results-content").hidden=true;
  $("dry-empty").hidden=false;$("dry-results").hidden=true;
@@ -29,24 +38,7 @@ function selectMode(next){
  $("action-label").textContent=dry?"Calculate chances":"Simulate loot";
  showError("");clearResults();
 }
-function icon(item){
- const frame=document.createElement("span");frame.className="phosani-icon";
- const img=document.createElement("img");
- img.src="../assets/items/"+item.id+".png";img.alt="";img.loading="lazy";
- img.width=36;img.height=32;
- // Always use assets bundled with this website (never Wiki hotlinks).
- img.onerror=()=>{img.onerror=null;img.src="../assets/items/big-bones.png";};
- frame.append(img);return frame;
-}
-function lootCard(item,quantity){
- const card=document.createElement("div");card.className="loot-item";
- const picture=document.createElement("div");picture.className="loot-icon";
- picture.append(icon(item));
- const details=document.createElement("div");details.className="loot-info";
- const amount=document.createElement("strong");amount.textContent="× "+fmt(quantity);
- const name=document.createElement("span");name.textContent=item.name;
- details.append(amount,name);card.append(picture,details);return card;
-}
+
 function renderUnique(drops){
  const item=ESSENCE,count=drops[item.id]??0;
  const card=document.createElement("div");
@@ -95,18 +87,7 @@ function lootResults(data){
  populate("chest-loot",chestLoot);
  $("empty-state").hidden=true;$("results-content").hidden=false;
 }
-function percentage(x){
- if(x<=0)return "0%";if(x>=1)return "100%";
- const v=x*100;if(v<.000001)return "<0.000001%";
- if(v>99.999999)return ">99.999999%";
- return v.toFixed(v<1?4:2)+"%";
-}
-function outcome(label,prob){
- const row=document.createElement("div");row.className="dry-outcome";
- const title=document.createElement("span");title.textContent=label;
- const num=document.createElement("strong");num.textContent=percentage(prob);
- row.append(title,num);return row;
-}
+
 function dryCard(item,data){
  const card=document.createElement("section");card.className="dry-result-card";
  const heading=document.createElement("div");heading.className="dry-result-heading";
@@ -147,3 +128,5 @@ form.addEventListener("submit",event=>{
   }
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate results.");}
 });
+
+clearInputsOnClick(form);

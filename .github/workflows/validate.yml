@@ -15,37 +15,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run loot table tests
-        run: node --test tests/*.test.mjs
-      - name: Check module syntax
-        run: |
-          node --check simulator.mjs
-          node --check app.mjs
-          node --check phosani/simulator.mjs
-          node --check phosani/dry-calc.mjs
-          node --check phosani/app.mjs
-          node --check yama/simulator.mjs
-          node --check yama/dry-calc.mjs
-          node --check yama/app.mjs
-          node --check hydra/simulator.mjs
-          node --check hydra/dry-calc.mjs
-          node --check hydra/app.mjs
-          node --check cerberus/simulator.mjs
-          node --check cerberus/dry-calc.mjs
-          node --check cerberus/app.mjs
-          node --check mad-angel/simulator.mjs
-          node --check mad-angel/dry-calc.mjs
-          node --check mad-angel/app.mjs
-          node --check corporeal-beast/simulator.mjs
-          node --check corporeal-beast/dry-calc.mjs
-          node --check corporeal-beast/app.mjs
-          node --check chaos-fanatic/simulator.mjs
-          node --check chaos-fanatic/dry-calc.mjs
-          node --check chaos-fanatic/app.mjs
-          node --check crazy-archaeologist/simulator.mjs
-          node --check crazy-archaeologist/dry-calc.mjs
-          node --check crazy-archaeologist/app.mjs
-          node --check dagannoth-kings/simulator.mjs
-          node --check dagannoth-kings/dry-calc.mjs
-          node --check dagannoth-kings/app.mjs
-          node --check dagannoth-kings/sync-sprites.mjs
+      - name: Validate simulators
+        run: node scripts/validate.mjs

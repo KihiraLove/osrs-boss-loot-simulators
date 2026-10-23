@@ -101,8 +101,8 @@ test("Dry counts normalize and validate input across max kill limit",()=>{
  assert.throws(()=>calculateDry(1,{"araxyte-fang":1,"noxious-point":1}));
 });
 test("Araxxor route, corpse modes, and every item icon are local",()=>{
- const home=read("index.html"),page=read("araxxor/index.html"),app=read("araxxor/app.mjs");
- assert.match(home,/href="\.\/araxxor\/"/);
+ const home=read("index.html"),page=read("bosses/araxxor/index.html"),app=read("bosses/araxxor/app.mjs");
+ assert.match(home,/href="bosses\/araxxor\/"/);
  assert.match(home,/assets\/items\/nid\.png/);
  for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","konar-task","coagulated-venom"])
   assert.ok(page.includes('id="'+id+'"'));

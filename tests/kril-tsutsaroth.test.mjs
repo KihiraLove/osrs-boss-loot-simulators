@@ -93,9 +93,9 @@ test("Validation and all options reject invalid inputs",()=>{
  assert.throws(()=>calculateDry(1,[]));
 });
 test("All separate loot panels, navigation, docs and sprite assets exist",()=>{
- const home=read("index.html"),html=read("kril-tsutsaroth/index.html");
- const app=read("kril-tsutsaroth/app.mjs"),docs=read("kril-tsutsaroth/README.md");
- assert.match(home,/href="\.\/kril-tsutsaroth\/"/);
+ const home=read("index.html"),html=read("bosses/kril-tsutsaroth/index.html");
+ const app=read("bosses/kril-tsutsaroth/app.mjs"),docs=read("bosses/kril-tsutsaroth/README.md");
+ assert.match(home,/href="bosses\/kril-tsutsaroth\/"/);
  assert.match(read("README.md"),/kril-tsutsaroth\/README\.md/);
  assert.match(docs,/bodyguards/);
  for(const source of SOURCES)assert.match(html,new RegExp('data-source="'+source.id+'"'));

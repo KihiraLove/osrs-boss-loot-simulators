@@ -85,9 +85,9 @@ test("Kill bounds and RNG validation",()=>{
  assert.throws(()=>simulate(1,{rng:null}));
 });
 test("Homepage, page controls and local PNG assets",()=>{
- const home=source("index.html"),page=source("deranged-archaeologist/index.html");
- const app=source("deranged-archaeologist/app.mjs");
- assert.match(home,/href="\.\/deranged-archaeologist\/"/);
+ const home=source("index.html"),page=source("bosses/deranged-archaeologist/index.html");
+ const app=source("bosses/deranged-archaeologist/app.mjs");
+ assert.match(home,/href="bosses\/deranged-archaeologist\/"/);
  for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry","unique-grid","loot-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);

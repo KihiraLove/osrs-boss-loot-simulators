@@ -1,32 +1,26 @@
+import {
+  clearInputsOnClick,
+  createItemIcon as icon,
+  parseNumber as parse,
+  showError as setError,
+  resetPanels as reset,
+  createLootCard as lootCard,
+  probabilityText as percent,
+  createOutcome as outcome,
+  byId as $,
+  formatNumber as format
+} from "../../shared/ui.mjs";
 import {UNIQUE,DRY_ITEMS,ITEMS,MAX_KILLS,simulate,rateOf} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
-const $=id=>document.getElementById(id);
-const format=n=>new Intl.NumberFormat("en-US").format(n);
+
 const form=$("simulator-form"),dryInputs=$("dry-inputs");
 let mode="loot";
-function icon(item){
- const wrap=document.createElement("span");wrap.className="phosani-icon";
- const img=document.createElement("img");img.src="../assets/items/"+item.id+".png";
- img.alt="";img.loading="lazy";img.width=36;img.height=32;wrap.append(img);
- return wrap;
-}
-function parse(field,limit,label){
- const value=field.value.trim();
- if(!/^(0|[1-9]\d*)$/.test(value)||!Number.isSafeInteger(Number(value))||Number(value)>limit)
-  throw new RangeError("Enter a non-negative whole number up to "+format(limit)+" for "+label+".");
- return Number(value);
-}
+
 function kills(){
  return {regular:parse($("regular-kills"),MAX_KILLS,"regular Gauntlet KC"),
   corrupted:parse($("corrupted-kills"),MAX_KILLS,"Corrupted Gauntlet KC")};
 }
-function setError(message){
- $("validation-message").textContent=message;$("validation-message").hidden=!message;
-}
-function reset(){
- $("empty-state").hidden=false;$("results-content").hidden=true;
- $("dry-empty").hidden=false;$("dry-results").hidden=true;
-}
+
 function setMode(next){
  mode=next;const dry=next==="dry";
  $("dry-fields").hidden=!dry;$("dry-panel").hidden=!dry;$("loot-panel").hidden=dry;
@@ -57,14 +51,7 @@ function uniqueCard(item,count){
   " · Corrupted 1/"+format(Math.round(1/rateOf("corrupted",item.id)));
  card.append(icon(item),title,amount,rarity);return card;
 }
-function lootCard(item,count){
- const card=document.createElement("div");card.className="loot-item";
- const frame=document.createElement("div");frame.className="loot-icon";frame.append(icon(item));
- const details=document.createElement("div");details.className="loot-info";
- const amount=document.createElement("strong");amount.textContent="× "+format(count);
- const title=document.createElement("span");title.textContent=item.name;
- details.append(amount,title);card.append(frame,details);return card;
-}
+
 function renderLoot(result){
  const unique=$("unique-grid"),loot=$("loot-grid");
  unique.replaceChildren();loot.replaceChildren();
@@ -78,18 +65,7 @@ function renderLoot(result){
  for(const [id,count] of entries)loot.append(lootCard(ITEMS[id],count));
  $("empty-state").hidden=true;$("results-content").hidden=false;
 }
-function percent(p){
- if(p<=0)return "0%";if(p>=1)return "100%";
- const n=p*100;
- if(n<.000001)return "<0.000001%";if(n>99.999999)return ">99.999999%";
- return n.toFixed(n<1?4:2)+"%";
-}
-function outcome(label,p){
- const box=document.createElement("div");box.className="dry-outcome";
- const title=document.createElement("span");title.textContent=label;
- const value=document.createElement("strong");value.textContent=percent(p);
- box.append(title,value);return box;
-}
+
 function dryCard(item,result){
  const card=document.createElement("section");card.className="dry-result-card";
  const head=document.createElement("div");head.className="dry-result-heading";
@@ -151,3 +127,5 @@ form.addEventListener("submit",event=>{
   }));
  }catch(error){setError(error instanceof Error?error.message:"Unable to calculate results.");}
 });
+
+clearInputsOnClick(form);

@@ -125,10 +125,10 @@ test("Probability mass sums to one; limits reject invalid counts",()=>{
 
 test("Homepage/docs/controls and every required local sprite",()=>{
  const home=file("index.html");
- const page=file("royal-titans/index.html");
- const app=file("royal-titans/app.mjs");
- const docs=file("royal-titans/README.md");
- assert.match(home,/href="\.\/royal-titans\/"/);
+ const page=file("bosses/royal-titans/index.html");
+ const app=file("bosses/royal-titans/app.mjs");
+ const docs=file("bosses/royal-titans/README.md");
+ assert.match(home,/href="bosses\/royal-titans\/"/);
  assert.match(docs,/Solo|solo/);
  assert.match(app,/calculateDry\(solo,duo,readReceived\(solo\+duo\),options\)/);
  for(const id of ["kills-solo","kills-duo","solo-titan","duo-titan","reward-action",

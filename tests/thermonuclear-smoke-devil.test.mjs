@@ -115,10 +115,10 @@ test("Validation rejects invalid kills, flags and random values",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
 test("Homepage, page controls, documentation and every required local sprite",()=>{
- const home=file("index.html"),page=file("thermonuclear-smoke-devil/index.html");
- const app=file("thermonuclear-smoke-devil/app.mjs");
- const docs=file("thermonuclear-smoke-devil/README.md");
- assert.match(home,/href="\.\/thermonuclear-smoke-devil\/"/);
+ const home=file("index.html"),page=file("bosses/thermonuclear-smoke-devil/index.html");
+ const app=file("bosses/thermonuclear-smoke-devil/app.mjs");
+ const docs=file("bosses/thermonuclear-smoke-devil/README.md");
+ assert.match(home,/href="bosses\/thermonuclear-smoke-devil\/"/);
  assert.match(docs,/shark lures/i);
  for(const id of ["mode-loot","mode-dry","kill-count","hard-cas","elite-cas",
   "konar-task","dry-inputs","unique-grid","loot-grid"])

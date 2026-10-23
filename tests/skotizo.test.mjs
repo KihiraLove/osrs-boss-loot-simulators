@@ -100,9 +100,9 @@ test("Inputs, random generator and toggles validate",()=>{
  assert.throws(()=>pickTotem(null,()=>.5));
 });
 test("Homepage, controls, README and every required sprite are present",()=>{
- const home=read("index.html"),page=read("skotizo/index.html"),app=read("skotizo/app.mjs");
- const docs=read("skotizo/README.md");
- assert.match(home,/href="\.\/skotizo\/"/);
+ const home=read("index.html"),page=read("bosses/skotizo/index.html"),app=read("bosses/skotizo/app.mjs");
+ const docs=read("bosses/skotizo/README.md");
+ assert.match(home,/href="bosses\/skotizo\/"/);
  for(const id of ["kill-count","elite-cas","konar-task","mode-loot",
   "mode-dry","unique-grid","loot-grid","dry-results-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");

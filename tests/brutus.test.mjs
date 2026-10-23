@@ -126,8 +126,8 @@ test("Distribution normalization, validation, and numerical stability",()=>{
  assert.throws(()=>calculateDry(1,{"mooleta":-1}));
 });
 test("Brutus page and all local sprites exist",()=>{
- const home=read("index.html"),page=read("brutus/index.html"),app=read("brutus/app.mjs");
- assert.match(home,/href="\.\/brutus\/"/);
+ const home=read("index.html"),page=read("bosses/brutus/index.html"),app=read("bosses/brutus/app.mjs");
+ assert.match(home,/href="bosses\/brutus\/"/);
  assert.match(home,/assets\/items\/beef\.png/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
