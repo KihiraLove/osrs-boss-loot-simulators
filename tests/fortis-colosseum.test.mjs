@@ -48,28 +48,28 @@ test("Full 12-wave completion grants quiver and independent pet roll",()=>{
 });
 test("Echo crystal double and triple quantities do not increase unique event count",()=>{
  let phase=0;
- const sequence=[0,0,0.94];
+ const sequence=[0,0,0,0,0.94];
  const rng=()=>sequence[phase++]??0.99;
  const x=simulate(1,4,{rng});
  assert.equal(x.echoRolls,1);
  assert.equal(x.drops["echo-crystal"],2);
- const y=simulate(1,4,{rng:()=>0.96});
- assert.equal(y.echoRolls,0);
+ const triple=[0,0,0,0,0.96];let p=0;
+ const y=simulate(1,4,{rng:()=>triple[p++]??0.99});
+ assert.equal(y.echoRolls,1);
+ assert.equal(y.drops["echo-crystal"],3);
 });
 test("Armour pieces have set-completion duplicate protection across runs",()=>{
- // Force unique on every wave >=4 and choose armour each time.
- let pos=0;
- const rng=()=>{const k=pos++;return k%3===0?0:k%3===1?.6:0;};
- const x=simulate(1,6,{rng});
- // The deterministic sequence may choose common loot at wave 2-3;
- // verify invariant via aggregate random simulation with armour-heavy RNG.
- const y=simulate(3,6,{rng:()=>0.01});
- assert.ok(Object.keys(x.drops).length>0);
- // The exact dry model encodes each full armour set as one of each piece.
+ // Wave 2,3 have one common RNG call each. Waves 4,5,6 then
+ // each roll the unique, choose armour and select a missing piece.
+ const sequence=[0,0,0,.5,0,0,.5,0,0,.5,0];
+ let index=0;
+ const x=simulate(2,6,{rng:()=>sequence[(index++)%sequence.length]});
+ for(const id of ["sunfire-fanatic-helm","sunfire-fanatic-cuirass","sunfire-fanatic-chausses"])
+  assert.equal(x.drops[id],2,id);
+ assert.equal(x.drops["echo-crystal"],undefined);
  const d=calculateDry(1,4);
  for(const id of ["sunfire-fanatic-helm","sunfire-fanatic-cuirass","sunfire-fanatic-chausses"])
   close(d[id].expected,(1/124)*.6/3);
- assert.ok(y.drops["echo-crystal"]>=0);
 });
 test("Combined dry probabilities are wave-based, and quiver remains guaranteed",()=>{
  const w4=calculateDry(1,4),w12=calculateDry(1,12);
