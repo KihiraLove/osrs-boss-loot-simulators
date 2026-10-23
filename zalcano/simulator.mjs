@@ -75,9 +75,9 @@ export function parameters(options={}){
  const relative=o.relativeContribution/100;
  const share=relative/(o.teamSize-1+relative);
  // The Wiki publishes only the shard's endpoints (1/1500 to 1/750).
- // Interpolate probability linearly between the minimum eligible threshold
- // and the 1000-point tertiary cap; this is explicitly an approximation.
- const progress=Math.max(0,Math.min(1,(cappedPoints-31)/(1000-31)));
+ // Interpolate probability linearly from 36 capped points (the lowest
+ // possible at 5 shield and 31 total damage) to the 1000-point cap.
+ const progress=Math.max(0,Math.min(1,(cappedPoints-36)/(1000-36)));
  const shardRate=rareEligible?(1+progress)/1500:0;
  const teamUnique=rareEligible?share/200:0;
  const seedRate=teamUnique*39/40;
@@ -128,7 +128,7 @@ export function simulate(kills,{rng=Math.random,...opts}={}){
   if(!rareEligible)continue;
   // One shared 1/200 roll; select the recipient by estimated contribution.
   // Do not roll seed and onyx as independent events.
-  if(unit(rng)<teamUnique){
+  if(unit(rng)<1/200 && unit(rng)<params.share){
    if(unit(rng)<1/40)add("uncut-onyx");
    else add("crystal-tool-seed");
   }

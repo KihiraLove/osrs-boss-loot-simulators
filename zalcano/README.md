@@ -63,7 +63,7 @@ The wiki specifies capped tertiary points:
 P_T=\min(H,400)+2\min(S,300)
 \]
 
-where \(H\) is HP damage and \(S\) is shield damage. The shard's published rate has **endpoint values only**, not a verified direct numerical mapping for intermediate contribution. The simulator **linearly interpolates drop probability** from **1/1,500 at the 31-damage eligibility threshold** to **1/750 at 1,000 tertiary points**. This interpolation is **an approximation**, and actual odds could differ.
+where \(H\) is HP damage and \(S\) is shield damage. The shard's published rate has **endpoint values only**, not a verified direct numerical mapping for intermediate contribution. The simulator **linearly interpolates drop probability** from **1/1,500 at the minimum qualifying 5 shield / 31 total damage** to **1/750 at 1,000 tertiary points**. This interpolation is **an approximation**, and actual odds could differ.
 
 ## Dry calculator
 
