@@ -10,6 +10,7 @@ Choose a boss from the [simulator home page](https://kihiralove.github.io/osrs-b
 
 | Boss documentation | Live simulator |
 | --- | --- |
+| [Fortis Colosseum](./fortis-colosseum/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/fortis-colosseum/) |
 | [Zalcano](./zalcano/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/zalcano/) |
 | [Doom of Mokhaiotl](./doom/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/doom/) |
 | [Phosani's Nightmare](./phosani/README.md) | [Open simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/phosani/) |
