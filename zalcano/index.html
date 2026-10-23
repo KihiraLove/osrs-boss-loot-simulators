@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Zalcano loot simulator and dry calculator with guaranteed mole parts, 131-ticket ordinary loot, and independent tertiary rewards.">
+  <title>Zalcano | Loot Simulator</title>
+  <link rel="icon" type="image/png" href="../assets/items/smolcano.png">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../">← All simulators</a></nav>
+  <a class="skip-link" href="#main">Skip to simulator</a>
+  <header class="site-header">
+    <div class="brand-mark"><img src="../assets/items/smolcano.png" alt="" width="42" height="42"></div>
+    <h1>Zalcano <span>Loot Simulator</span></h1>
+    <a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi">
+      <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true" width="24" height="24">
+      <span class="kofi-banner-label">Support me on Ko-fi</span>
+    </a>
+  </header>
+  <div class="mode-switch" role="group" aria-label="Calculator mode">
+    <button type="button" id="mode-loot" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+    <button type="button" id="mode-dry" class="mode-button" aria-pressed="false">Dry calculator</button>
+  </div>
+  <main id="main" class="layout">
+    <section class="panel controls-panel" aria-labelledby="plan-heading">
+      <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
+      <form id="simulator-form" novalidate>
+        <label class="depth-field phosani-kills"><span>Completed kills</span>
+          <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Zalcano kills">
+        </label>
+        <p class="contribution-note">Zalcano rewards depend on participation. Values below represent your typical contribution per completed kill, not the whole team's damage.</p>
+        <div class="contribution-grid">
+          <label class="depth-field"><span>Team size</span>
+            <input id="team-size" type="number" min="1" max="100" step="1" value="4" inputmode="numeric"></label>
+          <label class="depth-field"><span>Your contribution vs. average (%)</span>
+            <input id="relative-contribution" type="number" min="1" max="400" step="1" value="100" inputmode="numeric"></label>
+          <label class="depth-field"><span>Average shield damage</span>
+            <input id="shield-damage" type="number" min="0" max="10000" step="1" value="125" inputmode="numeric"></label>
+          <label class="depth-field"><span>Average HP damage</span>
+            <input id="hp-damage" type="number" min="0" max="10000" step="1" value="125" inputmode="numeric"></label>
+        </div>
+        <label class="phosani-option"><input id="mvp" type="checkbox"> MVP each kill (3 crystal shards, infernal ashes, +10% non-unique loot)</label>
+        <label class="phosani-option"><input id="xp-focus" type="checkbox"> XP-focused rewards (no ordinary resource loot; rares still roll)</label>
+        <div id="dry-fields" class="dry-fields" hidden>
+          <h3>Drops obtained</h3>
+          <div id="dry-inputs" class="dry-inputs"></div>
+        </div>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
+        <div class="action-row">
+          <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="secondary-action" id="clear-button">Clear</button>
+        </div>
+      </form>
+    </section>
+    <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
+      <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-orb"><img src="../assets/items/smolcano.png" alt="" width="62" height="62"></div>
+        <h3>Nothing claimed yet</h3>
+        <p>Enter completed kills to simulate crystal shards, resource loot, the Zalcano shard, tool seeds, onyx, and Smolcano.</p>
+      </div>
+      <div id="results-content" hidden>
+        <p class="contribution-note" id="loot-summary"></p><p class="contribution-note" id="summary-hint">Resource quantities use observed Wiki ranges; contribution-dependent sizes are illustrative.</p>
+        <div class="subheading"><h3>Collection-log rewards</h3></div>
+        <div id="unique-grid" class="unique-grid"></div>
+        <div class="subheading inventory-title"><h3>Collected loot</h3></div>
+        <div id="loot-grid" class="loot-grid"></div>
+      </div>
+    </section>
+    <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+      <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
+      <div id="dry-empty" class="empty-state">
+        <div class="empty-orb"><img src="../assets/items/smolcano.png" alt="" width="62" height="62"></div>
+        <h3>How lucky are your drops?</h3>
+        <p>Enter your Zalcano KC, typical team contribution and rare drops received. Pet and shard rates differ from team-assigned tool seed and onyx rates.</p>
+      </div>
+      <div id="dry-results" hidden><p id="dry-summary" class="contribution-note"></p><div id="dry-results-grid" class="dry-results-grid"></div></div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-meta">
+      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Zalcano" target="_blank" rel="noopener noreferrer">OSRS Wiki — Zalcano</a></p>
+      <p>Team-assigned tool seed and onyx chances use an estimated contribution share. Zalcano shard scaling is interpolated between published endpoints; ordinary loot ranges are sampled from published values. No data is stored, collected, or sold by this site.</p>
+    </div>
+    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+  </footer>
+</body>
+</html>
