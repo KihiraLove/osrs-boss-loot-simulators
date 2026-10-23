@@ -93,6 +93,20 @@ export function resetPanels() {
   byId("dry-results").hidden = true;
 }
 
+export function setCalculatorMode(mode) {
+  const dry = mode === "dry";
+  byId("dry-fields").hidden = !dry;
+  byId("dry-panel").hidden = !dry;
+  byId("loot-panel").hidden = dry;
+  for (const name of ["loot", "dry"]) {
+    byId("mode-" + name).classList.toggle("is-active", name === mode);
+    byId("mode-" + name).setAttribute("aria-pressed", String(name === mode));
+  }
+  byId("action-label").textContent = dry ? "Calculate chances" : "Simulate loot";
+  showError("");
+  return dry;
+}
+
 export function probabilityText(probability) {
   if (probability <= 0) return "0%";
   if (probability >= 1) return "100%";

@@ -1,7 +1,9 @@
+import { validateEncounterCounts } from "../../shared/encounters.mjs";
 // Fortis Colosseum reward chest, 2026 OSRS Wiki rates.
 // Each completed wave supplies one reward; unique replaces that wave's common.
-// Rewards are banked only after ending successfully / clearing wave 12.
-export const MAX_RUNS=100_000;
+// Each input counts that wave alone; all entered rewards are combined.
+export const MAX_WAVE_CLEARS=100_000;
+export const WAVES=Object.freeze(Array.from({length:12},(_,index)=>({id:String(index+1),wave:index+1,label:"Wave "+(index+1)})));
 export const MIN_WAVE=1,MAX_WAVE=12;
 export const UNIQUE_DENOMS=Object.freeze({4:124,5:110,6:96,7:82,8:68,9:54,10:40,11:26,12:12});
 const ARMOUR_IDS=Object.freeze(["sunfire-fanatic-helm","sunfire-fanatic-cuirass","sunfire-fanatic-chausses"]);
@@ -80,15 +82,8 @@ export const ITEMS=Object.freeze(Object.fromEntries([
  ...UNIQUE.map(x=>[x.id,{id:x.id,name:x.name}]),
  ["sunfire-splinters",{id:"sunfire-splinters",name:"Sunfire splinters"}]
 ]));
-export function validateRuns(runs){
- if(!Number.isSafeInteger(runs)||runs<0||runs>MAX_RUNS)
-  throw new RangeError("Enter between 0 and 100,000 completed Colosseum runs.");
- return runs;
-}
-export function validateWave(wave){
- if(!Number.isSafeInteger(wave)||wave<MIN_WAVE||wave>MAX_WAVE)
-  throw new RangeError("Enter a highest completed wave between 1 and 12.");
- return wave;
+export function validatePlan(counts) {
+ return validateEncounterCounts(counts,WAVES,MAX_WAVE_CLEARS,MAX_WAVE_CLEARS*12);
 }
 export function uniqueRate(wave){
  return wave>=4&&wave<=12?1/UNIQUE_DENOMS[wave]:0;
@@ -100,12 +95,6 @@ export function waveRates(wave){
   armour:unique*(wave<7?.6:9/16),
   tonalztics:wave>=7?unique/16:0
  };
-}
-export function ratesUpTo(wave){
- validateWave(wave);
- const waves=[];
- for(let w=4;w<=wave;w++)waves.push({...waveRates(w),wave:w});
- return waves;
 }
 export function validateOptions({quiverTrade="keep"}={}){
  if(!["keep","splinters","pet"].includes(quiverTrade))
@@ -124,20 +113,11 @@ function weighted(rows,rng){
  for(const row of rows){t-=row[3];if(t<0)return row;}
  return rows.at(-1);
 }
-export function rateOf(id,wave=12){
- const rates=ratesUpTo(wave);
- if(id==="dizanas-quiver")return wave===12?1:0;
- if(id==="smol-heredit")return wave===12?1/200:0;
- if(id==="echo-crystal")return rates.reduce((a,w)=>a+w.echo,0);
- if(ARMOUR_IDS.includes(id))return rates.reduce((a,w)=>a+w.armour,0)/3;
- if(id==="tonalztics-of-ralos-uncharged")return rates.reduce((a,w)=>a+w.tonalztics,0);
- return 0;
-}
-export function simulate(runs,wave=12,{rng=Math.random,quiverTrade="keep"}={}){
- validateRuns(runs);validateWave(wave);validateOptions({quiverTrade});
+export function simulate(counts,{rng=Math.random,quiverTrade="keep"}={}){
+ const plan=validatePlan(counts);validateOptions({quiverTrade});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
- const perWave=Array.from({length:wave},(_,i)=>({wave:i+1,drops:Object.create(null)}));
+ const perWave=WAVES.map(({wave})=>({wave,count:plan.counts[wave],drops:Object.create(null)}));
  const echoRolls={count:0};
  const armourUncollected=new Set(ARMOUR_IDS);
  let petOwned=false;
@@ -147,8 +127,8 @@ export function simulate(runs,wave=12,{rng=Math.random,quiverTrade="keep"}={}){
    if(waveRow)waveRow.drops[id]=(waveRow.drops[id]??0)+count;
   }
  }
- for(let run=0;run<runs;run++){
-  for(let w=1;w<=wave;w++){
+ for(const {wave:w,count} of plan.groups){
+  for(let clear=0;clear<count;clear++){
    const row=perWave[w-1];
    if(w===1){add("sunfire-splinters",80,row);continue;}
    const rate=waveRates(w);
@@ -182,5 +162,5 @@ export function simulate(runs,wave=12,{rng=Math.random,quiverTrade="keep"}={}){
    }
   }
  }
- return {runs,wave,quiverTrade,drops,perWave,echoRolls:echoRolls.count};
+ return {counts:plan.counts,waveClears:plan.total,completions:plan.counts[12],quiverTrade,drops,perWave,echoRolls:echoRolls.count};
 }

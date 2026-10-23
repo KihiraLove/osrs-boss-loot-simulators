@@ -1,34 +1,28 @@
-import { validateDropCount as checkCount, convolveDistributions as convolve, distributionOdds as summary, binomial } from "../../shared/distributions.mjs";
-import { MODES, PET, DRY_ITEMS, rateOf, primaryRate, validateKills, validateOptions } from "./simulator.mjs";
-const clamp=p=>Math.max(0,Math.min(1,p));
+import { PET, DRY_ITEMS, rateOf, primaryRate, validatePlan, validateOptions } from "./simulator.mjs";
+import { mixedBinomial } from "../../shared/encounters.mjs";
+import { distributionOdds, validateDropCount } from "../../shared/distributions.mjs";
 
-export function calculateDry(soloKills,duoKills,received={},options={}){
- validateKills(soloKills,"Solo KC");validateKills(duoKills,"Duo KC");
- if(!received||typeof received!=="object"||Array.isArray(received))
-  throw new TypeError("Drop counts must be an object.");
- const opts=validateOptions(options),kills={solo:soloKills,duo:duoKills},total=soloKills+duoKills;
- const modeTitan=id=>id==="solo"?opts.soloTitan:opts.duoTitan;
- function chance(fn,id){return fn(id,modeTitan(id));}
- function mix(fn){
-  let dist={from:0,values:Float64Array.of(1),expected:0},logNone=0;
-  for(const mode of MODES){
-   const p=chance(fn,mode.id),n=kills[mode.id];
-   if(!Number.isFinite(p)||p<0||p>1)throw new RangeError("Invalid drop rate.");
-   dist=convolve(dist,binomial(n,p));
-   logNone+=n*Math.log1p(-p);
-  }
-  return {dist,atLeastOne:clamp(-Math.expm1(logNone))};
- }
+export function calculateDry(counts,received={},options={}) {
+ const plan=validatePlan(counts),opts=validateOptions(options);
+ if(!received||typeof received!=="object"||Array.isArray(received))throw new TypeError("Drop counts must be an object.");
+ const mix=rate=>mixedBinomial(plan.groups.map(group=>({count:group.count,probability:rate(group)})));
  const results={};let primaryTotal=0;
- for(const item of DRY_ITEMS){
-  const receivedCount=received[item.id]??0;
-  checkCount(receivedCount,total,item.name);
-  const {dist,atLeastOne}=mix((mode,titan)=>rateOf(item.id,mode,titan,opts));
-  results[item.id]={...summary(dist,receivedCount),atLeastOne};
-  if(item.id!==PET.id)primaryTotal+=receivedCount;
+ for(const item of DRY_ITEMS) {
+  const count=received[item.id]??0;
+  const probability=group=>rateOf(item.id,group.mode,group.titan,opts);
+  const eligible=plan.groups.reduce((sum,group)=>sum+(probability(group)>0?group.count:0),0);
+  validateDropCount(count,eligible,item.name);
+  const {distribution,atLeastOne}=mix(probability);
+  results[item.id]={...distributionOdds(distribution,count),atLeastOne};
+  if(item.id!==PET.id)primaryTotal+=count;
  }
- checkCount(primaryTotal,total,"All primary uniques");
- const main=mix((mode,titan)=>primaryRate(mode,titan,opts));
- results.anyPrimary={...summary(main.dist,primaryTotal),atLeastOne:main.atLeastOne};
- return {soloKills,duoKills,kills:total,options:opts,results,...results};
+ for(const titan of ["branda","eldric"]) {
+  const count=DRY_ITEMS.filter(item=>item.titan===titan).reduce((sum,item)=>sum+(received[item.id]??0),0);
+  const max=plan.groups.filter(group=>group.titan===titan).reduce((sum,group)=>sum+group.count,0);
+  validateDropCount(count,max,"Combined "+titan+" rewards");
+ }
+ validateDropCount(primaryTotal,opts.action==="loot"?plan.total:0,"All primary uniques");
+ const main=mix(group=>primaryRate(group.mode,group.titan,opts));
+ results.anyPrimary={...distributionOdds(main.distribution,primaryTotal),atLeastOne:main.atLeastOne};
+ return {counts:plan.counts,kills:plan.total,options:opts,...results};
 }

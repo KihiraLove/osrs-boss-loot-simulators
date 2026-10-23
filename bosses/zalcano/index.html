@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11100d">
-  <meta name="description" content="Zalcano loot simulator and dry calculator with guaranteed mole parts, 131-ticket ordinary loot, and independent tertiary rewards.">
+  <meta name="description" content="Zalcano loot simulator and dry calculator combining Trios and minimum rare-eligible Mass kills.">
   <title>Zalcano | Loot Simulator</title>
   <link rel="icon" type="image/png" href="../../assets/items/smolcano.png">
   <link rel="stylesheet" href="../../styles.css">
@@ -20,22 +20,8 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
       <form id="simulator-form" novalidate>
-        <label class="depth-field count-field"><span>Completed kills</span>
-          <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Zalcano kills">
-        </label>
-        <p class="contribution-note">Zalcano rewards depend on participation. Values below represent your typical contribution per completed kill, not the whole team's damage.</p>
-        <div class="contribution-grid">
-          <label class="depth-field"><span>Team size</span>
-            <input id="team-size" type="number" min="1" max="100" step="1" value="4" inputmode="numeric"></label>
-          <label class="depth-field"><span>Your contribution vs. average (%)</span>
-            <input id="relative-contribution" type="number" min="1" max="400" step="1" value="100" inputmode="numeric"></label>
-          <label class="depth-field"><span>Average shield damage</span>
-            <input id="shield-damage" type="number" min="0" max="10000" step="1" value="125" inputmode="numeric"></label>
-          <label class="depth-field"><span>Average HP damage</span>
-            <input id="hp-damage" type="number" min="0" max="10000" step="1" value="125" inputmode="numeric"></label>
-        </div>
-        <label class="calculator-option"><input id="mvp" type="checkbox"> MVP each kill (3 crystal shards, infernal ashes, +10% non-unique loot)</label>
-        <label class="calculator-option"><input id="xp-focus" type="checkbox"> XP-focused rewards (no ordinary resource loot; rares still roll)</label>
+        <label class="depth-field count-field" title="One-third contribution, MVP every third kill"><span>Trios</span><input id="trios" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Trios kills"></label>
+        <label class="depth-field count-field" title="Minimum contribution eligible for rare rewards"><span>Mass</span><input id="mass" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Mass kills"></label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
@@ -55,7 +41,7 @@
         <p>Enter completed kills to simulate crystal shards, resource loot, the Zalcano shard, tool seeds, onyx, and Smolcano.</p>
       </div>
       <div id="results-content" hidden>
-        <p class="contribution-note" id="loot-summary"></p><p class="contribution-note" id="summary-hint">Resource quantities use observed Wiki ranges; contribution-dependent sizes are illustrative.</p>
+        <p class="contribution-note" id="loot-summary"></p><p class="contribution-note" id="summary-hint">Resource quantities and rare allocations use the contribution estimates documented in the guide.</p>
         <div class="subheading"><h3>Collection-log rewards</h3></div>
         <div id="unique-grid" class="unique-grid"></div>
         <div class="subheading inventory-title"><h3>Collected loot</h3></div>
@@ -67,7 +53,7 @@
       <div id="dry-empty" class="empty-state">
         <div class="empty-orb"><img src="../../assets/items/smolcano.png" alt="" width="62" height="62"></div>
         <h3>How lucky are your drops?</h3>
-        <p>Enter your Zalcano KC, typical team contribution and rare drops received. Pet and shard rates differ from team-assigned tool seed and onyx rates.</p>
+        <p>Enter Trios and Mass kills and the rare rewards received to calculate combined odds.</p>
       </div>
       <div id="dry-results" hidden><p id="dry-summary" class="contribution-note"></p><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>

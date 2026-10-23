@@ -1,41 +1,25 @@
-import { distributionOdds, convolveDistributions as convolution, binomial } from "../../shared/distributions.mjs";
-import {UNIQUE,validateKills,parameters} from "./simulator.mjs";
+import { UNIQUE, validatePlan, parameters, rateOf } from "./simulator.mjs";
+import { mixedBinomial } from "../../shared/encounters.mjs";
+import { distributionOdds, validateDropCount } from "../../shared/distributions.mjs";
 
-const clamp=x=>Math.max(0,Math.min(1,x));
-function odds(dist, count, p, kills) {
-  return { ...distributionOdds(dist, count), atLeastOne: -Math.expm1(kills * Math.log1p(-p)) };
-}
-
-export function calculateDry(kills,received={},opts={}){
- validateKills(kills);
- if(!received||typeof received!=="object"||Array.isArray(received))
-  throw new TypeError("Received drops must be an object.");
- const p=parameters(opts);
- const rates={"smolcano":p.petRate,"crystal-tool-seed":p.seedRate,
-  "zalcano-shard":p.shardRate,"uncut-onyx":p.onyxRate};
- const result={kills,parameters:p};
+export function calculateDry(counts,received={}) {
+ const plan=validatePlan(counts);
+ if(!received||typeof received!=="object"||Array.isArray(received))throw new TypeError("Received drops must be an object.");
+ const results={counts:plan.counts,kills:plan.total};
  let total=0;
- for(const item of UNIQUE){
+ for(const item of UNIQUE) {
   const count=received[item.id]??0;
-  if(!Number.isSafeInteger(count)||count<0||count>kills)
-   throw new RangeError(item.name+" must be between 0 and "+kills+".");
-  total+=count;
-  result[item.id]=odds(binomial(kills,rates[item.id]),count,rates[item.id],kills);
+  validateDropCount(count,plan.total,item.name);total+=count;
+  const mix=mixedBinomial(plan.groups.map(group=>({count:group.count,probability:rateOf(item.id,group.id)})));
+  results[item.id]={...distributionOdds(mix.distribution,count),atLeastOne:mix.atLeastOne};
  }
- if(total>3*kills)throw new RangeError("Too many combined collection-log rewards.");
- // Within any single kill, seed and onyx are mutually exclusive. The
- // combined table event, Zalcano shard, and pet roll independently.
- const dist=convolution(convolution(binomial(kills,p.teamUnique),
-  binomial(kills,p.shardRate)),binomial(kills,p.petRate));
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i;
-  if(n<total)fewer+=dist.values[i];
-  else if(n===total)exact=dist.values[i];
- }
- const noDrops=(1-p.teamUnique)*(1-p.shardRate)*(1-p.petRate);
- result.anyUnique={count:total,expected:dist.expected,
-  fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact),
-  atLeastOne:-Math.expm1(kills*Math.log(noDrops))};
- return result;
+ validateDropCount((received["crystal-tool-seed"]??0)+(received["uncut-onyx"]??0),plan.total,"Tool seeds and onyx");
+ validateDropCount(total,3*plan.total,"Combined collection-log rewards");
+ const groups=plan.groups.flatMap(group=>{
+  const p=parameters(group.id);
+  return [p.teamUnique,p.shardRate,p.petRate].map(probability=>({count:group.count,probability}));
+ });
+ const mix=mixedBinomial(groups);
+ results.anyUnique={...distributionOdds(mix.distribution,total),atLeastOne:mix.atLeastOne};
+ return results;
 }

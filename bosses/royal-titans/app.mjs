@@ -1,90 +1,12 @@
-import { createDryField, createUniqueCard, clearInputsOnClick, parseNumber, showError, resetPanels, createLootCard as lootCard, createDryCard, byId as $, formatNumber as format } from "../../shared/ui.mjs";
-import {
-  UNIQUE, DRY_ITEMS, ITEMS as ITEM_BY_ID, MAX_KILLS, simulate
-} from "./simulator.mjs";
+import { setupEncounterCalculator } from "../../shared/encounter-app.mjs";
+import { byId as $, formatNumber as format } from "../../shared/ui.mjs";
+import { ENCOUNTERS, UNIQUE, DRY_ITEMS, ITEMS, MAX_KILLS, simulate } from "./simulator.mjs";
 import { calculateDry } from "./dry-calc.mjs";
 
-const form = $("simulator-form");
-const dryInputs = $("dry-inputs");
-let mode = "loot";
-
-function setMode(next) {
-  mode=next;
-  const isDry=mode==="dry";
-  $("dry-fields").hidden=!isDry;
-  $("dry-panel").hidden=!isDry;
-  $("loot-panel").hidden=isDry;
-  for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
-    $("mode-"+name).classList.toggle("is-active",selected);
-    $("mode-"+name).setAttribute("aria-pressed",String(selected));
-  }
-  $("action-label").textContent=isDry?"Calculate chances":"Simulate loot";
-  showError("");
-}
-
-for(const item of DRY_ITEMS)dryInputs.append(createDryField(item));
-
-function uniqueCard(item,count) {
-  return createUniqueCard(item, count, item.id==="bran"?"1/3,000 (loot)":item.id==="giantsoul-amulet"?"Solo: 1/16":
-    "Solo: 1/75");
-}
-
-function renderLoot(result) {
-  const unique=$("unique-grid"),loot=$("loot-grid");
-  unique.replaceChildren();loot.replaceChildren();
-  for(const item of UNIQUE) unique.append(uniqueCard(item,result.drops[item.id]||0));
-  $("mode-summary").textContent=format(result.soloKills)+" solo + "+format(result.duoKills)+" duo = "+format(result.kills)+" kills";
-  const uniqueIds=new Set(UNIQUE.map(item=>item.id));
-  const entries=Object.entries(result.drops)
-    .filter(([id,count])=>count>0&&!uniqueIds.has(id))
-    .sort((a,b)=>b[1]-a[1]||ITEM_BY_ID[a[0]].name.localeCompare(ITEM_BY_ID[b[0]].name));
-  for(const [id,count] of entries)loot.append(lootCard(ITEM_BY_ID[id],count));
-  $("empty-state").hidden=true;$("results-content").hidden=false;
-}
-
-function dryCard(name, item, result, combined = false) {
-  return createDryCard(name, item, result, combined, result.atLeastOne !== undefined);
-}
-function renderDry(result) {
-  const grid=$("dry-results-grid");grid.replaceChildren();
-  grid.append(dryCard("Any primary unique",UNIQUE[0],result.anyPrimary,true));
-  for(const item of DRY_ITEMS)grid.append(dryCard(item.name,item,result[item.id]));
-  $("dry-empty").hidden=true;$("dry-results").hidden=false;
-}
-function readReceived(kills){
-  const result={};
-  for(const field of dryInputs.querySelectorAll("input")){
-    const item=ITEM_BY_ID[field.dataset.id];
-    result[item.id]=parseNumber(field,kills,item.name);
-  }
-  return result;
-}
-
-$("mode-loot").addEventListener("click",()=>setMode("loot"));
-$("mode-dry").addEventListener("click",()=>setMode("dry"));
-form.addEventListener("input",()=>{resetPanels();showError("");});
-$("clear-button").addEventListener("click",()=>{
-  for(const id of ["kills-solo","kills-duo"])$(id).value="0";
-  $("solo-titan").value="branda";$("duo-titan").value="branda";
-  $("reward-action").value="loot";
-  for(const id of ["hard-cas","elite-cas","read-mystic","read-deadeye"])$(id).checked=false;
-  for(const input of dryInputs.querySelectorAll("input"))input.value="0";
-  resetPanels();showError("");
+setupEncounterCalculator({
+ encounters:ENCOUNTERS,maxEach:MAX_KILLS,maxReceived:counts=>Object.values(counts).reduce((sum,count)=>sum+count,0),items:ITEMS,unique:UNIQUE,dryItems:DRY_ITEMS,simulate,calculateDry,
+ readOptions:()=>({action:document.querySelector('[name="reward-action"]:checked').value,hardCAs:$("hard-cas").checked,eliteCAs:$("elite-cas").checked}),
+ rarity:(item,result)=>item.id==="bran"?(result.options.action==="sacrifice"?"1/1,500":"1/3,000"):result.options.action!=="loot"?"No primary loot":item.id==="giantsoul-amulet"?"Solo: 1/16 · Duo: 1/32":"Solo: 1/75 · Duo: 1/150",
+ summaryLabel:"Any primary unique",summaryKey:"anyPrimary",
+ onLoot:result=>{$("mode-summary").textContent=ENCOUNTERS.map(group=>format(result.counts[group.id])+" "+group.label).join(" + ");}
 });
-form.addEventListener("submit",event=>{
-  event.preventDefault();showError("");
-  try{
-    const solo=parseNumber($("kills-solo"),MAX_KILLS,"Solo kills");
-    const duo=parseNumber($("kills-duo"),MAX_KILLS,"Duo kills");
-    const options={
-      soloTitan:$("solo-titan").value,duoTitan:$("duo-titan").value,
-      action:$("reward-action").value,hardCAs:$("hard-cas").checked,
-      eliteCAs:$("elite-cas").checked,readMystic:$("read-mystic").checked,
-      readDeadeye:$("read-deadeye").checked
-    };
-    if(mode==="dry")renderDry(calculateDry(solo,duo,readReceived(solo+duo),options));
-    else renderLoot(simulate(solo,duo,options));
-  }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
-});
-
-clearInputsOnClick(form);

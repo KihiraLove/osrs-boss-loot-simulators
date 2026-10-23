@@ -1,7 +1,7 @@
+import { validateEncounterCounts } from "../../shared/encounters.mjs";
 // Zalcano: one contribution-eligible player's loot per completed encounter.
 // Rates and common-table weights: OSRS Wiki, October 2026.
-// The shared 1/200 seed/onyx roll is attributed to this player via a stated
-// equal-other-contributions approximation; shard scaling is interpolated.
+// Shared rare allocation and contribution scaling use the presets below.
 export const MAX_KILLS=1_000_000;
 export const UNIQUE=Object.freeze([
  {id:"smolcano",name:"Smolcano"},
@@ -10,10 +10,14 @@ export const UNIQUE=Object.freeze([
  {id:"uncut-onyx",name:"Uncut onyx"}
 ]);
 export const DRY_ITEMS=UNIQUE;
-export const DEFAULT_OPTIONS=Object.freeze({
- teamSize:4,relativeContribution:100,hpDamage:125,shieldDamage:125,
- mvp:false,xpFocus:false
-});
+// Presets use a 1,000-point team baseline (400 HP + 300 shield damage).
+// The exact common-loot and team-allocation formulas are unpublished;
+// point-based interpolation and proportional allocation remain estimates.
+export const ENCOUNTERS=Object.freeze([
+ {id:"trios",label:"Trios",share:1/3,hpDamage:400/3,shieldDamage:100},
+ {id:"mass",label:"Mass",share:36/1000,hpDamage:26,shieldDamage:5}
+]);
+export function validatePlan(counts){return validateEncounterCounts(counts,ENCOUNTERS,MAX_KILLS);}
 // Wiki observed, contribution-dependent quantity ranges; these bounds are
 // sampled directly rather than asserting an unpublished quantity formula.
 // [item-id, label, min, max, weight out of 36]
@@ -46,53 +50,19 @@ export const ITEMS=Object.freeze(Object.fromEntries([
  ["crystal-shard",{id:"crystal-shard",name:"Crystal shard"}],
  ["infernal-ashes",{id:"infernal-ashes",name:"Infernal ashes"}]
 ]));
-export function validateKills(kills){
- if(!Number.isSafeInteger(kills)||kills<0||kills>MAX_KILLS)
-  throw new RangeError("Enter between 0 and 1,000,000 completed Zalcano kills.");
- return kills;
+export function parameters(mode="trios") {
+ const preset=ENCOUNTERS.find(encounter=>encounter.id===mode);
+ if(!preset)throw new RangeError("Choose Trios or Mass.");
+ const points=preset.hpDamage+2*preset.shieldDamage;
+ const progress=Math.max(0,Math.min(1,(points-36)/(1000-36)));
+ const teamUnique=preset.share/200;
+ return {...preset,points,progress,teamUnique,seedRate:teamUnique*39/40,
+  onyxRate:teamUnique/40,shardRate:(1+progress)/1500,petRate:1/2250};
 }
-export function resolveOptions(raw={}){
- if(!raw||typeof raw!=="object"||Array.isArray(raw))
-  throw new TypeError("Zalcano settings must be an object.");
- const o={...DEFAULT_OPTIONS,...raw};
- const ints=[["teamSize",1,100],["relativeContribution",1,400],
-  ["hpDamage",0,10000],["shieldDamage",0,10000]];
- for(const [key,min,max] of ints)
-  if(!Number.isSafeInteger(o[key])||o[key]<min||o[key]>max)
-   throw new RangeError(key+" must be a whole number between "+min+" and "+max+".");
- for(const key of ["mvp","xpFocus"])
-  if(typeof o[key]!=="boolean")throw new TypeError(key+" must be true or false.");
- return o;
-}
-export function parameters(options={}){
- const o=resolveOptions(options);
- const points=o.hpDamage+2*o.shieldDamage;
- const cappedPoints=Math.min(400,o.hpDamage)+2*Math.min(300,o.shieldDamage);
- const eligible=o.shieldDamage>=5;
- const rareEligible=eligible&&o.hpDamage+o.shieldDamage>=31;
- // Share approximation: all OTHER teammates have 100% of average weight;
- // the selected player's estimated weight is relativeContribution / 100.
- const relative=o.relativeContribution/100;
- const share=relative/(o.teamSize-1+relative);
- // The Wiki publishes only the shard's endpoints (1/1500 to 1/750).
- // Interpolate probability linearly from 36 capped points (the lowest
- // possible at 5 shield and 31 total damage) to the 1000-point cap.
- const progress=Math.max(0,Math.min(1,(cappedPoints-36)/(1000-36)));
- const shardRate=rareEligible?(1+progress)/1500:0;
- const teamUnique=rareEligible?share/200:0;
- const seedRate=teamUnique*39/40;
- const onyxRate=teamUnique/40;
- const petRate=rareEligible?1/2250:0;
- return {options:o,points,cappedPoints,share,eligible,rareEligible,
-  shardRate,teamUnique,seedRate,onyxRate,petRate};
-}
-export function rateOf(id,options={}){
- const p=parameters(options);
- const odds={
-  "crystal-tool-seed":p.seedRate,"uncut-onyx":p.onyxRate,
-  "zalcano-shard":p.shardRate,"smolcano":p.petRate
- };
- return odds[id]??0;
+export function rateOf(id,mode="trios") {
+ const p=parameters(mode);
+ return {"crystal-tool-seed":p.seedRate,"uncut-onyx":p.onyxRate,
+  "zalcano-shard":p.shardRate,"smolcano":p.petRate}[id]??0;
 }
 function unit(rng){
  const v=rng();
@@ -100,40 +70,34 @@ function unit(rng){
   throw new RangeError("RNG must return a finite number in [0,1).");
  return v;
 }
-function range(min,max,rng){
- return min===max?min:min+Math.floor(unit(rng)*(max-min+1));
-}
 function rollCommon(rng){
  let ticket=unit(rng)*mainTickets;
  for(const row of MAIN){ticket-=row[4];if(ticket<0)return row;}
  return MAIN.at(-1);
 }
-export function simulate(kills,{rng=Math.random,...opts}={}){
- validateKills(kills);
+export function simulate(counts,{rng=Math.random}={}) {
+ const plan=validatePlan(counts);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- const params=parameters(opts);
  const drops=Object.create(null);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]??0)+count;};
- const {eligible,rareEligible,seedRate,onyxRate,shardRate,petRate,teamUnique,options}=params;
- for(let i=0;i<kills;i++){
-  if(!eligible)continue;
-  add("crystal-shard",rareEligible?(options.mvp?3:2):1);
-  if(options.mvp)add("infernal-ashes");
-  if(!options.xpFocus){
+ const mvpKills=Math.floor(plan.counts.trios/3);
+ for(const group of plan.groups) {
+  const params=parameters(group.id);
+  for(let i=0;i<group.count;i++) {
+   const mvp=group.id==="trios"&&(i+1)%3===0;
+   add("crystal-shard",mvp?3:2);
+   if(mvp)add("infernal-ashes");
    const [id,,min,max]=rollCommon(rng);
-   let quantity=range(min,max,rng);
-   if(options.mvp)quantity+=Math.ceil(quantity/10);
+   let quantity=Math.floor(min+(max-min)*params.progress);
+   if(mvp)quantity+=Math.ceil(quantity/10);
    add(id,quantity);
+   if(unit(rng)<1/200&&unit(rng)<params.share) {
+    if(unit(rng)<1/40)add("uncut-onyx");
+    else add("crystal-tool-seed");
+   }
+   if(unit(rng)<params.shardRate)add("zalcano-shard");
+   if(unit(rng)<params.petRate)add("smolcano");
   }
-  if(!rareEligible)continue;
-  // One shared 1/200 roll; select the recipient by estimated contribution.
-  // Do not roll seed and onyx as independent events.
-  if(unit(rng)<1/200 && unit(rng)<params.share){
-   if(unit(rng)<1/40)add("uncut-onyx");
-   else add("crystal-tool-seed");
-  }
-  if(unit(rng)<shardRate)add("zalcano-shard");
-  if(unit(rng)<petRate)add("smolcano");
  }
- return {kills,options,parameters:params,drops};
+ return {counts:plan.counts,kills:plan.total,mvpKills,drops};
 }

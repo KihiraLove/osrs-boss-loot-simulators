@@ -39,6 +39,7 @@ No build or package installation is required. GitHub Actions validates and publi
 - `styles.css`: all calculator and main-page styles.
 - `shared/ui.mjs`, `shared/header.mjs`, `shared/footer.mjs`: fields, cards, navigation, Ko-fi and source links.
 - `shared/distributions.mjs`: stable binomial probabilities, convolution, count validation and dry-result statistics.
+- `shared/encounters.mjs`, `shared/encounter-app.mjs`: combined encounter plans and their calculator UI.
 - `shared/rare-tables.mjs`: rare/gem tables and Ring of wealth effects.
 - `shared/chest-*.mjs`: chest reward tables, calculations and UI.
 

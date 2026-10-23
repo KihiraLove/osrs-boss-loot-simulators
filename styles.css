@@ -532,11 +532,11 @@ body.boss-selection-page {
 .brutus-world input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
 
 /* Bryophyta key modes and summary. */
-.bryophyta-choice { display: grid; gap: 8px; border: 0; padding: 0; margin: 14px 0; }
-.bryophyta-choice legend { font-size: .83rem; color: var(--muted); margin-bottom: 8px; }
-.bryophyta-choice label { padding: 11px 12px; border: 1px solid var(--border); color: var(--muted); background: var(--panel-2); font-size: .83rem; cursor: pointer; }
-.bryophyta-choice label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
-.bryophyta-choice input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+:is(.bryophyta-choice, .calculator-choice) { display: grid; gap: 8px; border: 0; padding: 0; margin: 14px 0; }
+:is(.bryophyta-choice, .calculator-choice) legend { font-size: .83rem; color: var(--muted); margin-bottom: 8px; }
+:is(.bryophyta-choice, .calculator-choice) label { padding: 11px 12px; border: 1px solid var(--border); color: var(--muted); background: var(--panel-2); font-size: .83rem; cursor: pointer; }
+:is(.bryophyta-choice, .calculator-choice) label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
+:is(.bryophyta-choice, .calculator-choice) input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
 .bryophyta-note { font-size: .78rem; color: var(--muted); line-height: 1.5; }
 .bryophyta-summary { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
 .bryophyta-stat { border: 1px solid var(--border-soft); padding: 12px; background: var(--panel-2); }
@@ -594,17 +594,11 @@ body.boss-selection-page {
 /* Unique reward progress. */
 .vestige-progress { font-size: .8rem; color: var(--muted); margin: 12px 0 18px; }
 
-/* Fortis Colosseum settings and summary. */
-.fortis-select { min-width: 0; max-width: 100%; width: 100%; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 10px; }
-.fortis-settings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 12px 0 18px; }
-.fortis-settings label { display: flex; flex-direction: column; gap: 7px; color: var(--muted); font-size: .82rem; }
+/* Fortis Colosseum summary. */
 .fortis-note { font-size: .82rem; color: var(--muted); line-height: 1.6; margin: 12px 0; }
 .fortis-summary { display: flex; flex-wrap: wrap; gap: 12px; margin: 15px 0; }
 .fortis-summary span { border: 1px solid var(--border); background: var(--panel-2); padding: 10px 14px; font-size: .81rem; }
 .fortis-summary strong { display: block; font-size: 1.15rem; color: var(--text); }
-@media (max-width:460px) {
-  .fortis-settings { grid-template-columns: 1fr; }
-}
 
 /* Gauntlet settings and combined chances. */
 .gauntlet-kills { display: grid; gap: 8px; }
@@ -728,11 +722,5 @@ body.boss-selection-page {
   .yama-output .unique-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 
-/* Zalcano contribution inputs. */
-.contribution-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; margin: 14px 0; }
-.contribution-grid .depth-field { display: flex; flex-direction: column; gap: 7px; font-size: .78rem; }
-.contribution-grid input { width: 100%; min-width: 0; max-width: 100%; padding: 10px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+/* Zalcano contribution summary. */
 .contribution-note { color: var(--muted); font-size: .81rem; line-height: 1.6; margin: 10px 0 16px; }
-@media (max-width:480px) {
-  .contribution-grid { grid-template-columns: 1fr; }
-}

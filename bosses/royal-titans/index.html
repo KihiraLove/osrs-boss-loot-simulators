@@ -20,23 +20,18 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
       <form id="simulator-form" novalidate>
-        <div class="huey-kills">
-          <label class="depth-field count-field"><span>Solo (100%)</span><input id="kills-solo" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Royal Titans solo kills"></label>
-          <label class="depth-field count-field"><span>Duo (50%)</span><input id="kills-duo" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Royal Titans duo kills"></label>
-        </div>
-        <label class="depth-field"><span>Loot target for solo kills</span>
-          <select id="solo-titan" aria-label="Solo loot target"><option value="branda">Branda the Fire Queen</option><option value="eldric">Eldric the Ice King</option></select>
-        </label>
-        <label class="depth-field"><span>Loot target for duo kills</span>
-          <select id="duo-titan" aria-label="Duo loot target"><option value="branda">Branda the Fire Queen</option><option value="eldric">Eldric the Ice King</option></select>
-        </label>
-        <label class="depth-field"><span>Reward choice</span>
-          <select id="reward-action" aria-label="Reward choice"><option value="loot">Loot (unique or two ordinary rolls)</option><option value="sacrifice">Sacrifice (double pet odds)</option><option value="pages">Take desiccated pages</option></select>
-        </label>
+        <label class="depth-field count-field"><span>Solo Branda</span><input id="soloBranda" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Solo Branda kills"></label>
+        <label class="depth-field count-field"><span>Solo Eldric</span><input id="soloEldric" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Solo Eldric kills"></label>
+        <label class="depth-field count-field"><span>Duo Branda</span><input id="duoBranda" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Duo Branda kills"></label>
+        <label class="depth-field count-field"><span>Duo Eldric</span><input id="duoEldric" type="number" min="0" max="1000000" step="1" value="0" inputmode="numeric" aria-label="Duo Eldric kills"></label>
+        <fieldset class="calculator-choice" id="reward-choice">
+          <legend>Reward choice</legend>
+          <label><input name="reward-action" type="radio" value="loot" checked> Loot</label>
+          <label><input name="reward-action" type="radio" value="sacrifice"> Sacrifice</label>
+          <label><input name="reward-action" type="radio" value="pages"> Take desiccated pages</label>
+        </fieldset>
         <label class="calculator-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements</label>
         <label class="calculator-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
-        <label class="calculator-option"><input id="read-mystic" type="checkbox"> Mystic vigour prayer scroll already read</label>
-        <label class="calculator-option"><input id="read-deadeye" type="checkbox"> Deadeye prayer scroll already read</label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
