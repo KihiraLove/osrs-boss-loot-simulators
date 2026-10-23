@@ -1,6 +1,8 @@
-# Nex — nihil-shard-based loot simulator
+# OSRS Nex — nihil-shard-based loot simulator
 
-[Open Nex simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/nex/) · [All simulators](../../README.md)
+[Open Nex simulator](https://kihiralove.github.io/osrs-boss-loot-simulators/bosses/nex/) · [All simulators](../../README.md)
+
+Drop data and mechanics come from the **Old School RuneScape Wiki**. This calculator does not use RuneScape 3 Nex tables, Pernix or Virtus armour, or the RuneScape 3 Zaryte bow.
 
 Unlike other bosses on this site, **Nex uses only the number of nihil shards received from Nex** as input. There is **no kill-count or team-size input**. Her loot and rare-item odds depend on your damage contribution, which varies with team size and performance.
 
@@ -24,7 +26,7 @@ This is **not your actual KC**, and it is not a reconstruction of actual contrib
 
 ## Unique drop model
 
-The Wiki reports a **1/43 unique roll per team kill**, based on individual contribution; the personal contribution is what the shard estimate approximates. The six reward weights total 12:
+The Wiki reports an effective **1/43 base unique rate per kill**, allocated through individual player rolls based on contribution. Multiple players can receive unique rewards in the same kill. The MVP receives a 10% bonus to their unique chance; shard-only input cannot reconstruct that bonus. The six reward weights total 12:
 
 | Unique | Weight | Whole-team equivalent rate |
 | --- | ---: | ---: |
@@ -55,7 +57,7 @@ Other documented rates used where possible: **blood essence 1/82**, **rune sword
 
 ### Illustrative common loot
 
-The Wiki documents **two guaranteed common drops per Nex kill**, but does **not** publish exact numeric weights for many common items. We therefore display a separate **Illustrative common loot** section using approximately two rolls per contribution-equivalent full kill and manually assigned category weights. It covers runes, bolts, gems, wine of Zamorak, sharks with prayer potions, Saradomin brews with super restores, ecumenical key shards, and coins.
+The Wiki documents **two guaranteed common drops per Nex kill**, but does **not** publish exact numeric weights for many common items. We therefore display a separate **Illustrative common loot** section using approximately two rolls per contribution-equivalent full kill and manually assigned category weights. It covers runes, bolts, air orbs, coal, runite ore, gems, wine of Zamorak, sharks with prayer potions, Saradomin brews with super restores, ecumenical key shards, and coins.
 
 **These weights and inferred common item quantities are illustrative, not actual Nex common-drop rates.** They are separate from the guaranteed input shards, the accurately documented special rates, and unique estimates. We do not simulate guaranteed MVP-only big bones or claim to infer any real number of encounters.
 

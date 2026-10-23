@@ -79,7 +79,7 @@ test("Validate kills, options and random generator",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{eliteCAs:1}));
- assert.throws(()=>simulate(1,{konarTask:"yes"}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:"yes"}));
 });
 test("UI, navigation, docs and all local PNG sprites",()=>{
  const index=source("index.html");
@@ -87,8 +87,7 @@ test("UI, navigation, docs and all local PNG sprites",()=>{
  const docs=source("bosses/vorkath/README.md");
  assert.match(index,/href="bosses\/vorkath\/"/);
  assert.match(docs,/50th/);
- for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry",
-  "unique-grid","loot-grid","dry-inputs","dry-results-grid"])
+ for(const id of ["kill-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(ui.includes('id="'+id+'"'),id);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  for(const item of Object.values(ITEMS)){

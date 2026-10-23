@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Commander Zilyana and bodyguards (Starlight, Growler and Bree).
 // Each full-room clear gives one mutually exclusive 127-ticket roll per monster.
 import {RARE,GEM,MEGA,ITEMS as COMMON_ITEMS} from "../king-black-dragon/simulator.mjs";
@@ -104,7 +105,7 @@ function amount(low,high,rng){
  return low===high?low:low+Math.floor(unit(rng)*(high-low+1));
 }
 const SHARDS=["godsword-shard-1","godsword-shard-2","godsword-shard-3"];
-function rollPrimary(rng,add,isBoss){
+function rollPrimary(rng,add,isBoss,ringOfWealth=false){
  const [id,,lo,hi]=weighted(isBoss?BOSS_MAIN:MINION_MAIN,rng);
  if(id==="@unique"){
   if(isBoss){
@@ -129,7 +130,7 @@ function rollPrimary(rng,add,isBoss){
   // Shared four-column rare and gem subtables: [id,lo,hi,weight].
   let current=id==="@rare"?RARE:GEM;
   for(let depth=0;depth<8;depth++){
-   const [name,min,max]=weighted(current,rng,3);
+   const [name,min,max]=weighted(wealthTable(current,ringOfWealth,3,{nested:true}),rng,3);
    if(name==="@gem"){current=GEM;continue;}
    if(name==="@megaRare"){current=MEGA;continue;}
    if(name==="@talisman"){add("chaos-talisman");return;}
@@ -143,24 +144,23 @@ function rollPrimary(rng,add,isBoss){
   throw new Error("Rare table recursion limit exceeded.");
  }else add(id,amount(lo,hi,rng));
 }
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false,frozenDoor=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if([hardCAs,eliteCAs,konarTask,frozenDoor].some(v=>typeof v!=="boolean"))
-  throw new TypeError("Achievement, Konar and Frozen Door options must be boolean.");
+ if([hardCAs,eliteCAs].some(v=>typeof v!=="boolean"))
+  throw new TypeError("Combat Achievement options must be boolean.");
  const bySource=Object.fromEntries(SOURCES.map(x=>[x.id,Object.create(null)]));
  const add=(source,id,n=1)=>{if(n>0)bySource[source][id]=(bySource[source][id]??0)+n;};
  for(let k=0;k<kills;k++){
   add("zilyana","bones");
-  if(frozenDoor)add("zilyana","frozen-key-piece-saradomin");
-  rollPrimary(rng,(id,n)=>add("zilyana",id,n),true);
+  rollPrimary(rng,(id,n)=>add("zilyana",id,n),true,ringOfWealth);
   if(unit(rng)<1/5000)add("zilyana","pet-zilyana");
   if(unit(rng)<(eliteCAs?1/237:1/250))add("zilyana","clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/50)add("zilyana","brimstone-key");
+
   for(const source of ["starlight","growler","bree"]){
    add(source,"bones");
-   rollPrimary(rng,(id,n)=>add(source,id,n),false);
-   if(frozenDoor&&unit(rng)<1/20)add(source,"frozen-key-piece-saradomin");
+   rollPrimary(rng,(id,n)=>add(source,id,n),false,ringOfWealth);
    if(unit(rng)<(hardCAs?1/121:1/128))add(source,"clue-scroll-hard");
   }
  }

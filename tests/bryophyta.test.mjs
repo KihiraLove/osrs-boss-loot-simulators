@@ -161,8 +161,8 @@ test("Page shows independent loot sections, exactly two key modes and chest-only
  assert.match(html,/id="kill-count"/);assert.match(html,/id="chest-count"/);
  assert.match(html,/id="boss-loot"/);assert.match(html,/id="chest-loot"/);
  assert.match(html,/id="slayer-kills"/);
- assert.match(html,/Kc on slayer task out of total/);
- assert.match(html,/Key obtained form boss/);
+ assert.match(html,/Of which on task/);
+ assert.match(html,/Keys obtained from boss/);
  assert.match(html,/id="unique-grid"/);
  assert.match(app,/renderUnique\(data\.chestDrops\)/);
  assert.match(app,/delete chestLoot\[ESSENCE\.id\]/);

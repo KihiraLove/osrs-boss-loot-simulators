@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Deranged Archaeologist: one exclusive 131-ticket main roll per kill.
 // Source: https://oldschool.runescape.wiki/w/Deranged_archaeologist
 export const MAX_KILLS=1_000_000;
@@ -96,9 +97,10 @@ function secondary(rows,rng,add){
  const [id,count]=weighted(rows,rng,row=>1/row[2]);
  if(id!=="@nothing")add(id,count);
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);clueRate({eliteCAs});
- if(typeof konarTask!=="boolean")throw new TypeError("Konar task must be a boolean.");
+
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
@@ -106,7 +108,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
   add("bones");
   const [id,min,max]=weighted(MAIN,rng,row=>row[3]);
   if(id==="@seed")secondary(SEEDS,rng,add);
-  else if(id==="@rare"||id==="@gem")secondary(RARE,rng,add);
+  else if(id==="@rare"||id==="@gem")secondary(wealthTable(RARE,ringOfWealth,2,{reciprocal:true,kind:id==="@gem"?"gem":"rare"}),rng,add);
   else add(id,amount(min,max,rng));
   if(unit(rng)<108/175)add("numulite",amount(5,32,rng));
   // One fossil type may drop per kill; types are mutually exclusive.
@@ -117,7 +119,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
    if(fossilRoll<threshold){add(fossil);break;}
   }
   if(unit(rng)<clueRate({eliteCAs}))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/65)add("brimstone-key");
+
  }
- return {kills,eliteCAs,konarTask,drops};
+ return {kills,eliteCAs,drops};
 }

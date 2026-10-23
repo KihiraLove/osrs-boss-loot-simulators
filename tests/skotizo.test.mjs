@@ -32,7 +32,7 @@ test("Guaranteed rewards and multiple independent branches can coexist",()=>{
  assert.equal(x["jar-of-darkness"],1);
  assert.equal(x["dark-totem"],1);
  assert.equal(x["clue-scroll-elite"],1);
- assert.equal(x["brimstone-key"],1);
+ assert.equal(x["brimstone-key"],undefined);
 });
 test("High rolls still guarantee five shards and hard clue",()=>{
  const x=simulate(1,{rng:()=>.999999}).drops;
@@ -66,7 +66,7 @@ test("Unique rates, elite Combat Achievements and conditional keys",()=>{
  assert.equal(UNIQUE.length,6);
  assert.equal(TERTIARY.length,4);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
- assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],1);
+ assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],undefined);
 });
 test("Dry probabilities are binomial with independent tertiary rates",()=>{
  for(const k of [0,1,2,100,1000,100000,MAX_KILLS]){
@@ -92,7 +92,7 @@ test("Inputs, random generator and toggles validate",()=>{
   assert.throws(()=>calculateDry(k));
  }
  assert.throws(()=>validateOptions({eliteCAs:1}));
- assert.throws(()=>validateOptions({konarTask:"true"}));
+ assert.doesNotThrow(()=>validateOptions({konarTask:"true"}));
  assert.throws(()=>eliteClueRate(1));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:()=>-1}));
@@ -103,8 +103,7 @@ test("Homepage, controls, README and every required sprite are present",()=>{
  const home=read("index.html"),page=read("bosses/skotizo/index.html"),app=read("bosses/skotizo/app.mjs");
  const docs=read("bosses/skotizo/README.md");
  assert.match(home,/href="bosses\/skotizo\/"/);
- for(const id of ["kill-count","elite-cas","konar-task","mode-loot",
-  "mode-dry","unique-grid","loot-grid","dry-results-grid"])
+ for(const id of ["kill-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-results-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  assert.ok(!page.includes('id="hard-cas"'));
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);

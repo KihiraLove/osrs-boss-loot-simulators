@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // OSRS Araxxor: Harvest / Destroy. Rates: OSRS Wiki (Jul 2026).
 import {RDT} from "../cerberus/simulator.mjs";
 export const MAX_KILLS=1_000_000;
@@ -36,7 +37,6 @@ export const ITEMS=Object.freeze(Object.fromEntries([
  ...RDT.filter(x=>x[0]!=="nothing").map(([id,name])=>[id,name]),
  ["prayer-potion-4","Prayer potion(4)"],["super-combat-potion-1","Super combat potion(1)"],
  ["shark","Shark"],["wild-pie","Wild pie"],["clue-scroll-elite","Clue scroll (elite)"],
- ["brimstone-key","Brimstone key"],["coagulated-venom","Coagulated venom"]
 ].map(([id,name])=>[id,{id,name}])));
 export function validateKills(n){
  if(!Number.isSafeInteger(n)||n<0||n>MAX_KILLS)throw new RangeError("Enter between 0 and 1,000,000 completed kills.");
@@ -62,7 +62,8 @@ export function rateOf(id,mode="harvest"){
  if(HALBERD.some(x=>x.id===id)||id==="araxyte-fang")return 1/600;
  return DRY_ITEMS.find(x=>x.id===id)?.rate??0;
 }
-export function simulate(kills,{rng=Math.random,mode="harvest",eliteCAs=false,konarTask=false,coagulatedVenom=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,mode="harvest",eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);validateMode(mode);
  const drops=Object.create(null),missing=HALBERD.map(x=>x.id);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]||0)+count;};
@@ -77,7 +78,7 @@ export function simulate(kills,{rng=Math.random,mode="harvest",eliteCAs=false,ko
    }else{
     let chosen=pick(STANDARD,rng);
     if(chosen[0]==="$seeds")chosen=pick(SEEDS,rng);
-    else if(chosen[0]==="$rdt")chosen=pick(RDT,rng);
+    else if(chosen[0]==="$rdt")chosen=pick(wealthTable(RDT,ringOfWealth,4),rng);
     if(chosen[0]==="$supplies"){
      add(unit(rng)<.5?"araxyte-venom-sack":"super-combat-potion-1");
      add("prayer-potion-4");
@@ -86,13 +87,20 @@ export function simulate(kills,{rng=Math.random,mode="harvest",eliteCAs=false,ko
    }
    if(unit(rng)<1/250)add("araxyte-head");
    if(unit(rng)<1/1500)add("jar-of-venom");
-   if(konarTask&&unit(rng)<1/40)add("brimstone-key");
+
   }
   // Destroy forfeits all above, but leaves clues and doubles Nid.
   if(unit(rng)<(eliteCAs?1/47:1/50))add("clue-scroll-elite");
   if(unit(rng)<rateOf("nid",mode))add("nid");
  }
- // Explicit user opt-in: one previously unobtained, sub-1:15 speed reward.
- if(mode==="harvest"&&kills>0&&coagulatedVenom)add("coagulated-venom");
  return {kills,mode,drops};
+}
+
+export function simulateCombined(harvestKills,destroyKills,options={}) {
+ validateKills(harvestKills);validateKills(destroyKills);
+ const a=simulate(harvestKills,{...options,mode:"harvest"});
+ const b=simulate(destroyKills,{...options,mode:"destroy"});
+ const drops={...a.drops};
+ for(const [id,count] of Object.entries(b.drops))drops[id]=(drops[id]??0)+count;
+ return {kills:harvestKills+destroyKills,harvestKills,destroyKills,drops};
 }

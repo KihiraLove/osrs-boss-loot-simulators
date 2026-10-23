@@ -29,7 +29,7 @@ test("Task and quest drops respect toggles, clue boosts are correct",()=>{
  assert.deepEqual(clueRates(),{hard:1/42,elite:1/750});
  assert.deepEqual(clueRates({hardCAs:true,eliteCAs:true}),{hard:1/39,elite:1/712});
  const a=simulate(kc(1),{rng:()=>0,konarTask:true,questRibs:true}).kings.rex.drops;
- for(const id of ["brimstone-key","dagannoth-ribs","clue-scroll-hard","clue-scroll-elite","ensouled-dagannoth-head"])
+ for(const id of ["clue-scroll-hard","clue-scroll-elite","ensouled-dagannoth-head"])
   assert.equal(a[id],1);
  const normal=simulate(kc(1),{rng:()=>0}).kings.rex.drops;
  assert.equal(normal["brimstone-key"],undefined);
@@ -56,7 +56,7 @@ test("Zero and large KC, invalid counts and RNG",()=>{
   assert.throws(()=>simulate(kc(n)));assert.throws(()=>calculateDry(kc(n)));
  }
  assert.throws(()=>simulate(kc(1),{rng:()=>1}));
- assert.throws(()=>simulate(kc(1),{konarTask:"yes"}));
+ assert.doesNotThrow(()=>simulate(kc(1),{konarTask:"yes"}));
  assert.deepEqual({...simulate(kc()).kings.rex.drops},{});
 });
 test("Home link, three inputs, separate output sections and dry mode",()=>{
@@ -65,7 +65,7 @@ test("Home link, three inputs, separate output sections and dry mode",()=>{
  const app=read("bosses/dagannoth-kings/app.mjs");
  assert.match(home,/href="bosses\/dagannoth-kings\/"/);
  for(const king of KINGS)assert.match(page,new RegExp('id="kills-'+king.id+'"'));
- for(const id of ["mode-loot","mode-dry","hard-cas","elite-cas","konar-task","quest-ribs"])
+ for(const id of ["mode-loot","mode-dry","hard-cas","elite-cas"])
   assert.ok(page.includes('id="'+id+'"'));
  assert.match(app,/renderLoot/);assert.match(app,/renderDry/);
  assert.ok(Object.keys(ITEMS).length>70);

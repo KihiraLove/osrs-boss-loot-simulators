@@ -34,7 +34,7 @@ test("one primary unique per kill, always infernal ashes",()=>{
  assert.equal(result.drops["ensouled-hellhound-head"],1);
  assert.equal(result.drops["jar-of-souls"],1);
  assert.equal(result.drops["hellpuppy"],1);
- assert.equal(result.drops["brimstone-key"],1);
+ assert.equal(result.drops["brimstone-key"],undefined);
 });
 test("normal loot retains source quantities and updated key master teleport batch of seven",()=>{
  const result=simulate(1,{rng:()=>.999});
@@ -51,7 +51,7 @@ test("Konar task is required for a brimstone key; elite CA affects only elite cl
  const base=simulate(1,{rng:sequence(),konarTask:false,eliteCAs:false});
  const boosted=simulate(1,{rng:sequence(),konarTask:true,eliteCAs:true});
  assert.equal(base.drops["brimstone-key"],undefined);
- assert.equal(boosted.drops["brimstone-key"],1);
+ assert.equal(boosted.drops["brimstone-key"],undefined);
  assert.equal(base.drops["clue-scroll-elite"],1);
  assert.equal(boosted.drops["clue-scroll-elite"],1);
  // Chance between the two thresholds, 1/100 and 1/95.
@@ -102,7 +102,7 @@ test("cerberus route uses local pet sprite, two calculator modes, and optional t
  assert.match(page,/src="(?:\.\/)?app\.mjs"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
- assert.match(page,/id="konar-task"/);
+ assert.doesNotMatch(page,/id="konar-task"/);
  assert.match(page,/id="elite-cas"/);
  assert.match(page,/src="\.\.\/\.\.\/assets\/items\/hellpuppy\.png"/);
  assert.match(app,/calculateDry/);

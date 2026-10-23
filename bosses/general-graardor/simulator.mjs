@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // General Graardor and all three Bandos bodyguards, OSRS Wiki, October 2026.
 // One "kill" means one boss kill and one kill of each of the three sergeants.
 // Both primary tables use a single, mutually exclusive 127-ticket roll.
@@ -92,9 +93,9 @@ function unit(rng){
   throw new RangeError("RNG must return a finite number in [0,1).");
  return v;
 }
-function weighted(rows,rng){
- let t=unit(rng)*mainTickets(rows);
- for(const row of rows){t-=row[4];if(t<0)return row;}
+function weighted(rows,rng,weightIndex=4){
+ let t=unit(rng)*rows.reduce((sum,row)=>sum+row[weightIndex],0);
+ for(const row of rows){t-=row[weightIndex];if(t<0)return row;}
  return rows.at(-1);
 }
 function amount(low,high,rng){
@@ -102,7 +103,7 @@ function amount(low,high,rng){
 }
 const ARMOUR=UNIQUE.slice(0,3).map(x=>x.id);
 const SHARDS=UNIQUE.slice(4,7).map(x=>x.id);
-function rollPrimary(rng,add,isBoss){
+function rollPrimary(rng,add,isBoss,ringOfWealth=false){
  const row=weighted(isBoss?BOSS_MAIN:MINION_MAIN,rng);
  const [id,,low,high]=row;
  if(id==="@armour"){
@@ -123,7 +124,7 @@ function rollPrimary(rng,add,isBoss){
   // runite bar, and 19,500-20,000 coins for empty results.
   let current=id==="@rare"?RARE:GEM;
   for(let depth=0;depth<8;depth++){
-   const [value,lo,hi]=weighted(current,rng);
+   const [value,lo,hi]=weighted(wealthTable(current,ringOfWealth,3,{nested:true}),rng,3);
    if(value==="@gem"){current=GEM;continue;}
    if(value==="@megaRare"){current=MEGA;continue;}
    if(value==="@talisman"){add("chaos-talisman");return;}
@@ -137,11 +138,12 @@ function rollPrimary(rng,add,isBoss){
   throw new Error("God Wars rare-drop table depth exceeded.");
  }else add(id,amount(low,high,rng));
 }
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false,frozenDoor=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if([hardCAs,eliteCAs,konarTask,frozenDoor].some(x=>typeof x!=="boolean"))
-  throw new TypeError("Combat Achievement, Konar and Frozen Door options must be boolean.");
+ if([hardCAs,eliteCAs].some(x=>typeof x!=="boolean"))
+  throw new TypeError("Combat Combat Achievement options must be boolean.");
  const bySource=Object.fromEntries(SOURCES.map(x=>[x.id,Object.create(null)]));
  function add(source,id,n=1){
   if(n>0)bySource[source][id]=(bySource[source][id]??0)+n;
@@ -149,19 +151,17 @@ export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,kon
  for(let k=0;k<kills;k++){
   const boss="graardor";
   add(boss,"big-bones");
-  if(frozenDoor)add(boss,"frozen-key-piece-bandos");
-  rollPrimary(rng,(id,n)=>add(boss,id,n),true);
+  rollPrimary(rng,(id,n)=>add(boss,id,n),true,ringOfWealth);
   if(unit(rng)<1/5000)add(boss,"pet-general-graardor");
   if(unit(rng)<(eliteCAs?1/237:1/250))add(boss,"clue-scroll-elite");
   if(unit(rng)<1/400)add(boss,"long-bone");
   if(unit(rng)<1/5012.5)add(boss,"curved-bone");
-  if(konarTask&&unit(rng)<1/50)add(boss,"brimstone-key");
+
   for(const source of ["strongstack","steelwill","grimspike"]){
    add(source,"bones");
-   rollPrimary(rng,(id,n)=>add(source,id,n),false);
+   rollPrimary(rng,(id,n)=>add(source,id,n),false,ringOfWealth);
    const special=source==="strongstack"?"kebab":source==="steelwill"?"beer":"right-eye-patch";
    if(unit(rng)<1/6)add(source,special);
-   if(frozenDoor&&unit(rng)<1/20)add(source,"frozen-key-piece-bandos");
    if(unit(rng)<(hardCAs?1/121:1/128))add(source,"clue-scroll-hard");
    if(unit(rng)<1/5000)add(source,"goblin-champion-scroll");
   }

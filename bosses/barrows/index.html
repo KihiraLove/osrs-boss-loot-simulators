@@ -29,15 +29,11 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Your chests</h2></div>
       <form id="simulator-form" novalidate>
-        <label class="depth-field phosani-kills"><span>Completed chests (all 6 brothers)</span>
+        <label class="depth-field phosani-kills"><span>Chest count (all 6 brothers)</span>
           <input id="chest-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Barrows chests with all six brothers defeated">
         </label>
-        <fieldset class="barrows-potential"><legend>Rewards potential (6 brothers always)</legend>
-          <label><input type="radio" name="potential" value="880" checked> 880 points (86.8% — runes)</label>
-          <label><input type="radio" name="potential" value="1012"> 1,012 points (full rewards)</label>
-        </fieldset>
-        <label class="phosani-option" id="hard-diary-option"><input id="hard-diary" type="checkbox"> Hard Morytania Diary (+50% runes)</label>
-        <label class="phosani-option" id="elite-cas-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (elite clue boost)</label>
+        <label class="phosani-option" id="hard-diary-option"><input id="hard-diary" type="checkbox"> Hard Morytania Diary</label>
+        <label class="phosani-option" id="elite-cas-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
@@ -73,12 +69,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Chest_(Barrows)" target="_blank" rel="noopener noreferrer">OSRS Wiki — Chest (Barrows)</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Chest_(Barrows)"></footer>
 </body>
 </html>

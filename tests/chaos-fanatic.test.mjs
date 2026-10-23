@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,RARE,ITEMS,UNIQUE,DRY_ITEMS,
  SHARD_CHANCE,ANY_SHARD_CHANCE,PET_CHANCE,
- validateKills,validateTask,clueRate,rateOf,simulate
+ validateKills,clueRate,rateOf,simulate
 } from "../bosses/chaos-fanatic/simulator.mjs";
 import {calculateDry} from "../bosses/chaos-fanatic/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
@@ -73,16 +73,16 @@ test("Rare/gem branch produces published table results",()=>{
 });
 test("Slayer tasks and hard clue boosts are optional",()=>{
  const konar=simulate(1,{rng:()=>0,task:"konar"});
- assert.equal(konar.drops["brimstone-key"],1);
+ assert.equal(konar.drops["brimstone-key"],undefined);
  assert.equal(konar.drops["larrans-key"],undefined);
  const wilderness=simulate(1,{rng:()=>0,task:"krystilia"});
- assert.equal(wilderness.drops["larrans-key"],1);
- assert.equal(wilderness.drops["slayers-enchantment"],1);
+ assert.equal(wilderness.drops["larrans-key"],undefined);
+ assert.equal(wilderness.drops["slayers-enchantment"],undefined);
  assert.equal(wilderness.drops["brimstone-key"],undefined);
  close(clueRate(),1/128);
  close(clueRate({hardCAs:true}),1/121);
- close(clueRate({ringOfWealth:true}),1/64);
- close(clueRate({hardCAs:true,ringOfWealth:true}),1/60);
+ close(clueRate({imbuedRingOfWealth:true}),1/64);
+ close(clueRate({hardCAs:true,imbuedRingOfWealth:true}),2/121);
 });
 test("Dry model handles mutually exclusive shards plus independent pet",()=>{
  const x=calculateDry(1,{"odium-shard-1":1});
@@ -110,10 +110,9 @@ test("High KC, zero KC, bounds, RNG and options",()=>{
  for(const n of [-1,1.5,NaN,Infinity,MAX_KILLS+1]){
   assert.throws(()=>validateKills(n));assert.throws(()=>simulate(n));assert.throws(()=>calculateDry(n));
  }
- assert.throws(()=>validateTask("unknown"));
- assert.throws(()=>simulate(1,{task:"other"}));
+ assert.doesNotThrow(()=>simulate(1,{task:"other"}));
  assert.throws(()=>clueRate({hardCAs:1}));
- assert.throws(()=>simulate(1,{ringOfWealth:1}));
+ assert.throws(()=>simulate(1,{imbuedRingOfWealth:1}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>calculateDry(1,{"odium-shard-1":-1}));
  assert.throws(()=>calculateDry(1,{"pet-chaos-elemental":2}));
@@ -125,8 +124,9 @@ test("Chaos Fanatic page, controls and every item has a local PNG",()=>{
  assert.match(home,/assets\/items\/odium-shard-1\.png/);
  assert.match(page,/id="kill-count"/);
  assert.match(page,/id="hard-cas"/);
- assert.match(page,/id="ring-of-wealth"/);
- assert.match(page,/name="slayer-task"/);
+ assert.doesNotMatch(page,/id="ring-of-wealth"/);
+ assert.match(page,/id="imbued-ring-of-wealth"/);
+ assert.doesNotMatch(page,/name="slayer-task"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="unique-grid"/);

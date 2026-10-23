@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,RARE,ITEMS,UNIQUE,DRY_ITEMS,
  SHARD_CHANCE,ANY_SHARD_CHANCE,FEDORA_CHANCE,
- validateKills,validateTask,clueRate,rateOf,simulate
+ validateKills,clueRate,rateOf,simulate
 } from "../bosses/crazy-archaeologist/simulator.mjs";
 import {calculateDry} from "../bosses/crazy-archaeologist/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
@@ -60,15 +60,15 @@ test("Ordinary table has weighted drops, paired gems and an unlisted blank ticke
 });
 test("Slayer and clue options are mutually exclusive or independent as appropriate",()=>{
  const konar=simulate(1,{rng:()=>0,task:"konar"});
- assert.equal(konar.drops["brimstone-key"],1);
+ assert.equal(konar.drops["brimstone-key"],undefined);
  assert.equal(konar.drops["larrans-key"],undefined);
  const krystilia=simulate(1,{rng:()=>0,task:"krystilia"});
- assert.equal(krystilia.drops["larrans-key"],1);
- assert.equal(krystilia.drops["slayers-enchantment"],1);
+ assert.equal(krystilia.drops["larrans-key"],undefined);
+ assert.equal(krystilia.drops["slayers-enchantment"],undefined);
  assert.equal(krystilia.drops["brimstone-key"],undefined);
  close(clueRate(),1/128);close(clueRate({hardCAs:true}),1/121);
- close(clueRate({ringOfWealth:true}),1/64);
- close(clueRate({hardCAs:true,ringOfWealth:true}),1/60);
+ close(clueRate({imbuedRingOfWealth:true}),1/64);
+ close(clueRate({hardCAs:true,imbuedRingOfWealth:true}),2/121);
 });
 test("Dry calculator treats any shard and Fedora as independent outcomes",()=>{
  const x=calculateDry(1,{"odium-shard-2":1});
@@ -96,10 +96,9 @@ test("High KC, zero KC, validation, options and RNG bounds",()=>{
  for(const n of [-1,1.5,NaN,Infinity,MAX_KILLS+1]){
   assert.throws(()=>validateKills(n));assert.throws(()=>simulate(n));assert.throws(()=>calculateDry(n));
  }
- assert.throws(()=>validateTask("unknown"));
- assert.throws(()=>simulate(1,{task:"other"}));
+ assert.doesNotThrow(()=>simulate(1,{task:"other"}));
  assert.throws(()=>clueRate({hardCAs:1}));
- assert.throws(()=>simulate(1,{ringOfWealth:1}));
+ assert.throws(()=>simulate(1,{imbuedRingOfWealth:1}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>calculateDry(1,{"odium-shard-2":-1}));
  assert.throws(()=>calculateDry(1,{fedora:2}));
@@ -109,8 +108,8 @@ test("Crazy Archaeologist page and all item images are local",()=>{
  const home=source("index.html"),page=source("bosses/crazy-archaeologist/index.html"),app=source("bosses/crazy-archaeologist/app.mjs");
  assert.match(home,/href="bosses\/crazy-archaeologist\/"/);
  assert.match(home,/assets\/items\/fedora\.png/);
- for(const id of ["kill-count","hard-cas","ring-of-wealth","mode-loot","mode-dry","unique-grid","loot-grid"])assert.ok(page.includes('id="'+id+'"'),id+" absent");
- assert.match(page,/name="slayer-task"/);
+ for(const id of ["kill-count","hard-cas","imbued-ring-of-wealth","mode-loot","mode-dry","unique-grid","loot-grid"])assert.ok(page.includes('id="'+id+'"'),id+" absent");
+ assert.doesNotMatch(page,/name="slayer-task"/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  for(const item of Object.values(ITEMS)){
   const png=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

@@ -72,11 +72,11 @@ test("Supply roll awards all three foods and potions",()=>{
  assert.equal(x["super-combat-potion-2"],1);
 });
 
-test("Konar keys are only valid for normal encounters",()=>{
- assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],1);
+test("Removed task options cannot award brimstone keys",()=>{
+ assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
- assert.throws(()=>validateOptions({konarTask:true,awakened:true}));
- assert.throws(()=>simulate(1,{awakened:true,konarTask:true}));
+ assert.doesNotThrow(()=>validateOptions({konarTask:true,awakened:true}));
+ assert.doesNotThrow(()=>simulate(1,{awakened:true,konarTask:true}));
 });
 
 test("Quartz first-drop threshold and state return to base rate",()=>{
@@ -131,10 +131,9 @@ test("Page navigation, 7-column desktop grid and all local item sprites",()=>{
  const app=source("bosses/vardorvis/app.mjs"),css=source("styles.css");
  assert.match(home,/href="bosses\/vardorvis\/"/);
  assert.match(css,/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/);
- assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
- assert.match(app,/konar-task/);
- for(const id of ["kill-count","perfect","awakened","konar-task",
-  "mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
+ assert.match(app,/calculateDry\(kills,readReceived\(kills\),false\)/);
+ assert.doesNotMatch(app,/konar-task/);
+ for(const id of ["kill-count","perfect","mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  for(const item of Object.values(ITEMS)){
   const icon=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

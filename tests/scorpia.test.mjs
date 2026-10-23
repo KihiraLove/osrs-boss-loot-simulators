@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,SHARD_CHANCE,ANY_SHARD_CHANCE,PET_CHANCE,DRAGON_2H_CHANCE,
- UNIQUE,DRY_ITEMS,MAIN,ITEMS,validateKills,validateTask,clueRate,rateOf,simulate
+ UNIQUE,DRY_ITEMS,MAIN,ITEMS,validateKills,clueRate,rateOf,simulate
 } from "../bosses/scorpia/simulator.mjs";
 import {calculateDry,collectionLogOdds,COLLECTION_LOG_PER_KILL} from "../bosses/scorpia/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
@@ -67,18 +67,17 @@ test("Stack quantities and standard drops follow main table",()=>{
 test("Slayer task and hard clue options",()=>{
  close(clueRate(),1/100);
  close(clueRate({hardCAs:true}),1/95);
- close(clueRate({ringOfWealth:true}),1/50);
- close(clueRate({hardCAs:true,ringOfWealth:true}),1/47);
+ close(clueRate({imbuedRingOfWealth:true}),1/50);
+ close(clueRate({hardCAs:true,imbuedRingOfWealth:true}),2/95);
  const konar=simulate(1,{rng:()=>0,task:"konar"});
- assert.equal(konar.drops["brimstone-key"],1);
+ assert.equal(konar.drops["brimstone-key"],undefined);
  assert.equal(konar.drops["larrans-key"],undefined);
  const krystilia=simulate(1,{rng:()=>0,task:"krystilia"});
- assert.equal(krystilia.drops["larrans-key"],1);
- assert.equal(krystilia.drops["slayers-enchantment"],1);
+ assert.equal(krystilia.drops["larrans-key"],undefined);
+ assert.equal(krystilia.drops["slayers-enchantment"],undefined);
  assert.equal(krystilia.drops["brimstone-key"],undefined);
- assert.throws(()=>validateTask("both"));
  assert.throws(()=>clueRate({hardCAs:1}));
- assert.throws(()=>clueRate({ringOfWealth:"yes"}));
+ assert.throws(()=>clueRate({imbuedRingOfWealth:"yes"}));
 });
 test("Dry calculator respects shard exclusivity and combined rare-count double drops",()=>{
  const p=COLLECTION_LOG_PER_KILL;
@@ -129,8 +128,7 @@ test("README, home navigation, inputs and local sprite signatures",()=>{
  assert.match(home,/href="bosses\/scorpia\/"/);
  assert.match(docs,/1\/256/);
  assert.match(app,/result\.anyShard/);
- for(const id of ["kill-count","hard-cas","ring-of-wealth","task-fieldset",
-  "mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid"])
+ for(const id of ["kill-count","hard-cas","imbued-ring-of-wealth","mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid"])
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
  for(const item of Object.values(ITEMS)){
   const file=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

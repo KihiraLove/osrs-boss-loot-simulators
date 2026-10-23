@@ -29,14 +29,13 @@
 <form id="simulator-form" novalidate>
 <label class="depth-field phosani-kills"><span>Completed Kree'arra kills</span>
 <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Kree'arra kills"></label>
-<p class="room-hint">Each kill includes Flight Kilisa (melee), Wingman Skree (magic) and Flockleader Geerin (ranged) once.</p>
-<label class="phosani-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements (bodyguard clues: 1/121)</label>
-<label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (Kree'arra clues: 1/237)</label>
-<label class="phosani-option"><input id="konar-task" type="checkbox"> Konar Slayer task (boss + bodyguard brimstone keys)</label>
-<label class="phosani-option"><input id="frozen-door" type="checkbox"> During The Frozen Door miniquest (Armadyl key pieces)</label>
+<p class="room-hint">Each kill includes Flight Kilisa, Wingman Skree, and Flockleader Geerin once.</p>
+<label class="phosani-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements</label>
+<label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
 <div id="dry-fields" class="dry-fields" hidden><h3>Drops obtained (boss + 3 bodyguards)</h3>
 <div id="dry-inputs" class="dry-inputs"></div></div>
-<p id="validation-message" class="validation-message" role="alert" hidden></p>
+<label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
 <div class="action-row">
 <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
 <button type="button" class="secondary-action" id="clear-button">Clear</button>
@@ -71,11 +70,5 @@
 <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
 </section>
 </main>
-<footer><div class="footer-meta">
-<p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/General_Kree'arra">Kree'arra</a>,
-<a href="https://oldschool.runescape.wiki/w/Flight_Kilisa">Flight Kilisa</a>,
-<a href="https://oldschool.runescape.wiki/w/Wingman_Skree">Wingman Skree</a>,
-<a href="https://oldschool.runescape.wiki/w/Flockleader_Geerin">Flockleader Geerin</a>.</p>
-<p>No data is stored, collected, or sold by this site.</p></div>
-<div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators">GitHub</a></div></footer>
+<footer data-wiki-links="https://oldschool.runescape.wiki/w/General_Kree'arra https://oldschool.runescape.wiki/w/Flight_Kilisa https://oldschool.runescape.wiki/w/Wingman_Skree https://oldschool.runescape.wiki/w/Flockleader_Geerin"></footer>
 </body></html>

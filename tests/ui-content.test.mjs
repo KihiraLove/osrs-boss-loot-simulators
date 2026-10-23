@@ -56,15 +56,17 @@ test("Ko-fi uses the BingoPlayerStats blue pill banner and bounded cup icon", ()
 
 test("footer uses the BingoPlayerStats structure and privacy statement", () => {
   const html = read("bosses/doom/index.html");
+  const footer = read("shared/footer.mjs");
   const css = read("styles.css");
-  assert.match(html, /class="footer-meta"/);
-  assert.match(html, /class="footer-actions"/);
-  assert.match(html, /class="text-button"/);
-  assert.match(html, /No data is stored, collected, or sold by this site\./);
+  assert.match(html, /<footer data-wiki-links="https:\/\/oldschool\.runescape\.wiki\/w\/Doom_of_Mokhaiotl"><\/footer>/);
+  assert.match(footer, /className = "footer-meta"/);
+  assert.match(footer, /className = "footer-actions"/);
+  assert.match(footer, /className = "text-button"/);
+  assert.match(footer, /No data is stored, collected, or sold by this site\./);
   assert.match(css, /\.footer-meta\s*\{/);
   assert.match(css, /\.footer-actions\s*\{/);
   assert.match(css, /\.text-button\s*\{/);
-  assert.match(html, /href="https:\/\/github.com\/KihiraLove\/osrs-boss-loot-simulators"/);
+  assert.match(footer, /https:\/\/github.com\/KihiraLove\/osrs-boss-loot-simulators/);
 });
 
 test("README uses matching GitHub Pages CI status and Ko-fi badges", () => {

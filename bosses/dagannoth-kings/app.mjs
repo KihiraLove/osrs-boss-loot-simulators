@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   clearInputsOnClick,
   createItemIcon,
   showError as error,
@@ -11,6 +12,7 @@ import {KINGS,UNIQUE,ITEMS,MAX_KILLS,simulate,rateOf} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
 const form=$("simulator-form");let mode="loot";
+const readRings=setupRingOptions(form);
 function icon(item) {
   return createItemIcon(item, { textFallback: true });
 }
@@ -138,10 +140,8 @@ form.addEventListener("submit",event=>{
  try{
   const n=counts();
   if(mode==="dry")renderDry(calculateDry(n,received(n)));
-  else renderLoot(simulate(n,{
-   hardCAs:$("hard-cas").checked,eliteCAs:$("elite-cas").checked,
-   konarTask:$("konar-task").checked,questRibs:$("quest-ribs").checked
-  }));
+  else renderLoot(simulate(n,{...readRings(),
+   hardCAs:$("hard-cas").checked,eliteCAs:$("elite-cas").checked}));
  }catch(e){error(e instanceof Error?e.message:"Could not calculate the result.");}
 });
 

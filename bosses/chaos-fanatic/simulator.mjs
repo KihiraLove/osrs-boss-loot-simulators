@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Chaos Fanatic: one exclusive 1/128 shard pre-roll (each shard 1/256)
 // before the 128-ticket ordinary table; separate tertiary rolls.
 // Source: https://oldschool.runescape.wiki/w/Chaos_Fanatic
@@ -28,7 +29,7 @@ export const MAIN=table(
 // OSRS Wiki's published unboosted *overall* rare + gem drop probabilities.
 // One shared secondary outcome pool covers both 4-ticket branches.
 // The denominators are rounded on the Wiki, so normalize their weights.
-// Ring of wealth's rare table effect and Legends' Quest modifiers are not modeled.
+// Ring of wealth is applied within the shared rare and gem subtables.
 export const RARE=[
  ["@nothing",0,47.02],["coins",3000,195.05],
  ["uncut-sapphire",1,110.7],["loop-half-of-key",1,193.61],
@@ -72,15 +73,10 @@ export function validateKills(kills){
   throw new RangeError("Enter a whole number of Chaos Fanatic kills from 0 to 1,000,000.");
  return kills;
 }
-export function validateTask(task){
- if(!["none","konar","krystilia"].includes(task))
-  throw new RangeError("Choose None, Konar or Krystilia for Slayer task.");
- return task;
-}
-export function clueRate({hardCAs=false,ringOfWealth=false}={}){
- if(typeof hardCAs!=="boolean"||typeof ringOfWealth!=="boolean")
+export function clueRate({hardCAs=false,imbuedRingOfWealth=false}={}){
+ if(typeof hardCAs!=="boolean"||typeof imbuedRingOfWealth!=="boolean")
   throw new TypeError("Combat Achievement and ring options must be booleans.");
- return ringOfWealth?(hardCAs?1/60:1/64):(hardCAs?1/121:1/128);
+ return (hardCAs?1/121:1/128)*(imbuedRingOfWealth?2:1);
 }
 export const rateOf=id=>UNIQUE.find(x=>x.id===id)?.rate??0;
 function unit(rng){
@@ -95,12 +91,12 @@ function weighted(rows,rng,weight){
  return rows[rows.length-1];
 }
 const amount=(min,max,rng)=>min===max?min:min+Math.floor(unit(rng)*(max-min+1));
-function rollRare(rng,add){
- const [id,count]=weighted(RARE,rng,row=>1/row[2]);
+function rollRare(rng,add,ringOfWealth=false,kind="rare"){
+ const [id,count]=weighted(wealthTable(RARE,ringOfWealth,2,{reciprocal:true,kind}),rng,row=>1/row[2]);
  if(id!=="@nothing")add(id,count);
 }
-export function simulate(kills,{rng=Math.random,task="none",hardCAs=false,ringOfWealth=false}={}){
- validateKills(kills);validateTask(task);clueRate({hardCAs,ringOfWealth});
+export function simulate(kills,{rng=Math.random,hardCAs=false,imbuedRingOfWealth=false}={}){
+ validateKills(kills);clueRate({hardCAs,imbuedRingOfWealth});
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let kill=0;kill<kills;kill++){
@@ -114,17 +110,13 @@ export function simulate(kills,{rng=Math.random,task="none",hardCAs=false,ringOf
     add("zamorak-monk-top");add("zamorak-monk-bottom");
    }else if(id==="@gems-pair"){
     add("uncut-emerald",6);add("uncut-sapphire",4);
-   }else if(id==="@rare"||id==="@gem")rollRare(rng,add);
+   }else if(id==="@rare"||id==="@gem")rollRare(rng,add,imbuedRingOfWealth,id==="@gem"?"gem":"rare");
    else add(id,amount(min,max,rng));
   }
   if(unit(rng)<1/3)add("looting-bag");
-  if(unit(rng)<clueRate({hardCAs,ringOfWealth}))add("clue-scroll-hard");
+  if(unit(rng)<clueRate({hardCAs,imbuedRingOfWealth}))add("clue-scroll-hard");
   if(unit(rng)<PET_CHANCE)add("pet-chaos-elemental");
-  if(task==="konar"&&unit(rng)<1/80)add("brimstone-key");
-  if(task==="krystilia"){
-   if(unit(rng)<1/76)add("larrans-key");
-   if(unit(rng)<1/30)add("slayers-enchantment");
-  }
+
  }
- return {kills,task,hardCAs,ringOfWealth,drops};
+ return {kills,hardCAs,imbuedRingOfWealth,drops};
 }

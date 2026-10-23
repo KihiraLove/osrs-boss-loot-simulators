@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Giant Mole: guaranteed parts, one 131-ticket main roll, independent tertiary.
 // Drop data: https://oldschool.runescape.wiki/w/Giant_Mole
 // Nested rare-drop, gem, mega-rare, and talisman tables follow wiki ratios.
@@ -48,9 +49,10 @@ function pick(table,rng){
 function quantity(min,max,rng){
  return min===max?min:min+Math.floor(unit(rng)*(max-min+1));
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);clueRate(eliteCAs);
- if(typeof konarTask!=="boolean")throw new TypeError("Konar task must be boolean.");
+
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
@@ -62,7 +64,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
   let depth=0;
   while(id.startsWith("@")&&id!=="@nothing"){
    if(++depth>5)throw new Error("Nested drop table exceeded depth.");
-   [id,min,max]=pick(SUBTABLES[id.slice(1)],rng);
+   [id,min,max]=pick(wealthTable(SUBTABLES[id.slice(1)],ringOfWealth,3,{nested:true}),rng);
   }
   if(id!=="@nothing")add(id,quantity(min,max,rng));
   // Independent tertiary rolls may overlap with the ordinary reward and each other.
@@ -71,7 +73,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
   if(unit(rng)<1/3000)add("baby-mole");
   if(unit(rng)<1/5012.5)add("curved-bone");
   if(unit(rng)<clueRate(eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/74)add("brimstone-key");
+
  }
- return {kills,eliteCAs,konarTask,drops};
+ return {kills,eliteCAs,drops};
 }

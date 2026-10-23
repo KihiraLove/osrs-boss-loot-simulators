@@ -64,7 +64,7 @@ test("Large kills and invalid inputs",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:12}));
  assert.throws(()=>simulate(1,{eliteCAs:"yes"}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,{"magic-fang":3}));
 });
@@ -73,7 +73,7 @@ test("Site navigation, options, docs and local PNG sprites",()=>{
  assert.match(read("README.md"),/zulrah\/README\.md/);
  assert.match(read("bosses/zulrah/README.md"),/249-ticket/);
  const html=read("bosses/zulrah/index.html"),app=read("bosses/zulrah/app.mjs");
- for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
+ for(const id of ["kill-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/kills\*\(item\.rolls===2\?2:1\)/);
  for(const item of Object.values(ITEMS)){

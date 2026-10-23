@@ -15,6 +15,34 @@ test("Wiki shard bundle means and the six weighted unique rates",()=>{
  const horn=UNIQUE.find(x=>x.id==="nihil-horn");
  close(horn.rate,1/258);
 });
+
+test("Nex unique rewards and rates use the OSRS table",()=>{
+ const rates={
+  "ancient-hilt":1/516,"nihil-horn":1/258,
+  "torva-full-helm-damaged":1/258,"torva-platebody-damaged":1/258,
+  "torva-platelegs-damaged":1/258,"zaryte-vambraces":1/172,"nexling":1/500
+ };
+ assert.deepEqual(UNIQUE.map(item=>item.id).sort(),Object.keys(rates).sort());
+ for(const item of UNIQUE)close(item.rate,rates[item.id]);
+ assert.ok(Object.keys(ITEMS).every(id=>!/(?:pernix|virtus|zaryte-bow|torva-boots|torva-gloves)/.test(id)));
+ const sources=read("bosses/nex/index.html").match(/data-wiki-links="([^"]+)"/)[1].split(/\s+/);
+ assert.ok(sources.every(url=>new URL(url).hostname==="oldschool.runescape.wiki"));
+});
+
+test("OSRS common resource quantities include air orbs, coal and runite ore",()=>{
+ for(const [id,low,high]of [["air-orb",6,100],["coal",23,2354],["runite-ore",2,30]]){
+  const index=COMMON_POOL.findIndex(row=>row[0]===id);
+  assert.ok(index>=0,id);
+  const row=COMMON_POOL[index];
+  assert.deepEqual(row.slice(2,4),[low,high]);
+  const total=COMMON_POOL.reduce((sum,item)=>sum+item[4],0);
+  const ticket=(COMMON_POOL.slice(0,index).reduce((sum,item)=>sum+item[4],0)+row[4]/2)/total;
+  const result=simulate(1000,{rng:()=>ticket});
+  assert.ok(result.common[id]>=low*result.estimatedCommonRolls);
+  assert.ok(result.common[id]<=high*result.estimatedCommonRolls);
+  assert.ok(result.estimatedCommonRolls>0);
+ }
+});
 test("No KC input; zero shards give no rolled rewards",()=>{
  const result=simulate(0,{rng:()=>0.5});
  assert.equal(result.shards,0);

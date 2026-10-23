@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Sarachnis loot: mutually exclusive pre-roll and main drop, separate herb + tertiary.
 import {GEM,MEGA,TALISMAN,ITEMS as SHARED_ITEMS} from "../giant-mole/simulator.mjs";
 export const MAX_KILLS=1_000_000;
@@ -35,9 +36,9 @@ export function validateKills(n){
   throw new RangeError("Sarachnis kills must be a whole number from 0 to 1,000,000.");
  return n;
 }
-export function validateOptions({hardCAs=false,eliteCAs=false,konarTask=false}={}){
- if([hardCAs,eliteCAs,konarTask].some(v=>typeof v!=="boolean"))
-  throw new TypeError("Combat Achievements and Konar task must be booleans.");
+export function validateOptions({hardCAs=false,eliteCAs=false}={}){
+ if([hardCAs,eliteCAs].some(v=>typeof v!=="boolean"))
+  throw new TypeError("Combat Achievements must be boolean.");
 }
 export function rateOf(id){return UNIQUE.find(x=>x.id===id)?.rate??0;}
 export function clueRate(tier,enabled=false){
@@ -59,7 +60,7 @@ function pick(rows,rng){
 }
 function quantity(lo,hi,rng){return lo===hi?lo:lo+Math.floor(unit(rng)*(hi-lo+1));}
 // 2/384 dragon med helm, 1/384 cudgel, otherwise one ordinary outcome.
-export function rollPrimary(rng=Math.random){
+export function rollPrimary(rng=Math.random,ringOfWealth=false){
  const pre=unit(rng)*384;
  if(pre<2)return {id:"dragon-med-helm",quantity:1};
  if(pre<3)return {id:"sarachnis-cudgel",quantity:1};
@@ -69,17 +70,18 @@ export function rollPrimary(rng=Math.random){
   if(depth>6)throw new Error("Unexpected nested drop depth.");
   const table=subtables[row[0]];
   if(!table)throw new Error("Unrecognized shared loot table.");
-  row=pick(table,rng);
+  row=pick(wealthTable(table,ringOfWealth,3,{nested:true}),rng);
  }
  if(row[0]==="@nothing")return null;
  return {id:row[0],quantity:quantity(row[1],row[2],rng)};
 }
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({hardCAs,eliteCAs,konarTask});
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
+ validateKills(kills);validateOptions({hardCAs,eliteCAs});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null),add=(id,q=1)=>{if(q>0)drops[id]=(drops[id]??0)+q;};
  for(let k=0;k<kills;k++){
-  const primary=rollPrimary(rng);if(primary)add(primary.id,primary.quantity);
+  const primary=rollPrimary(rng,ringOfWealth);if(primary)add(primary.id,primary.quantity);
   const herb=pick(HERBS,rng);
   if(herb[0]!=="@nothing")add(herb[0],quantity(herb[1],herb[2],rng));
   // One page at 1/5: choose uniformly from the least-collected types.
@@ -91,7 +93,7 @@ export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,kon
   for(const [id,rate] of TERTIARY)if(unit(rng)<rate)add(id);
   if(unit(rng)<clueRate("hard",hardCAs))add("clue-scroll-hard");
   if(unit(rng)<clueRate("elite",eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/57)add("brimstone-key");
+
  }
- return {kills,drops,hardCAs,eliteCAs,konarTask};
+ return {kills,drops,hardCAs,eliteCAs};
 }

@@ -1,18 +1,11 @@
+import {convolveDistributions,distributionOdds} from "../../shared/distributions.mjs";
 import {DRY_ITEMS,HALBERD,MAX_KILLS,validateKills,validateMode,rateOf} from "./simulator.mjs";
 import {binomial} from "../phosani/dry-calc.mjs";
 const clamp=x=>Math.max(0,Math.min(1,x));
 function check(n,max,label){
  if(!Number.isSafeInteger(n)||n<0||n>max)throw new RangeError(label+" must be between 0 and "+max+".");
 }
-function stats(dist,count){
- let fewer=0,exact=0;
- for(let i=0;i<dist.values.length;i++){
-  const n=dist.from+i;
-  if(n<count)fewer+=dist.values[i];
-  else if(n===count)exact+=dist.values[i];
- }
- return {count,expected:dist.expected,fewer:clamp(fewer),exact:clamp(exact),more:clamp(1-fewer-exact)};
-}
+
 // A halberd hit occurs at 1/200 per kill; first three hits are a
 // random permutation of the pieces, then a fresh permutation begins.
 // Given B halberd hits, a named piece appears floor(B/3) times plus
@@ -43,13 +36,27 @@ export function calculateDry(kills,received={},mode="harvest"){
    throw new RangeError("Destroy forfeits all rare rewards except Nid.");
   if(mode==="destroy"&&item.id!=="nid")continue;
   results[item.id]=HALBERD.some(x=>x.id===item.id)
-   ?pieceOdds(kills,count):stats(binomial(kills,rateOf(item.id,mode)),count);
+   ?pieceOdds(kills,count):distributionOdds(binomial(kills,rateOf(item.id,mode)),count);
  }
  if(mode==="harvest"){
   const count=DRY_ITEMS.slice(0,4).reduce((s,item)=>s+(received[item.id]??0),0);
   check(count,kills,"Signature count");
-  results.anyUnique={...stats(binomial(kills,1/150),count),
+  results.anyUnique={...distributionOdds(binomial(kills,1/150),count),
    atLeastOne:-Math.expm1(kills*Math.log1p(-1/150))};
  }
  return results;
+}
+
+export function calculateCombinedDry(harvestKills,destroyKills,received={}) {
+ validateKills(harvestKills);validateKills(destroyKills);
+ if(!received||typeof received!=="object"||Array.isArray(received))throw new TypeError("Drop counts are required.");
+ const petCount=received["nid"]??0;
+ if(!Number.isSafeInteger(petCount)||petCount<0||petCount>harvestKills+destroyKills)throw new RangeError("Pet count exceeds completed kills.");
+ const result=calculateDry(harvestKills,{...received,"nid":0},"harvest");
+ const p=rateOf("nid","harvest"),q=rateOf("nid","destroy");
+ const distribution=convolveDistributions(binomial(harvestKills,p),binomial(destroyKills,q));
+ const pet={...distributionOdds(distribution,petCount),atLeastOne:-Math.expm1(harvestKills*Math.log1p(-p)+destroyKills*Math.log1p(-q))};
+ result["nid"]=pet;
+
+ return result;
 }

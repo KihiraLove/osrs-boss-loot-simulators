@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#11100d">
   <meta name="description" content="Hespori loot simulator and dry calculator with weighted seeds, the Bottomless compost bucket and Farming-level pet chances.">
   <title>Hespori | Loot Simulator</title>
-  <link rel="icon" type="image/png" href="../../assets/items/tangleroot.png">
+  <link rel="icon" type="image/png" href="../../assets/items/bottomless-compost-bucket.png">
   <link rel="stylesheet" href="../../styles.css">
   <script type="module" src="app.mjs"></script>
 </head>
@@ -14,7 +14,7 @@
   <nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../..">← All simulators</a></nav>
   <a class="skip-link" href="#main">Skip to simulator</a>
   <header class="site-header">
-    <div class="brand-mark"><img src="../../assets/items/tangleroot.png" alt="" width="42" height="42"></div>
+    <div class="brand-mark"><img src="../../assets/items/bottomless-compost-bucket.png" alt="" width="42" height="42"></div>
     <h1>Hespori <span>Loot Simulator</span></h1>
     <a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi">
       <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true" width="24" height="24">
@@ -35,7 +35,7 @@
         <label class="depth-field phosani-kills"><span>Farming level</span>
           <input id="farming-level" type="number" min="65" max="99" step="1" value="99" inputmode="numeric" aria-label="Farming level">
         </label>
-        <label class="phosani-option"><input id="farmer-outfit" type="checkbox"> Full farmer\'s outfit (+2.5% Farming XP)</label>
+        <label class="phosani-option"><input id="farmer-outfit" type="checkbox"> Full farmer's outfit (+2.5% Farming XP)</label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
@@ -50,7 +50,7 @@
     <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
       <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
       <div id="empty-state" class="empty-state">
-        <div class="empty-orb"><img src="../../assets/items/tangleroot.png" alt="" width="62" height="62"></div>
+        <div class="empty-orb"><img src="../../assets/items/bottomless-compost-bucket.png" alt="" width="62" height="62"></div>
         <h3>Nothing claimed yet</h3>
         <p>Enter completed Hespori kills to simulate your drops.</p>
       </div>
@@ -65,19 +65,13 @@
     <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
       <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
       <div id="dry-empty" class="empty-state">
-        <div class="empty-orb"><img src="../../assets/items/tangleroot.png" alt="" width="62" height="62"></div>
+        <div class="empty-orb"><img src="../../assets/items/bottomless-compost-bucket.png" alt="" width="62" height="62"></div>
         <h3>How lucky are your drops?</h3>
         <p>Enter your kill count and the number of each rare drop received to calculate the odds.</p>
       </div>
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Hespori" target="_blank" rel="noopener noreferrer">OSRS Wiki — Hespori</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Hespori"></footer>
 </body>
 </html>

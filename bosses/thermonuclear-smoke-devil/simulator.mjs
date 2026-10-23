@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Thermonuclear smoke devil, OSRS Wiki 2026-10.
 // One pre-roll replaces the standard loot; pet, jar and clues are tertiary.
 import {GEM,MEGA,TALISMAN,ITEMS as SHARED_ITEMS} from "../king-black-dragon/simulator.mjs";
@@ -22,9 +23,9 @@ export function validateKills(n){
   throw new RangeError("Enter a whole number of Thermonuclear Smoke Devil kills from 0 to 1,000,000.");
  return n;
 }
-export function validateOptions({hardCAs=false,eliteCAs=false,konarTask=false}={}){
- if([hardCAs,eliteCAs,konarTask].some(v=>typeof v!=="boolean"))
-  throw new TypeError("Combat Achievement and Konar options must be boolean.");
+export function validateOptions({hardCAs=false,eliteCAs=false}={}){
+ if([hardCAs,eliteCAs].some(v=>typeof v!=="boolean"))
+  throw new TypeError("Combat Achievement options must be boolean.");
 }
 export const clueRate=(tier,boost=false)=>{
  if(tier==="hard")return boost?1/91:1/96;
@@ -44,10 +45,10 @@ function weighted(table,rng){
  return table.at(-1);
 }
 function quantity(low,high,rng){return low===high?low:low+Math.floor(unit(rng)*(high-low+1));}
-function standardRoll(rng,add){
+function standardRoll(rng,add,ringOfWealth=false){
  let table=MAIN;
  for(let depth=0;depth<6;depth++){
-  const [id,low,high]=weighted(table,rng);
+  const [id,low,high]=weighted(wealthTable(table,ringOfWealth&&table!==MAIN&&table!==SHARK,3,{nested:true}),rng);
   if(id==="@nothing")return;
   if(id==="@shark"){table=SHARK;continue;}
   if(id.startsWith("@")){
@@ -61,8 +62,9 @@ function standardRoll(rng,add){
 }
 // The three listed rare pre-rolls are mutually exclusive, with their
 // advertised marginal rates, and replace the standard drop.
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({hardCAs,eliteCAs,konarTask});
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
+ validateKills(kills);validateOptions({hardCAs,eliteCAs});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]??0)+count;};
@@ -70,12 +72,12 @@ export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,kon
   add("ashes");
   const ticket=unit(rng);let cumulative=0,pre=null;
   for(const item of PRE_ROLL){cumulative+=item.rate;if(ticket<cumulative){pre=item.id;break;}}
-  if(pre)add(pre);else standardRoll(rng,add);
+  if(pre)add(pre);else standardRoll(rng,add,ringOfWealth);
   if(unit(rng)<rateOf("jar-of-smoke"))add("jar-of-smoke");
   if(unit(rng)<rateOf("pet-smoke-devil"))add("pet-smoke-devil");
   if(unit(rng)<clueRate("hard",hardCAs))add("clue-scroll-hard");
   if(unit(rng)<clueRate("elite",eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/48)add("brimstone-key");
+
  }
- return {kills,drops,hardCAs,eliteCAs,konarTask};
+ return {kills,drops,hardCAs,eliteCAs};
 }

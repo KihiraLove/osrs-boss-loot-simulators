@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Cerberus, OSRS Wiki drop table, checked October 2026.
 // Each kill awards one primary table roll (4 unique tickets and 126 regular
 // tickets out of 130), plus independent tertiary rolls.
@@ -92,7 +93,6 @@ export const ITEMS=Object.freeze(Object.fromEntries([
  ["infernal-ashes","Infernal ashes"],
  ...UNIQUE.map(i=>[i.id,i.name]),
  ...TERTIARY.map(i=>[i.id,i.name]),
- ["brimstone-key","Brimstone key"],
  ...COMMON.map(([id,name])=>[id,name]),
  ...RDT.filter(r=>r[0]!=="nothing").map(([id,name])=>[id,name])
 ].map(([id,name])=>[id,{id,name}])));
@@ -117,7 +117,8 @@ function weighted(table,weightIndex,rng){
 function quantity(row,rng){
  return row[2]===row[3]?row[2]:row[2]+Math.floor(unit(rng)*(row[3]-row[2]+1));
 }
-export function simulate(kills,{rng=Math.random,konarTask=false,eliteCAs=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]||0)+n;};
@@ -133,14 +134,13 @@ export function simulate(kills,{rng=Math.random,konarTask=false,eliteCAs=false}=
   }
   // The wiki also reports an independent 3/130 RDT access.
   if(unit(rng)<3/130){
-   const chosen=weighted(RDT,4,rng);
+   const chosen=weighted(wealthTable(RDT,ringOfWealth,4),4,rng);
    if(chosen[0]!=="nothing")add(chosen[0],quantity(chosen,rng));
   }
   if(unit(rng)<1/15)add("ensouled-hellhound-head");
   if(unit(rng)<(eliteCAs?1/95:1/100))add("clue-scroll-elite");
   if(unit(rng)<1/2000)add("jar-of-souls");
   if(unit(rng)<1/3000)add("hellpuppy");
-  if(konarTask&&unit(rng)<1/45)add("brimstone-key");
  }
  return {kills,drops};
 }

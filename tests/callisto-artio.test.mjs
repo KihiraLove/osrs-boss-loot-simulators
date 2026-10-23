@@ -117,7 +117,7 @@ test("Combined website page and all required local sprites exist",()=>{
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="unique-grid"/);
  assert.match(page,/id="dry-inputs"/);
- assert.match(app,/simulate\(callisto,artio\)/);
+ assert.match(app,/simulate\(callisto,artio,readRings\(\)\)/);
  assert.match(app,/calculateDry\(callisto,artio,readReceived\(callisto\+artio\)\)/);
  assert.doesNotMatch(page,/id="kill-count"/);
  for(const item of Object.values(ITEMS)){

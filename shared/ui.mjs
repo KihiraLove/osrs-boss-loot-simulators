@@ -1,7 +1,20 @@
+import "./footer.mjs";
+
 const formatter = new Intl.NumberFormat("en-US");
 
 export const byId = id => document.getElementById(id);
 export const formatNumber = value => formatter.format(value);
+
+export function setupRingOptions(form) {
+  const options = [...form.querySelectorAll("[data-ring-option]")];
+  byId("mode-loot").addEventListener("click", () => options.forEach(option => { option.hidden = false; }));
+  byId("mode-dry").addEventListener("click", () => options.forEach(option => { option.hidden = true; }));
+  byId("clear-button").addEventListener("click", () => options.forEach(option => { option.querySelector("input").checked = false; }));
+  return () => {
+    const imbued = byId("imbued-ring-of-wealth")?.checked ?? false;
+    return { ringOfWealth: (byId("ring-of-wealth")?.checked ?? false) || imbued, imbuedRingOfWealth: imbued };
+  };
+}
 
 export function itemImageUrl(id) {
   return new URL("../assets/items/" + id + ".png", import.meta.url).href;

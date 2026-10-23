@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   clearInputsOnClick,
   createItemImage as icon,
   showError as errorText,
@@ -13,6 +14,7 @@ import {ITEMS,DRY_IDS,SIGNATURE_IDS,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
 const form=$("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs=$("dry-inputs");
 const DISPLAY_UNIQUES=[...SIGNATURE_IDS,"alchemical-hydra-heads","jar-of-chemicals","ikkle-hydra"];
 let mode="loot";
@@ -116,7 +118,7 @@ form.addEventListener("submit",event=>{
  try{
   const kills=numberInput($("kill-count"),MAX_KILLS,"completed kills");
   if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
-  else renderLoot(simulate(kills,{hardCA:$("hard-ca").checked,eliteCA:$("elite-ca").checked}));
+  else renderLoot(simulate(kills,{...readRings(),hardCA:$("hard-ca").checked,eliteCA:$("elite-ca").checked}));
  }catch(e){errorText(e instanceof Error?e.message:"The calculation could not be completed.");}
 });
 

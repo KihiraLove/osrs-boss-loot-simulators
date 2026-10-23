@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -16,6 +17,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -91,7 +93,7 @@ form.addEventListener("submit",event=>{
     const vetion=parseNumber($("vetion-kc"),MAX_KILLS,"Vet'ion KC");
     const calvarion=parseNumber($("calvarion-kc"),MAX_KILLS,"Calvar'ion KC");
     if(mode==="dry")renderDry(calculateDry(vetion,calvarion,readReceived(vetion+calvarion)));
-    else renderLoot(simulate(vetion,calvarion));
+    else renderLoot(simulate(vetion,calvarion,readRings()));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

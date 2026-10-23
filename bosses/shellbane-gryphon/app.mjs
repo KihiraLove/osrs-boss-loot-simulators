@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -21,6 +22,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -31,8 +33,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("elite-cas").closest("label").hidden=isDry;
-  $("konar-task").closest("label").hidden=isDry;
-  $("clue-step").closest("label").hidden=isDry;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -91,12 +92,8 @@ function readReceived(kills){
 $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
-form.addEventListener("change",event=>{
-  if(event.target.id==="konar-task"&&event.target.checked)$("clue-step").checked=false;
-  if(event.target.id==="clue-step"&&event.target.checked)$("konar-task").checked=false;
-});
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";$("elite-cas").checked=false;$("konar-task").checked=false;$("clue-step").checked=false;
+  $("kill-count").value="0";$("elite-cas").checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -105,9 +102,8 @@ form.addEventListener("submit",event=>{
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
     if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
-    else renderLoot(simulate(kills,{
-      eliteCAs:$("elite-cas").checked,konarTask:$("konar-task").checked,clueStep:$("clue-step").checked
-    }));
+    else renderLoot(simulate(kills,{...readRings(),
+      eliteCAs:$("elite-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

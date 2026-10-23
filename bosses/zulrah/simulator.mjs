@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Zulrah loot table, OSRS Wiki (October 2026).
 // Guaranteed scales, two independent ordinary rolls, one tertiary roll per kill.
 // Every ordinary roll hits the four-item unique table with probability 1/256.
@@ -91,7 +92,7 @@ function weighted(table,rng){
  for(const row of table){ticket-=row[4];if(ticket<0)return row;}
  return table.at(-1);
 }
-function rollMain(rng,add){
+function rollMain(rng,add,ringOfWealth=false){
  // 1/256 per main roll for one of the four equally weighted uniques.
  if(unit(rng)<1/256){
   const choice=Math.floor(unit(rng)*4);
@@ -110,26 +111,27 @@ function rollMain(rng,add){
   const shark=weighted(SHARK,rng);
   add(shark[0],shark[2]);
  }else if(row[0]==="@rdt"){
-  const rare=weighted(RDT,rng);
+  const rare=weighted(wealthTable(RDT,ringOfWealth,4),rng);
   if(rare[0]!=="nothing")add(rare[0],rare[2]===rare[3]
    ?rare[2]:rare[2]+Math.floor(unit(rng)*(rare[3]-rare[2]+1)));
  }else add(row[0],row[2]);
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievement and Konar options must be boolean.");
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievement options must be boolean.");
  const drops=Object.create(null);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]??0)+count;};
  for(let k=0;k<kills;k++){
   add("zulrahs-scales",100+Math.floor(unit(rng)*200));
-  rollMain(rng,add);
-  rollMain(rng,add);
+  rollMain(rng,add,ringOfWealth);
+  rollMain(rng,add,ringOfWealth);
   if(unit(rng)<1/3000)add("jar-of-swamp");
   if(unit(rng)<1/4000)add("pet-snakeling");
   if(unit(rng)<(eliteCAs?1/71:1/75))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/50)add("brimstone-key");
+
  }
  return {kills,drops};
 }

@@ -26,7 +26,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("elite-cas").closest("label").hidden=isDry;
-  $("konar-task").closest("label").hidden=isDry;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -88,7 +88,7 @@ $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";$("elite-cas").checked=false;$("konar-task").checked=false;
+  $("kill-count").value="0";$("elite-cas").checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -98,8 +98,7 @@ form.addEventListener("submit",event=>{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
     if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
     else renderLoot(simulate(kills,{
-      eliteCAs:$("elite-cas").checked,konarTask:$("konar-task").checked
-    }));
+      eliteCAs:$("elite-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

@@ -35,8 +35,7 @@ test("Pickaxe pre-roll replaces primary drop but not the guaranteed or tertiary 
  const {drops}=simulate(1,{rng:()=>0,konarTask:true});
  assert.equal(drops["dragon-bones"],1);
  assert.equal(drops["black-dragonhide"],2);
- for(const id of ["dragon-pickaxe","kbd-heads","prince-black-dragon",
-  "draconic-visage","clue-scroll-elite","brimstone-key"])
+ for(const id of ["dragon-pickaxe","kbd-heads","prince-black-dragon","draconic-visage","clue-scroll-elite"])
   assert.equal(drops[id],1,id);
  assert.equal(drops["rune-longsword"],undefined);
 });
@@ -100,7 +99,7 @@ test("Invalid kill counts, flags and RNG are rejected",()=>{
   assert.throws(()=>calculateDry(n));
  }
  assert.throws(()=>validateOptions({monkeyMadness2:1}));
- assert.throws(()=>simulate(1,{konarTask:"yes"}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:"yes"}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
 });
@@ -109,11 +108,10 @@ test("Local sprite assets, navigation, controls and boss README exist",()=>{
  const app=file("bosses/king-black-dragon/app.mjs"),docs=file("bosses/king-black-dragon/README.md");
  assert.match(home,/href="bosses\/king-black-dragon\/"/);
  assert.match(docs,/dragon pickaxe/i);
- for(const id of ["mode-loot","mode-dry","kill-count","monkey-madness-2",
-  "elite-cas","konar-task","dry-inputs","unique-grid","loot-grid"]){
+ for(const id of ["mode-loot","mode-dry","kill-count","monkey-madness-2","elite-cas","dry-inputs","unique-grid","loot-grid"]){
   assert.ok(html.includes('id="'+id+'"'),id+" missing from page");
  }
- for(const id of ["monkey-madness-2","elite-cas","konar-task"]){
+ for(const id of ["monkey-madness-2","elite-cas"]){
   assert.ok(app.includes('$("'+id+'")'),id+" not wired");
  }
  for(const item of Object.values(ITEMS)){

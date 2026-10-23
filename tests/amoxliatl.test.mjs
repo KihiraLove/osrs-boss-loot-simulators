@@ -38,11 +38,11 @@ test("Frozen tear quantity tiers have the correct weighted boundaries",()=>{
  assert.equal(simulate(1,{rng:()=>0.6}).drops["frozen-tear"],8);
  assert.equal(simulate(1,{rng:()=>0.9}).drops["frozen-tear"],19);
 });
-test("The gem subtable and Konar/key/clue toggles are applied",()=>{
+test("The gem subtable and clue improvement apply without task keys",()=>{
  const result=simulate(1,{rng:()=>.99999});
  assert.equal(result.drops["dragon-spear"],2);
  assert.equal(result.drops["brimstone-key"],undefined);
- assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],1);
+ assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>.0051,eliteCAs:false}).drops["clue-scroll-elite"],undefined);
  assert.equal(simulate(1,{rng:()=>.0051,eliteCAs:true}).drops["clue-scroll-elite"],1);
 });
@@ -90,7 +90,7 @@ test("Boss picker, calculator modes, and every reward icon are local",()=>{
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="elite-cas"/);
- assert.match(page,/id="konar-task"/);
+ assert.doesNotMatch(page,/id="konar-task"/);
  assert.match(page,/assets\/items\/moxi\.png/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(home+page+app,/oldschool\.runescape\.wiki\/images/);

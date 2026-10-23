@@ -50,7 +50,7 @@ test("Regular and corrupted kills produce one combined loot inventory",()=>{
  assert.equal(results.drops["rune-full-helm"],13); // 2 × 2 + 3 × 3
  for(const unique of UNIQUE)assert.equal(results.drops[unique.id],2); // four independent checks
  assert.equal(results.drops["clue-scroll-elite"],2);
- assert.equal(results.drops["gauntlet-cape"],1);
+ assert.equal(results.drops["gauntlet-cape"],undefined);
  const onlyRegular=simulate(1,0,{rng:()=>0});
  assert.equal(onlyRegular.drops["crystal-shard"],5);
  assert.equal(onlyRegular.drops["rune-full-helm"],4);
@@ -60,12 +60,12 @@ test("Regular and corrupted kills produce one combined loot inventory",()=>{
  assert.equal(onlyCorrupted.drops["rune-full-helm"],9);
 });
 
-test("Chest quantities and first-time cape are modeled correctly",()=>{
+test("Chest quantities are modeled without a first-time cape",()=>{
  const result=simulate(1,1,{rng:()=>0.999999});
  assert.equal(result.drops["crystal-shard"],21); // regular 9 + corrupted 12
  assert.equal(result.drops.coins,2*80000+3*150000);
- assert.equal(result.drops["gauntlet-cape"],1);
- assert.equal(simulate(1,5,{rng:()=>0.999999}).drops["gauntlet-cape"],1);
+ assert.equal(result.drops["gauntlet-cape"],undefined);
+ assert.equal(simulate(1,5,{rng:()=>0.999999}).drops["gauntlet-cape"],undefined);
  assert.equal(simulate(0,2,{rng:()=>0.999999,includeCape:false}).drops["gauntlet-cape"],undefined);
  assert.deepEqual({...simulate(0,0).drops},{});
 });
@@ -113,7 +113,7 @@ test("Reject invalid kill counts, options, random values and received counts",()
   assert.throws(()=>calculateDry(0,count));
  }
  assert.throws(()=>simulate(1,0,{eliteCAs:1}));
- assert.throws(()=>simulate(0,1,{includeCape:1}));
+ assert.doesNotThrow(()=>simulate(0,1,{includeCape:1}));
  assert.throws(()=>simulate(1,1,{rng:null}));
  assert.throws(()=>simulate(1,1,{rng:()=>1}));
  assert.throws(()=>simulate(1,1,{rng:()=>-0.1}));
@@ -132,8 +132,7 @@ test("Browser UI combines both modes and has all required local item sprites",()
  assert.match(readme,/\[The Gauntlet\]\(bosses\/gauntlet\/README\.md\)/);
  assert.match(app,/calculateDry\(n\.regular,n\.corrupted,readReceived\(n\.regular\+n\.corrupted\)\)/);
  assert.match(app,/simulate\(n\.regular,n\.corrupted/);
- for(const id of ["regular-kills","corrupted-kills","elite-cas","include-cape",
-  "mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","total-summary"]){
+ for(const id of ["regular-kills","corrupted-kills","elite-cas","mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","total-summary"]){
   assert.ok(html.includes('id="'+id+'"'),id+" control missing");
  }
  for(const item of Object.values(ITEMS)){

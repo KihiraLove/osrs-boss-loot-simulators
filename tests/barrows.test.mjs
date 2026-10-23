@@ -125,12 +125,12 @@ test("Barrows page is fixed to six brothers, has both modes and local PNG icons"
  assert.match(home,/href="bosses\/barrows\/"/);
  assert.match(home,/assets\/items\/dharoks-helm\.png/);
  assert.match(page,/All simulators/);
- assert.match(page,/Completed chests \(all 6 brothers\)/);
+ assert.match(page,/aria-label="Completed Barrows chests with all six brothers defeated"/);
  assert.match(page,/id="chest-count"/);
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
- assert.match(page,/value="880"/);
- assert.match(page,/value="1012"/);
+ assert.doesNotMatch(page,/name="potential"/);
+ assert.doesNotMatch(page,/value="1012"/);
  assert.match(page,/id="hard-diary"/);
  assert.match(page,/id="elite-cas"/);
  assert.doesNotMatch(page,/name="brother"/);

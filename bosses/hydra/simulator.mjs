@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Alchemical Hydra (not ordinary Hydra). Drop data: OSRS Wiki via KURU and Reldo,
 // checked 17 October 2026. Every kill: 2 hydra bones + two standard-table rolls.
 // Only first standard roll can be replaced by a sequential unique pre-roll.
@@ -140,11 +141,11 @@ function choose(table,rng){
 }
 function quantity(row,rng){return row[2]===row[3]?row[2]:row[2]+Math.floor(unit(rng)*(row[3]-row[2]+1));}
 function add(out,id,n=1){if(n>0)out[id]=(out[id]||0)+n;}
-function standard(out,rng){
+function standard(out,rng,ringOfWealth=false){
  let row=choose(STANDARD,rng);
  if(row[0]==="@herb")row=choose(HERBS,rng);
  else if(row[0]==="@seed")row=choose(SEEDS,rng);
- else if(row[0]==="@rdt")row=choose(RDT,rng);
+ else if(row[0]==="@rdt")row=choose(wealthTable(RDT,ringOfWealth,4),rng);
  if(row[0]!=="nothing")add(out,row[0],quantity(row,rng));
 }
 export function validateKills(n){
@@ -163,7 +164,8 @@ export function preRollRates(){
  result.none=remaining;
  return result;
 }
-export function simulate(kills,{rng=Math.random,hardCA=false,eliteCA=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCA=false,eliteCA=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  const drops=Object.create(null);
  let ringPieces=0;
@@ -178,8 +180,8 @@ export function simulate(kills,{rng=Math.random,hardCA=false,eliteCA=false}={}){
    }
   }
   // A pre-roll replaces only the first of the two regular loot rolls.
-  if(!won)standard(drops,rng);
-  standard(drops,rng);
+  if(!won)standard(drops,rng,ringOfWealth);
+  standard(drops,rng,ringOfWealth);
   if(unit(rng)<1/40)add(drops,"brimstone-key");
   if(unit(rng)<1/(hardCA?95:100))add(drops,"clue-scroll-hard");
   if(unit(rng)<1/256)add(drops,"alchemical-hydra-heads");

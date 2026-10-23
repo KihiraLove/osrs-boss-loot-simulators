@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Abyssal Sire, OSRS Wiki drop table (July 2026 revision).
 // Unsired is a 1/100 pre-roll replacing the ordinary 139-ticket table.
 // An unsired is consumed at the Font, with a 128-ticket pet-eligible
@@ -156,28 +157,29 @@ export function openUnsired(count,{rng=Math.random}={}){
  }
  return {count,drops};
 }
-function normalDrop(rng,add){
+function normalDrop(rng,add,ringOfWealth=false){
  let entry=pick(MAIN,4,rng);
  if(entry[0]==="$herb")entry=pick(HERBS,4,rng);
  else if(entry[0]==="$seed")entry=pick(SEEDS,4,rng);
  else if(entry[0]==="$talisman")entry=pick(TALISMANS,4,rng);
  else if(entry[0]==="$rdt"){
-  entry=pick(RDT,4,rng);
+  entry=pick(wealthTable(RDT,ringOfWealth,4),4,rng);
   if(entry[0]!=="nothing")add(entry[0],amount(entry,rng)*2);
   return;
  }
  add(entry[0],amount(entry,rng));
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  const drops=Object.create(null);
  const add=(id,n=1)=>addTo(drops,id,n);
  for(let i=0;i<kills;i++){
   add("abyssal-ashes");
   if(unit(rng)<UNSIRED_RATE)add("unsired");
-  else normalDrop(rng,add);
+  else normalDrop(rng,add,ringOfWealth);
   if(unit(rng)<(eliteCAs?1/171:1/180))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/40)add("brimstone-key");
+
  }
  const opened=openUnsired(drops.unsired||0,{rng});
  return {kills,drops,unsired:opened.count,rewards:opened.drops};

@@ -33,17 +33,16 @@
       <form id="simulator-form" novalidate>
         <div class="gauntlet-kills">
           <label class="depth-field phosani-kills">
-            <span>Regular Gauntlet KC</span>
+            <span>Gauntlet</span>
             <input id="regular-kills" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed regular Gauntlet kills">
           </label>
           <label class="depth-field phosani-kills">
-            <span>Corrupted Gauntlet KC</span>
+            <span>Corrupted Gauntlet</span>
             <input id="corrupted-kills" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Corrupted Gauntlet kills">
           </label>
         </div>
-        <label class="gauntlet-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (elite clues)</label>
-        <label class="gauntlet-option"><input id="include-cape" type="checkbox" checked> Include first-time Gauntlet cape</label>
-        <div id="dry-fields" class="dry-fields" hidden>
+        <label class="gauntlet-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
+                <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained (both modes combined)</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
         </div>
@@ -81,8 +80,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">Unofficial Old School RuneScape simulator · <a href="https://oldschool.runescape.wiki/w/Reward_Chest_(The_Gauntlet)">OSRS Wiki</a> · <a href="https://github.com/KihiraLove/osrs-boss-loot-simulators">Source code</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Reward_Chest_(The_Gauntlet)"></footer>
 </body>
 </html>

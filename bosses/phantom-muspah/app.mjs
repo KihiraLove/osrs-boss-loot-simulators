@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -16,6 +17,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -25,7 +27,7 @@ function setMode(next) {
   $("dry-fields").hidden=!isDry;
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
-  for(const id of ["hard-cas","elite-cas","konar-task","charged-ice"])$(id).closest("label").hidden=isDry;
+  for(const id of ["hard-cas","elite-cas"])$(id).closest("label").hidden=isDry;
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -48,7 +50,7 @@ function dryField(item) {
 for(const item of DRY_ITEMS)dryField(item);
 
 function uniqueCard(item,count) {
-  return createUniqueCard(item, count, item.id==="charged-ice"?"Conditional":item.id==="ancient-essence"?"93/100":"1/"+format(Math.round(1/rateOf(item.id))));
+  return createUniqueCard(item, count, item.id==="ancient-essence"?"93/100":"1/"+format(Math.round(1/rateOf(item.id))));
 }
 
 function renderLoot(result) {
@@ -85,7 +87,7 @@ $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";for(const id of ["hard-cas","elite-cas","konar-task","charged-ice"])$(id).checked=false;
+  $("kill-count").value="0";for(const id of ["hard-cas","elite-cas"])$(id).checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -94,9 +96,8 @@ form.addEventListener("submit",event=>{
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
     if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
-    else renderLoot(simulate(kills,{
-      eliteCAs:$("elite-cas").checked,hardCAs:$("hard-cas").checked,konarTask:$("konar-task").checked,chargedIce:$("charged-ice").checked
-    }));
+    else renderLoot(simulate(kills,{...readRings(),
+      eliteCAs:$("elite-cas").checked,hardCAs:$("hard-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

@@ -37,7 +37,7 @@ test("A Venator shard suppresses all other normal and tertiary loot",()=>{
 test("Supply bundle replaces one standard roll and contains all three groups",()=>{
  let idx=0;
  // Two essence draws, the supplies branch, three paired supply draws,
- // the remaining ordinary roll, pet, hard clue, elite clue, and Konar key.
+ // the remaining ordinary roll, pet, hard clue, and elite clue.
  const vals=[
   .1,.5, // essence roll and quantity
   0, // choose the supplies bundle
@@ -47,8 +47,7 @@ test("Supply bundle replaces one standard roll and contains all three groups",()
   0, // ordinary-table roll
   0, // pet
   0, // hard clue
-  0, // elite clue
-  0  // brimstone key
+  0 // elite clue
  ];
  const rng=()=>{if(idx>=vals.length)throw new Error("RNG fixture exhausted");return vals[idx++];};
  const x=simulate(1,{rng,konarTask:true}).drops;
@@ -61,11 +60,11 @@ test("Supply bundle replaces one standard roll and contains all three groups",()
  assert.equal(x.muphin,1);
  assert.equal(x["clue-scroll-hard"],1);
  assert.equal(x["clue-scroll-elite"],1);
- assert.equal(x["brimstone-key"],1);
+ assert.equal(x["brimstone-key"],undefined);
 });
-test("Charged ice is a one-time opt-in conditional bonus",()=>{
+test("Charged ice is excluded from simulated loot",()=>{
  assert.equal(simulate(0,{chargedIce:true}).drops["charged-ice"],undefined);
- assert.equal(simulate(2,{rng:()=>0,chargedIce:true}).drops["charged-ice"],1);
+ assert.equal(simulate(2,{rng:()=>0,chargedIce:true}).drops["charged-ice"],undefined);
  assert.equal(simulate(10,{rng:()=>0}).drops["charged-ice"],undefined);
 });
 test("Dry probabilities model independent kills with mutually exclusive unique outcomes",()=>{
@@ -94,7 +93,7 @@ test("Validate kill counts, RNG bounds, option types and dry item counts",()=>{
  }
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
  assert.throws(()=>calculateDry(1,{"frozen-cache":2}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,{"muphin":-1}));
@@ -105,7 +104,7 @@ test("Homepage, simulator options and local sprites are present",()=>{
  assert.match(home,/href="bosses\/phantom-muspah\/"/);
  assert.match(docs,/Venator shard/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
- for(const id of ["kill-count","mode-loot","mode-dry","hard-cas","elite-cas","konar-task","charged-ice","unique-grid","loot-grid"])
+ for(const id of ["kill-count","mode-loot","mode-dry","hard-cas","elite-cas","unique-grid","loot-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" not present");
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

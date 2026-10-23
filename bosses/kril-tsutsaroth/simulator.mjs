@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // K'ril Tsutsaroth + 3 Zamorak bodyguards; OSRS Wiki, October 2026.
 // Each full-room kill has four independent, 127-ticket main-table rolls.
 // Boss-only unique rates and the bodyguards' Zamorakian spear chance are exact.
@@ -106,7 +107,7 @@ function qty(low,high,rng){
  return low===high?low:low+Math.floor(unit(rng)*(high-low+1));
 }
 const SHARDS=UNIQUE.slice(4,7).map(x=>x.id);
-function rollMain(rng,add,isBoss){
+function rollMain(rng,add,isBoss,ringOfWealth=false){
  const [id,,lo,hi]=weighted(isBoss?BOSS_MAIN:MINION_MAIN,rng);
  if(id==="@staff"){
   if(unit(rng)<1/4)add("staff-of-the-dead");
@@ -131,7 +132,7 @@ function rollMain(rng,add,isBoss){
   // Shared rare and gem subtables have [id, min, max, weight] rows.
   let table=id==="@rare"?RARE:GEM;
   for(let depth=0;depth<8;depth++){
-   const [name,min,max]=weighted(table,rng,3);
+   const [name,min,max]=weighted(wealthTable(table,ringOfWealth,3,{nested:true}),rng,3);
    if(name==="@gem"){table=GEM;continue;}
    if(name==="@megaRare"){table=MEGA;continue;}
    if(name==="@talisman"){add("chaos-talisman");return;}
@@ -144,24 +145,23 @@ function rollMain(rng,add,isBoss){
   throw new Error("Rare-drop subtable exceeded maximum depth.");
  }else add(id,qty(lo,hi,rng));
 }
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false,frozenDoor=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if([hardCAs,eliteCAs,konarTask,frozenDoor].some(x=>typeof x!=="boolean"))
-  throw new TypeError("Achievement, Konar and Frozen Door options must be boolean.");
+ if([hardCAs,eliteCAs].some(x=>typeof x!=="boolean"))
+  throw new TypeError("Combat Achievement options must be boolean.");
  const bySource=Object.fromEntries(SOURCES.map(x=>[x.id,Object.create(null)]));
  const add=(source,id,n=1)=>{if(n>0)bySource[source][id]=(bySource[source][id]??0)+n;};
  for(let i=0;i<kills;i++){
   add("kril","infernal-ashes");
-  if(frozenDoor)add("kril","frozen-key-piece-zamorak");
-  rollMain(rng,(id,n)=>add("kril",id,n),true);
+  rollMain(rng,(id,n)=>add("kril",id,n),true,ringOfWealth);
   if(unit(rng)<1/5000)add("kril","pet-kril-tsutsaroth");
   if(unit(rng)<(eliteCAs?1/237:1/250))add("kril","clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/50)add("kril","brimstone-key");
+
   for(const source of ["tstanon","balfrug","zakln"]){
    add(source,"malicious-ashes");
-   rollMain(rng,(id,n)=>add(source,id,n),false);
-   if(frozenDoor&&unit(rng)<1/20)add(source,"frozen-key-piece-zamorak");
+   rollMain(rng,(id,n)=>add(source,id,n),false,ringOfWealth);
    if(unit(rng)<(hardCAs?1/121:1/128))add(source,"clue-scroll-hard");
   }
  }

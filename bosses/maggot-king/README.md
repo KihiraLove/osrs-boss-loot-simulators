@@ -4,9 +4,9 @@
 
 ## Modes
 
-After each Maggot King kill, the player chooses **Open-stomach** or **Take-eggs**. These are mutually exclusive options. The simulator has a strategy selector above the kill count; the loot and dry-calculator results use the selected strategy.
+After each Maggot King kill, the player chooses **Open-stomach** or **Take-eggs**. The simulator accepts a separate kill count for each choice and combines their loot. Each individual kill still uses just one choice.
 
-- **Open-stomach** (normal loot): unique weapon pre-rolls, a weighted 159-ticket common table, independent **Maggot marquess (1/3,500)** and elite clues (**1/40**, or **1/38** with elite Combat Achievements). Optional Konar Slayer task adds independent **brimstone keys (1/50)**.
+- **Open-stomach** (normal loot): unique weapon pre-rolls, a weighted 159-ticket common table, independent **Maggot marquess (1/3,500)** and elite clues (**1/40**, or **1/38** with elite Combat Achievements).
 - **Take-eggs** (pet strategy): no normal table or weapon uniques. One of six egg variants can appear, each with its published chance to be obtained and its own chance to hatch **Maggot marquess**. The total pet probability for one take-eggs kill, **assuming the obtained egg is popped**, is about **1/1,502.4**. Elite clues still roll at **1/40**, or **1/38** with the elite Combat Achievements toggle.
 
 ## Open-stomach details
@@ -34,7 +34,7 @@ The published egg probabilities total **493/1,500**. The remaining **1,007/1,500
 
 For **Open-stomach**, enter your received Elder venator fangs, Crimson kistens and Maggot marquess pets. The calculator shows expected drops, chances of **fewer**, **exactly**, or **more**, and the chance of **at least one** of each. The **either weapon unique** result combines the two mutually exclusive weapon branches, using a per-kill chance of **1/340 + 1/520**.
 
-For **Take-eggs**, the calculator shows the Maggot marquess distribution using the weighted probability of hatching it from an obtained egg, about **1/1,502.4** per kill. Weapon uniques are not available in this mode.
+For **Take-eggs**, Maggot marquess uses the weighted probability of hatching it from an obtained egg, about **1/1,502.4** per kill. The combined pet distribution convolves the Open-stomach and Take-eggs probabilities. Weapon uniques use only the Open-stomach count.
 
 All calculations run locally, and all item images are bundled in the repository as local PNGs.
 

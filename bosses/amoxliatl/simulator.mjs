@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Amoxliatl, repeatable post-quest fight. See OSRS Wiki / Amoxliatl.
 // Each kill: two rolls from the 58-ticket primary table, one frozen-tear
 // quantity roll, and independent tertiary drops. Rates are per completed kill.
@@ -40,7 +41,7 @@ export const COMMON=[
  ["$gem","Gem table",0,0,2]
 ];
 // 16,384-ticket conditional gem table, preserving the reported per-roll
-// rates (including "Nothing"). Ring of wealth is not modelled.
+// Ring of wealth is applied within the shared rare and gem subtables.
 export const GEM=[
  ["nothing","Nothing",0,0,8177],
  ["uncut-sapphire","Uncut sapphire",1,1,4096],
@@ -86,7 +87,8 @@ function quantity(lo,hi,rng){
 export function rateOf(id){
  return TERTIARY.find(item=>item.id===id)?.rate??0;
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  const drops=Object.create(null);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]??0)+count;};
@@ -99,12 +101,12 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
 
   for(let roll=0;roll<2;roll++){
    const table=weighted(COMMON,rng);
-   const item=table[0]==="$gem"?weighted(GEM,rng):table;
+   const item=table[0]==="$gem"?weighted(wealthTable(GEM,ringOfWealth,4,{kind:"gem"}),rng):table;
    if(item[0]!=="nothing")add(item[0],quantity(item[2],item[3],rng));
   }
   for(const item of DRY_ITEMS)if(unit(rng)<item.rate)add(item.id);
   if(unit(rng)<(eliteCAs?1/190:1/200))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/54)add("brimstone-key");
+
  }
  return {kills,drops};
 }

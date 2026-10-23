@@ -42,7 +42,7 @@ test("Stomach unique pre-roll, pet, clue, and Konar key are independent",()=>{
  assert.equal(x.drops["crimson-kisten"],undefined);
  assert.equal(x.drops["maggot-marquess"],2);
  assert.equal(x.drops["clue-scroll-elite"],2);
- assert.equal(x.drops["brimstone-key"],2);
+ assert.equal(x.drops["brimstone-key"],undefined);
  assert.equal(x.drops["stymphike-tartare"],undefined);
 });
 
@@ -99,9 +99,9 @@ test("Reject invalid counts, modes and RNGs",()=>{
   assert.throws(()=>calculateDry(n));
  }
  assert.throws(()=>validateMode("other"));
- assert.throws(()=>validateOptions({mode:"eggs",konarTask:true}));
+ assert.doesNotThrow(()=>validateOptions({mode:"eggs",konarTask:true}));
  assert.throws(()=>validateOptions({eliteCAs:1}));
- assert.throws(()=>simulate(1,{mode:"eggs",konarTask:true}));
+ assert.doesNotThrow(()=>simulate(1,{mode:"eggs",konarTask:true}));
  assert.throws(()=>simulate(1,{mode:"fish"}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
@@ -116,12 +116,10 @@ test("All icons exist; page and homepage have correct links and controls",()=>{
  assert.match(home,/maggot-marquess\.png/);
  assert.match(css,/grid-template-columns:\s*repeat\(9,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(css,/width:\s*72px;\s*height:\s*72px/);
- for(const id of ["kill-count","elite-cas","konar-task","mode-loot",
-  "mode-dry","unique-grid","loot-grid","dry-inputs"])
+ for(const id of ["stomach-count","eggs-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs"])
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
- assert.match(page,/value="stomach"/);
- assert.match(page,/value="eggs"/);
- assert.match(app,/mode:corpseMode\(\)/);
+ assert.doesNotMatch(page,/name="corpse"/);
+ assert.match(app,/simulateCombined as simulate/);
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...bytes.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id+" PNG");

@@ -53,7 +53,7 @@ test("Optional Konar assignment and elite Combat Achievements use their proper r
  assert.equal(rateOf("clue-scroll-elite",true),1/95);
  const on=simulate(1,{rng:()=>0,konarTask:true,eliteCAs:true});
  const off=simulate(1,{rng:()=>0,konarTask:false,eliteCAs:false});
- assert.equal(on.drops["brimstone-key"],1);
+ assert.equal(on.drops["brimstone-key"],undefined);
  assert.equal(off.drops["brimstone-key"],undefined);
  assert.equal(on.eliteCAs,true);
  assert.equal(off.eliteCAs,false);
@@ -110,7 +110,7 @@ test("Invalid KC, drop counts and RNG are rejected",()=>{
   assert.throws(()=>calculateDry(x));
  }
  assert.throws(()=>simulate(1,{rng:()=>1}));
- assert.throws(()=>simulate(1,{konarTask:"yes"}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:"yes"}));
  assert.throws(()=>calculateDry(1,{"kq-head":2}));
  assert.throws(()=>calculateDry(1,{"kq-head":-1}));
  assert.throws(()=>calculateDry(1,null));
@@ -122,13 +122,13 @@ test("Kalphite Queen homepage, calculator options, and all local item icons exis
  assert.match(home,/assets\/items\/kalphite-princess\.png/);
  assert.match(html,/id="kill-count"/);
  assert.match(html,/id="elite-cas"/);
- assert.match(html,/id="konar-task"/);
+ assert.doesNotMatch(html,/id="konar-task"/);
  assert.match(html,/id="mode-loot"/);
  assert.match(html,/id="mode-dry"/);
  assert.match(html,/id="unique-grid"/);
  assert.match(html,/id="loot-grid"/);
  assert.match(html,/id="dry-inputs"/);
- assert.match(app,/simulate\(kills,\{eliteCAs:/);
+ assert.match(app,/simulate\(kills,\{\.\.\.readRings\(\),eliteCAs:/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  for(const item of Object.values(ITEMS)){
   const png=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

@@ -38,7 +38,7 @@ test("Two regular loot rolls can yield the same reward alongside separate pre-ro
  assert.equal(x.drops["long-bone"],1);
  assert.equal(x.drops["curved-bone"],1);
  assert.equal(x.drops["clue-scroll-elite"],1);
- assert.equal(x.drops["brimstone-key"],1);
+ assert.equal(x.drops["brimstone-key"],undefined);
 });
 test("Every main branch is reachable, with nested seed, herb and gem rolls",()=>{
  assert.deepEqual(rollMain(seq([point(MAIN,"@seed"),0,0])),["potato-seed",1]);
@@ -61,14 +61,14 @@ test("Pre-roll and collection-log rates are current",()=>{
  close(clueRate(true),1/190);
  assert.throws(()=>clueRate("yes"));
 });
-test("Eligible elite clue step provides guaranteed clue and casket, not a Konar key",()=>{
+test("Removed clue-step mode cannot award a guaranteed clue or casket",()=>{
  const x=simulate(1,{rng:()=>0.99,clueStep:true});
- assert.equal(x.drops["reward-casket-elite"],1);
- assert.equal(x.drops["clue-scroll-elite"],1);
+ assert.equal(x.drops["reward-casket-elite"],undefined);
+ assert.equal(x.drops["clue-scroll-elite"],undefined);
  assert.equal(x.drops["brimstone-key"],undefined);
  const ordinary=simulate(1,{rng:()=>0.99});
  assert.equal(ordinary.drops["reward-casket-elite"],undefined);
- assert.throws(()=>simulate(1,{konarTask:true,clueStep:true}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:true,clueStep:true}));
 });
 test("Binomial dry odds and any unique chance are normalized",()=>{
  const chance=1-(1-1/75)*(1-1/2000)*(1-1/3000);
@@ -98,9 +98,9 @@ test("Zero kills and invalid numbers/options/RNG are rejected appropriately",()=
   assert.throws(()=>simulate(n));
   assert.throws(()=>calculateDry(n));
  }
- assert.throws(()=>simulate(1,{konarTask:5}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:5}));
  assert.throws(()=>simulate(1,{eliteCAs:"yes"}));
- assert.throws(()=>simulate(1,{clueStep:1}));
+ assert.doesNotThrow(()=>simulate(1,{clueStep:1}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
 });
@@ -109,8 +109,7 @@ test("Page, local icons, and README integration",()=>{
  const app=src("bosses/shellbane-gryphon/app.mjs"),readme=src("bosses/shellbane-gryphon/README.md");
  assert.match(home,/href="bosses\/shellbane-gryphon\/"/);
  assert.match(readme,/two separate ordinary loot rolls/i);
- for(const id of ["kill-count","elite-cas","konar-task","clue-step",
-  "mode-loot","mode-dry","unique-grid","loot-grid","dry-any-unique"]){
+ for(const id of ["kill-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-any-unique"]){
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
  }
  assert.match(app,/anyUniqueChance/);

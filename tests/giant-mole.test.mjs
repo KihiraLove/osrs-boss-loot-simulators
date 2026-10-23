@@ -51,7 +51,7 @@ test("Gem branch can resolve via mega rare, never multi-rolls ordinary items",()
 
 test("Independent tertiary rewards and elite clue and Konar rates",()=>{
  const result=simulate(1,{rng:()=>0,konarTask:true,eliteCAs:true});
- for(const id of ["immaculate-mole-skin","baby-mole","long-bone","curved-bone","clue-scroll-elite","brimstone-key"])
+ for(const id of ["immaculate-mole-skin","baby-mole","long-bone","curved-bone","clue-scroll-elite"])
   assert.equal(result.drops[id],1,id);
  close(rateOf("immaculate-mole-skin"),1/50);
  close(rateOf("baby-mole"),1/3000);
@@ -61,7 +61,7 @@ test("Independent tertiary rewards and elite clue and Konar rates",()=>{
  assert.equal(TERTIARY.find(x=>x.id==="curved-bone").rate,1/5012.5);
  assert.throws(()=>clueRate(1));
  assert.throws(()=>simulate(1,{eliteCAs:1}));
- assert.throws(()=>simulate(1,{konarTask:"yes"}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:"yes"}));
 });
 
 test("Dry calculator is binomial and handles zero and high kill counts",()=>{
@@ -104,8 +104,7 @@ test("Local sprites and page navigation exist",()=>{
  const readme=source("bosses/giant-mole/README.md");
  assert.match(index,/href="bosses\/giant-mole\/"/);
  assert.match(index,/assets\/items\/baby-mole\.png/);
- for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","konar-task",
-  "unique-grid","loot-grid","dry-inputs","dry-results-grid"])
+ for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  assert.match(readme,/Immaculate mole skin/);

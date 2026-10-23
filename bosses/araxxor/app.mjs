@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -11,23 +12,15 @@ import {
   formatNumber as format
 } from "../../shared/ui.mjs";
 import {
-  SIGNATURE as UNIQUE, DRY_ITEMS, ITEMS as ITEM_BY_ID, MAX_KILLS, simulate, rateOf
+  SIGNATURE as UNIQUE, DRY_ITEMS, ITEMS as ITEM_BY_ID, MAX_KILLS, simulateCombined as simulate, rateOf
 } from "./simulator.mjs";
-import { calculateDry } from "./dry-calc.mjs";
+import { calculateCombinedDry as calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
-const corpseMode=()=>form.querySelector('input[name="corpse"]:checked').value;
 
-function refreshChoices(){
- const destroy=corpseMode()==="destroy";
- const dry=mode==="dry";
- $("konar-task").closest("label").hidden=dry||destroy;
- $("coagulated-venom").closest("label").hidden=dry||destroy;
- for(const input of dryInputs.querySelectorAll("input"))
-  input.closest("label").hidden=destroy&&input.dataset.id!=="nid";
-}
 function setMode(next) {
   mode=next;
   const isDry=mode==="dry";
@@ -35,7 +28,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("elite-cas").closest("label").hidden=isDry;
-  refreshChoices();
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -58,14 +51,13 @@ function dryField(item) {
 for(const item of DRY_ITEMS)dryField(item);
 
 function uniqueCard(item,count) {
-  return createUniqueCard(item, count, "1/"+format(Math.round(1/rateOf(item.id,corpseMode()))));
+  return createUniqueCard(item, count, item.id==="nid"?"Harvest 1/3,000 · Destroy 1/1,500":"1/"+format(Math.round(1/rateOf(item.id,"harvest"))));
 }
 
 function renderLoot(result) {
   const unique=$("unique-grid"),loot=$("loot-grid");
   unique.replaceChildren();loot.replaceChildren();
   for(const item of DRY_ITEMS){
-  if(corpseMode()==="destroy"&&item.id!=="nid")continue;
   unique.append(uniqueCard(item,result.drops[item.id]||0));
  }
   const uniqueIds=new Set(DRY_ITEMS.map(item=>item.id));
@@ -86,7 +78,6 @@ function readReceived(kills){
   const result={};
   for(const field of dryInputs.querySelectorAll("input")){
     const item=ITEM_BY_ID[field.dataset.id];
-    if(corpseMode()==="destroy"&&item.id!=="nid")continue;
     result[item.id]=parseNumber(field,kills,item.name);
   }
   return result;
@@ -94,26 +85,20 @@ function readReceived(kills){
 
 $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
-form.addEventListener("input",()=>{resetPanels();showError("");refreshChoices();});
+form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";$("elite-cas").checked=false;$("konar-task").checked=false;
-  $("coagulated-venom").checked=false;
-  form.querySelector('input[name="corpse"][value="harvest"]').checked=true;
+  $("harvest-count").value="0";$("destroy-count").value="0";$("elite-cas").checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
-  resetPanels();showError("");refreshChoices();
+  resetPanels();showError("");
 });
 form.addEventListener("submit",event=>{
   event.preventDefault();showError("");
   try{
-    const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
-    if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills),corpseMode()));
-    else renderLoot(simulate(kills,{
-      mode:corpseMode(),eliteCAs:$("elite-cas").checked,
-      konarTask:$("konar-task").checked,coagulatedVenom:$("coagulated-venom").checked
-    }));
+    const a=parseNumber($("harvest-count"),MAX_KILLS,"harvested corpses"),b=parseNumber($("destroy-count"),MAX_KILLS,"destroyed corpses");
+    const kills=a+b;
+    if(mode==="dry")renderDry(calculateDry(a,b,readReceived(kills)));
+    else renderLoot(simulate(a,b,{...readRings(),eliteCAs:$("elite-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
-
-refreshChoices();
 
 clearInputsOnClick(form);

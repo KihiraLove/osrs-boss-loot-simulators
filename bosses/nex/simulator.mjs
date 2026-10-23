@@ -1,4 +1,4 @@
-// Nex: contribution-equivalent loot inferred from NIHIL SHARDS RECEIVED.
+// Old School RuneScape Nex: contribution-equivalent loot inferred from NIHIL SHARDS RECEIVED.
 // Shards do not record actual kill count, team size or damage contribution.
 // Sources: https://oldschool.runescape.wiki/w/Nex and /w/Nihil_shard
 export const MAX_SHARDS=1_000_000;
@@ -33,6 +33,9 @@ export const COMMON_POOL=Object.freeze([
  ["dragon-bolts-unf","Dragon bolts (unf)",12,283,8],
  ["onyx-bolts-e","Onyx bolts (e)",11,29,4],
  ["steel-cannonball","Steel cannonball",42,2252,8],
+ ["air-orb","Air orb",6,100,5],
+ ["coal","Coal",23,2354,4],
+ ["runite-ore","Runite ore",2,30,4],
  ["uncut-ruby","Uncut ruby",3,80,5],
  ["uncut-diamond","Uncut diamond",3,64,5],
  ["wine-of-zamorak","Wine of Zamorak",4,64,5],
@@ -96,8 +99,9 @@ export function simulate(shards,{rng=Math.random,eliteCAs=false}={}){
  const exposure=exposureOf(shards);
  const rares=Object.create(null),other=Object.create(null),common=Object.create(null);
  const add=(dest,id,n=1)=>{if(n>0)dest[id]=(dest[id]??0)+n;};
- // The six team-unique outcomes are disjoint within a kill; thinning a
- // Poisson approximation makes each personal item count Poisson distributed.
+ // OSRS rolls unique chances per player, based on contribution. Multiple
+ // players can receive uniques in one kill. Shard-derived personal exposure
+ // is approximated with independent Poisson item counts here.
  for(const item of UNIQUE)
   add(rares,item.id,samplePoisson(exposure*item.rate,rng));
  for(const item of OTHER_RATES){

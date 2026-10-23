@@ -88,10 +88,10 @@ test("Binomial evaluator allows up to two million trials without underflow",()=>
 });
 test("Elite clue and Konar are optional tertiary rewards",()=>{
  const first=simulate(1,{rng:()=>0,eliteCAs:true,konarTask:true});
- assert.equal(first.drops["brimstone-key"],1);
+ assert.equal(first.drops["brimstone-key"],undefined);
  assert.equal(first.drops["clue-scroll-elite"],1);
  assert.throws(()=>simulate(1,{eliteCAs:"yes"}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
 });
 test("Kill and random source validation",()=>{
  assert.deepEqual({...simulate(0).drops},{});
@@ -108,8 +108,7 @@ test("Homepage, modes, options, docs, and all local icons",()=>{
  const index=source("index.html"),html=source("bosses/grotesque-guardians/index.html");
  const app=source("bosses/grotesque-guardians/app.mjs");
  assert.match(index,/href="bosses\/grotesque-guardians\/"/);
- for(const id of ["kill-count","mode-loot","mode-dry","elite-cas","konar-task",
-   "unique-grid","loot-grid","dry-inputs","dry-results-grid"])
+ for(const id of ["kill-count","mode-loot","mode-dry","elite-cas","unique-grid","loot-grid","dry-inputs","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  assert.match(source("bosses/grotesque-guardians/README.md"),/two independent main loot rolls/i);

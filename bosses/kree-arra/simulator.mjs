@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Kree'arra and all three Armadyl bodyguards; Old School RuneScape Wiki, 2026.
 // A full room clear rolls one 127-ticket table for each of Kree'arra,
 // Flight Kilisa, Wingman Skree and Flockleader Geerin, independently.
@@ -107,7 +108,7 @@ const ARMOUR=UNIQUE.slice(0,3).map(x=>x.id);
 const SHARDS=UNIQUE.slice(4,7).map(x=>x.id);
 export const KONAR_RATE=Object.freeze({kree:1/50,kilisa:1/89,skree:1/92,geerin:1/91});
 // Ordinary and unique tables are mutually exclusive: exactly one main roll.
-function rollMain(rng,add,isBoss,feathers){
+function rollMain(rng,add,isBoss,feathers,ringOfWealth=false){
  const [id,,low,high]=weighted(isBoss?BOSS_MAIN:MINION_MAIN,rng);
  if(id==="@armour"){
   // Boss armour is a three-item table. Each minion has 3 / 127 subrolls.
@@ -128,7 +129,7 @@ function rollMain(rng,add,isBoss,feathers){
   // Existing project GWD approximation, with canonical weight index 3.
   let table=id==="@rare"?RARE:GEM;
   for(let depth=0;depth<8;depth++){
-   const [loot,min,max]=weighted(table,rng,3);
+   const [loot,min,max]=weighted(wealthTable(table,ringOfWealth,3,{nested:true}),rng,3);
    if(loot==="@gem"){table=GEM;continue;}
    if(loot==="@megaRare"){table=MEGA;continue;}
    if(loot==="@talisman"){add("chaos-talisman");return;}
@@ -148,11 +149,12 @@ function rollMain(rng,add,isBoss,feathers){
   add(id,amount(low,high,rng));
  }
 }
-export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false,frozenDoor=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if([hardCAs,eliteCAs,konarTask,frozenDoor].some(v=>typeof v!=="boolean"))
-  throw new TypeError("Combat Achievement, Konar and Frozen Door options must be boolean.");
+ if([hardCAs,eliteCAs].some(v=>typeof v!=="boolean"))
+  throw new TypeError("Combat Combat Achievement options must be boolean.");
  const bySource=Object.fromEntries(SOURCES.map(x=>[x.id,Object.create(null)]));
  const add=(source,id,n=1)=>{
   if(n>0)bySource[source][id]=(bySource[source][id]??0)+n;
@@ -160,20 +162,18 @@ export function simulate(kills,{rng=Math.random,hardCAs=false,eliteCAs=false,kon
  for(let k=0;k<kills;k++){
   const feathers=amount(1,16,rng);
   add("kree","big-bones");add("kree","feather",feathers);
-  if(frozenDoor)add("kree","frozen-key-piece-armadyl");
-  rollMain(rng,(id,n)=>add("kree",id,n),true,feathers);
+  rollMain(rng,(id,n)=>add("kree",id,n),true,feathers,ringOfWealth);
   if(unit(rng)<1/5000)add("kree","pet-kree-arra");
   if(unit(rng)<(eliteCAs?1/237:1/250))add("kree","clue-scroll-elite");
   if(unit(rng)<1/400)add("kree","long-bone");
   if(unit(rng)<1/5012.5)add("kree","curved-bone");
-  if(konarTask&&unit(rng)<KONAR_RATE.kree)add("kree","brimstone-key");
+
   for(const source of ["kilisa","skree","geerin"]){
    const minionFeathers=amount(1,11,rng);
    add(source,"bones");add(source,"feather",minionFeathers);
-   rollMain(rng,(id,n)=>add(source,id,n),false,minionFeathers);
-   if(frozenDoor&&unit(rng)<1/20)add(source,"frozen-key-piece-armadyl");
+   rollMain(rng,(id,n)=>add(source,id,n),false,minionFeathers,ringOfWealth);
    if(unit(rng)<(hardCAs?1/121:1/128))add(source,"clue-scroll-hard");
-   if(konarTask&&unit(rng)<KONAR_RATE[source])add(source,"brimstone-key");
+
   }
  }
  const drops=Object.create(null);

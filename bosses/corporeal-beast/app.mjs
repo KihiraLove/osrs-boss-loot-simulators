@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -16,6 +17,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -94,7 +96,7 @@ form.addEventListener("submit",event=>{
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
     if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
-    else renderLoot(simulate(kills,{
+    else renderLoot(simulate(kills,{...readRings(),
       eliteCAs:$("elite-cas").checked,ringOfWealth:$("ring-of-wealth").checked,
       legendsQuest:$("legends-quest").checked
     }));

@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // OSRS Corporeal Beast: solo kill gets one full main-table roll;
 // the sigil table and tertiary items are independent of the main roll.
 // https://oldschool.runescape.wiki/w/Corporeal_Beast
@@ -89,7 +90,7 @@ function rollGems(rng,add,{ringOfWealth,legendsQuest}){
   const [id,min,max]=weighted(rows,rng);
   if(id==="@nothing")continue;
   if(id==="@mega"){
-   const [mega,qty]=weighted(MEGA,rng);
+   const [mega,qty]=weighted(wealthTable(MEGA,ringOfWealth,3,{nested:true}),rng);
    if(mega!=="@nothing")add(legendsQuest?mega:"nature-talisman",qty);
   }else add(id,quantity(min,max,rng));
  }

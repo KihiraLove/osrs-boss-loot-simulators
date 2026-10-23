@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MINOR,MAIN,RARE,ITEMS,UNIQUE,DRY_ITEMS,
  PICKAXE_CHANCE,DRAGON_2H_MAIN_CHANCE,DRAGON_2H_CHANCE,
- PET_CHANCE,PRIMARY_CHANCE,validateKills,validateTask,clueRate,
+ PET_CHANCE,PRIMARY_CHANCE,validateKills,clueRate,
  rateOf,simulate
 } from "../bosses/chaos-elemental/simulator.mjs";
 import {calculateDry} from "../bosses/chaos-elemental/dry-calc.mjs";
@@ -81,11 +81,11 @@ test("Rare-table branch is conditional and can return a known RDT item",()=>{
 });
 test("Konar and Krystilia are exclusive optional Slayer assignments",()=>{
  const konar=simulate(1,{rng:()=>0,task:"konar"});
- assert.equal(konar.drops["brimstone-key"],1);
+ assert.equal(konar.drops["brimstone-key"],undefined);
  assert.equal(konar.drops["larrans-key"],undefined);
  const krystilia=simulate(1,{rng:()=>0,task:"krystilia"});
- assert.equal(krystilia.drops["larrans-key"],1);
- assert.equal(krystilia.drops["slayers-enchantment"],1);
+ assert.equal(krystilia.drops["larrans-key"],undefined);
+ assert.equal(krystilia.drops["slayers-enchantment"],undefined);
  assert.equal(krystilia.drops["brimstone-key"],undefined);
  const none=simulate(1,{rng:()=>0,task:"none"});
  assert.equal(none.drops["brimstone-key"],undefined);
@@ -94,8 +94,8 @@ test("Konar and Krystilia are exclusive optional Slayer assignments",()=>{
 test("Elite-clue boosts stack according to Combat Achievements and imbued ring",()=>{
  close(clueRate(),1/200);
  close(clueRate({eliteCAs:true}),1/190);
- close(clueRate({ringOfWealth:true}),1/100);
- close(clueRate({eliteCAs:true,ringOfWealth:true}),1/95);
+ close(clueRate({imbuedRingOfWealth:true}),1/100);
+ close(clueRate({eliteCAs:true,imbuedRingOfWealth:true}),1/95);
 });
 test("Dry odds reflect mutually exclusive primary rewards and independent pet",()=>{
  const x=calculateDry(1,{"dragon-2h-sword":1});
@@ -129,10 +129,9 @@ test("Invalid KC, options, RNG and received counts throw",()=>{
   assert.throws(()=>simulate(n));
   assert.throws(()=>calculateDry(n));
  }
- assert.throws(()=>validateTask("yes"));
- assert.throws(()=>simulate(1,{task:"other"}));
+ assert.doesNotThrow(()=>simulate(1,{task:"other"}));
  assert.throws(()=>simulate(1,{eliteCAs:1}));
- assert.throws(()=>clueRate({ringOfWealth:1}));
+ assert.throws(()=>clueRate({imbuedRingOfWealth:1}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>calculateDry(1,{"dragon-pickaxe":-1}));
  assert.throws(()=>calculateDry(1,{"pet-chaos-elemental":2}));
@@ -145,16 +144,17 @@ test("Chaos Elemental page, options and local PNG item sprites",()=>{
  assert.match(home,/assets\/items\/pet-chaos-elemental\.png/);
  assert.match(html,/id="kill-count"/);
  assert.match(html,/id="elite-cas"/);
- assert.match(html,/id="ring-of-wealth"/);
- assert.match(html,/name="slayer-task"/);
- assert.match(html,/value="konar"/);
- assert.match(html,/value="krystilia"/);
+ assert.doesNotMatch(html,/id="ring-of-wealth"/);
+ assert.doesNotMatch(html,/name="slayer-task"/);
+ assert.doesNotMatch(html,/value="konar"/);
+ assert.doesNotMatch(html,/value="krystilia"/);
  assert.match(html,/id="mode-loot"/);
  assert.match(html,/id="mode-dry"/);
  assert.match(html,/id="unique-grid"/);
  assert.match(html,/id="loot-grid"/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
- assert.match(app,/ringOfWealth:\$\("ring-of-wealth"\)\.checked/);
+ assert.match(app,/setupRingOptions\(form\)/);
+ assert.match(html,/id="imbued-ring-of-wealth"/);
  for(const item of Object.values(ITEMS)){
   const png=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
   assert.deepEqual([...png.subarray(0,8)],[137,80,78,71,13,10,26,10],item.id+" needs a local PNG");

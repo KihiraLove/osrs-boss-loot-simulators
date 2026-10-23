@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -14,6 +15,7 @@ import {SOURCES,UNIQUE,DRY_ITEMS,ITEMS,MAX_KILLS,simulate,rateOf} from "./simula
 import {calculateDry} from "./dry-calc.mjs";
 
 const form=$("simulator-form"),dryInputs=$("dry-inputs");
+const readRings=setupRingOptions(form);
 let mode="loot";
 
 function reset(){
@@ -24,7 +26,7 @@ function setMode(next){
  mode=next;const isDry=next==="dry";
  $("loot-panel").hidden=isDry;$("dry-panel").hidden=!isDry;
  $("dry-fields").hidden=!isDry;
- for(const id of ["hard-cas","elite-cas","konar-task","frozen-door"])
+ for(const id of ["hard-cas","elite-cas"])
   $(id).closest("label").hidden=isDry;
  for(const option of ["loot","dry"]){
   const selected=option===next;
@@ -109,7 +111,7 @@ $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{reset();showError("");});
 $("clear-button").addEventListener("click",()=>{
  $("kill-count").value="0";
- for(const id of ["hard-cas","elite-cas","konar-task","frozen-door"])$(id).checked=false;
+ for(const id of ["hard-cas","elite-cas"])$(id).checked=false;
  for(const input of dryInputs.querySelectorAll("input"))input.value="0";
  reset();showError("");
 });
@@ -118,9 +120,8 @@ form.addEventListener("submit",event=>{
  try{
   const kills=readInt($("kill-count"),MAX_KILLS,"full-room Graardor kills");
   if(mode==="dry")renderDry(calculateDry(kills,received(kills)));
-  else renderLoot(simulate(kills,{hardCAs:$("hard-cas").checked,
-   eliteCAs:$("elite-cas").checked,konarTask:$("konar-task").checked,
-   frozenDoor:$("frozen-door").checked}));
+  else renderLoot(simulate(kills,{...readRings(),hardCAs:$("hard-cas").checked,
+   eliteCAs:$("elite-cas").checked}));
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate the results.");}
 });
 

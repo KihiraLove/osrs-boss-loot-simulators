@@ -45,7 +45,7 @@ test("Independent tertiary rewards can coexist with a primary reward",()=>{
  assert.equal(result.drops.sraracha,1);
  assert.equal(result.drops["clue-scroll-hard"],1);
  assert.equal(result.drops["clue-scroll-elite"],1);
- assert.equal(result.drops["brimstone-key"],1);
+ assert.equal(result.drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
 });
 
@@ -105,15 +105,14 @@ test("Home, Sarachnis UI controls and local item assets",()=>{
  const app=source("bosses/sarachnis/app.mjs"),readme=source("bosses/sarachnis/README.md");
  assert.match(home,/href="bosses\/sarachnis\/"/);
  assert.match(readme,/1\/384/);
- for(const id of ["kill-count","hard-cas","elite-cas","konar-task",
-  "mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs"])
+ for(const id of ["kill-count","hard-cas","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid","dry-inputs"])
   assert.ok(page.includes('id="'+id+'"'),id+" input missing");
  assert.match(app,/hardCAs:\$\("hard-cas"\)\.checked/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  // Only check the Sarachnis-defined IDs (shared Giant Mole table owns its assets).
  const keys=new Set([...MAIN,...HERBS,...RARE_SEEDS].map(row=>row[0])
   .concat([...UNIQUE,...TERTIARY.map(([id])=>({id}))].map(x=>x.id),
-   PAGES,["dragon-med-helm","brimstone-key","clue-scroll-hard","clue-scroll-elite"]));
+   PAGES,["dragon-med-helm","clue-scroll-hard","clue-scroll-elite"]));
  for(const id of keys){
   if(id.startsWith("@"))continue;
   assert.ok(ITEMS[id],id+" item metadata missing");

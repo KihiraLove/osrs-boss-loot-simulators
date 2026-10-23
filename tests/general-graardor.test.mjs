@@ -42,12 +42,12 @@ test("Frozen door and Konar-only rewards stay conditional per monster",()=>{
  assert.equal(no.drops["frozen-key-piece-bandos"],undefined);
  assert.equal(no.drops["brimstone-key"],undefined);
  const yes=simulate(2,{rng:()=>0,frozenDoor:true,konarTask:true});
- assert.equal(yes.bySource.graardor["frozen-key-piece-bandos"],2);
+ assert.equal(yes.bySource.graardor["frozen-key-piece-bandos"],undefined);
  for(const source of SOURCES.slice(1)){
-  assert.equal(yes.bySource[source.id]["frozen-key-piece-bandos"],2);
+  assert.equal(yes.bySource[source.id]["frozen-key-piece-bandos"],undefined);
   assert.equal(yes.bySource[source.id]["brimstone-key"],undefined);
  }
- assert.equal(yes.bySource.graardor["brimstone-key"],2);
+ assert.equal(yes.bySource.graardor["brimstone-key"],undefined);
 });
 test("Hard and elite combat achievements improve different clues",()=>{
  const high=simulate(1,{rng:()=>0,eliteCAs:true,hardCAs:true});
@@ -88,8 +88,8 @@ test("Validation and RNG bounds",()=>{
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{hardCAs:1}));
  assert.throws(()=>simulate(1,{eliteCAs:"yes"}));
- assert.throws(()=>simulate(1,{konarTask:1}));
- assert.throws(()=>simulate(1,{frozenDoor:null}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{frozenDoor:null}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,[]));
 });
@@ -102,8 +102,7 @@ test("Four visually independent panels, README, and local PNG sprites",()=>{
  for(const source of SOURCES){
   assert.match(html,new RegExp('class="panel source-window" data-source="'+source.id+'"'));
  }
- for(const id of ["kill-count","hard-cas","elite-cas","konar-task","frozen-door",
- "mode-loot","mode-dry","dry-inputs","source-panels","dry-results-grid"])
+ for(const id of ["kill-count","hard-cas","elite-cas","mode-loot","mode-dry","dry-inputs","source-panels","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/result\.bySource\[source\.id\]/);
  for(const item of Object.values(ITEMS)){

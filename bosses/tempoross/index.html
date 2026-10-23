@@ -29,15 +29,13 @@
     <section class="panel controls-panel" aria-labelledby="plan-heading">
       <div class="section-heading"><h2 id="plan-heading">Reward permits</h2></div>
       <form id="simulator-form" novalidate>
-        <label class="depth-field phosani-kills"><span>Reward pool pulls</span>
+        <label class="depth-field phosani-kills"><span>Pulls</span>
           <input id="pull-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Number of Tempoross reward permits to open">
         </label>
         <label class="depth-field phosani-kills"><span>Base Fishing level</span>
           <input id="fishing-level" type="number" min="35" max="99" step="1" value="99" inputmode="numeric" aria-label="Base Fishing level at the time of claiming rewards">
         </label>
-        <label class="phosani-option"><input id="owns-barrel" type="checkbox"> Already own a Fish barrel (duplicate rolls give 25 soaked pages)</label>
-        <label class="phosani-option"><input id="owns-tackle-box" type="checkbox"> Already own a Tackle box (duplicate rolls give 25 soaked pages)</label>
-        <div id="dry-fields" class="dry-fields" hidden>
+                        <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
         </div>
@@ -73,12 +71,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Reward_pool" target="_blank" rel="noopener noreferrer">OSRS Wiki — Tempoross reward pool</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Reward_pool"></footer>
 </body>
 </html>

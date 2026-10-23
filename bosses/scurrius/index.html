@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11100d">
-  <meta name="description" content="Scurrius loot simulator and dry calculator for solo/MVP and group non-MVP loot.">
+  <meta name="description" content="Scurrius loot simulator and dry calculator for solo kills.">
   <title>Scurrius | Loot Simulator</title>
   <link rel="icon" type="image/png" href="../../assets/items/scurry.png">
   <link rel="stylesheet" href="../../styles.css">
@@ -32,11 +32,7 @@
         <label class="depth-field phosani-kills"><span>Completed kills</span>
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Scurrius kills">
         </label>
-        <fieldset class="scurrius-world"><legend>Loot eligibility</legend>
-          <label><input type="radio" name="encounter-mode" value="mvp" checked> Solo / MVP</label>
-          <label><input type="radio" name="encounter-mode" value="nonMvp"> Non-MVP</label>
-        </fieldset>
-        <label class="phosani-option" id="medium-ca-option"><input id="medium-cas" type="checkbox"> Medium Combat Achievements (medium clues: 1/23)</label>
+        <label class="phosani-option" id="medium-ca-option"><input id="medium-cas" type="checkbox"> Medium Combat Achievements</label>
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
@@ -72,12 +68,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Scurrius" target="_blank" rel="noopener noreferrer">OSRS Wiki — Scurrius</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Scurrius"></footer>
 </body>
 </html>

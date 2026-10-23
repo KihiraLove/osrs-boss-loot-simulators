@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   clearInputsOnClick,
   createItemImage as icon,
   parseNumber as parse,
@@ -11,6 +12,7 @@ import {REWARDS,ITEMS,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
 const form=$("simulator-form");
+const readRings=setupRingOptions(form);
 let mode="loot";
 
 function resetPanels(){
@@ -102,7 +104,7 @@ $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
  $("kill-count").value="0";$("unsired-count").value="0";
- $("elite-cas").checked=false;$("konar-task").checked=false;
+ $("elite-cas").checked=false;
  for(const input of $("dry-inputs").querySelectorAll("input"))input.value="0";
  resetPanels();showError("");
 });
@@ -113,7 +115,7 @@ form.addEventListener("submit",event=>{
   if(mode==="dry"){
    const unsireds=parse($("unsired-count"),kills,"Unsired drops");
    renderDry(calculateDry(kills,unsireds,readRewards(unsireds)));
-  }else renderLoot(simulate(kills,{eliteCAs:$("elite-cas").checked,konarTask:$("konar-task").checked}));
+  }else renderLoot(simulate(kills,{...readRings(),eliteCAs:$("elite-cas").checked}));
  }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

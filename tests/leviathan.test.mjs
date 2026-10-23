@@ -80,11 +80,11 @@ test("Supplies use sea turtles and a ranging potion",()=>{
  assert.equal(drops["super-combat-potion-2"],undefined);
 });
 
-test("Konar applies only to normal mode",()=>{
- assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],1);
+test("Removed task options cannot award brimstone keys",()=>{
+ assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
- assert.throws(()=>validateOptions({awakened:true,konarTask:true}));
- assert.throws(()=>simulate(1,{awakened:true,konarTask:true}));
+ assert.doesNotThrow(()=>validateOptions({awakened:true,konarTask:true}));
+ assert.doesNotThrow(()=>simulate(1,{awakened:true,konarTask:true}));
 });
 
 test("First quartz scaling and subsequent quartz chance",()=>{
@@ -139,8 +139,8 @@ test("All sprites, UI controls and navigation exist",()=>{
  const app=source("bosses/leviathan/app.mjs"),docs=source("bosses/leviathan/README.md");
  assert.match(home,/href="bosses\/leviathan\/"/);
  assert.match(docs,/three-hit|three.hidden|third/i);
- assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
- for(const id of ["mode-loot","mode-dry","kill-count","perfect","awakened","konar-task","unique-grid","loot-grid","vestige-progress"])
+ assert.match(app,/calculateDry\(kills,readReceived\(kills\),false\)/);
+ for(const id of ["mode-loot","mode-dry","kill-count","perfect","unique-grid","loot-grid","vestige-progress"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

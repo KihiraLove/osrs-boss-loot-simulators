@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Vorkath: two independent 150-ticket regular rolls, guaranteed drops,
 // then one independent roll per tertiary. Source: OSRS Wiki, October 2026.
 // Table data: RSPSApp/osrsreboxed-db; subtable weights as documented below.
@@ -38,9 +39,9 @@ function choose(table,rng,index=4){
  return table.at(-1);
 }
 function qty(lo,hi,rng){return lo===hi?lo:lo+Math.floor(unit(rng)*(hi-lo+1));}
-function rollMain(add,rng){
+function rollMain(add,rng,ringOfWealth=false){
  let row=choose(MAIN,rng);
- if(row[0]==="@rdt")row=choose(RDT,rng);
+ if(row[0]==="@rdt")row=choose(wealthTable(RDT,ringOfWealth,4),rng);
  else if(row[0]==="@bolts")row=choose(BOLTS,rng);
  else if(row[0]==="@shark")row=choose(SHARKS,rng);
  else if(row[0]==="@seed")row=choose(SEEDS,rng);
@@ -49,16 +50,17 @@ function rollMain(add,rng){
  const amount=row[0]==="shark-lure"?(35+Math.floor(unit(rng)*21))*2:qty(row[2],row[3],rng);
  add(row[0],amount);
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievement and Konar options must be boolean.");
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievement options must be boolean.");
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let k=1;k<=kills;k++){
   add("superior-dragon-bones",2);add("blue-dragonhide",2);
-  rollMain(add,rng);rollMain(add,rng);
+  rollMain(add,rng,ringOfWealth);rollMain(add,rng,ringOfWealth);
   for(const item of TERTIARY){
    if(item.id==="vorkaths-head"){
     // Guaranteed on the 50th KC; no separate random head roll that kill.
@@ -66,7 +68,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
    }else if(unit(rng)<item.rate)add(item.id);
   }
   if(unit(rng)<(eliteCAs?1/61:1/65))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/50)add("brimstone-key");
+
  }
  return {kills,drops};
 }

@@ -18,21 +18,14 @@ import { calculateDry } from "./dry-calc.mjs";
 const form = $("simulator-form");
 const dryInputs = $("dry-inputs");
 let mode = "loot";
-const encounterMode=()=>form.querySelector('input[name="encounter-mode"]:checked').value;
-const available=item=>rateOf(item.id,encounterMode())>0;
 
-function updateEncounter(){
-  $("medium-ca-option").hidden=mode==="dry"||encounterMode()==="nonMvp";
-  for(const input of dryInputs.querySelectorAll("input"))
-    input.closest("label").hidden=!available(ITEM_BY_ID[input.dataset.id]);
-}
 function setMode(next) {
   mode=next;
   const isDry=mode==="dry";
   $("dry-fields").hidden=!isDry;
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
-  updateEncounter();
+  $("medium-ca-option").hidden=isDry;
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -55,13 +48,13 @@ function dryField(item) {
 for(const item of DRY_ITEMS)dryField(item);
 
 function uniqueCard(item,count) {
-  return createUniqueCard(item, count, "1/"+format(Math.round(1/rateOf(item.id,encounterMode()))));
+  return createUniqueCard(item, count, "1/"+format(Math.round(1/rateOf(item.id))));
 }
 
 function renderLoot(result) {
   const unique=$("unique-grid"),loot=$("loot-grid");
   unique.replaceChildren();loot.replaceChildren();
-  for(const item of DRY_ITEMS)if(available(item))unique.append(uniqueCard(item,result.drops[item.id]||0));
+  for(const item of DRY_ITEMS)unique.append(uniqueCard(item,result.drops[item.id]||0));
   const uniqueIds=new Set(DRY_ITEMS.map(item=>item.id));
   const entries=Object.entries(result.drops)
     .filter(([id,count])=>count>0&&!uniqueIds.has(id))
@@ -80,7 +73,6 @@ function readReceived(kills){
   const result={};
   for(const field of dryInputs.querySelectorAll("input")){
     const item=ITEM_BY_ID[field.dataset.id];
-    if(!available(item))continue;
     result[item.id]=parseNumber(field,kills,item.name);
   }
   return result;
@@ -88,22 +80,19 @@ function readReceived(kills){
 
 $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
-form.addEventListener("input",()=>{resetPanels();showError("");updateEncounter();});
+form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
   $("kill-count").value="0";$("medium-cas").checked=false;
-  form.querySelector('input[name="encounter-mode"][value="mvp"]').checked=true;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
-  resetPanels();showError("");updateEncounter();
+  resetPanels();showError("");
 });
 form.addEventListener("submit",event=>{
   event.preventDefault();showError("");
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
-    if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills),encounterMode()));
-    else renderLoot(simulate(kills,{mode:encounterMode(),mediumCAs:$("medium-cas").checked}));
+    if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
+    else renderLoot(simulate(kills,{mediumCAs:$("medium-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
-
-updateEncounter();
 
 clearInputsOnClick(form);

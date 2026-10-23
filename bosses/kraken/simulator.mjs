@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Kraken boss (level 291). Excludes the ordinary cave kraken Slayer monster.
 // Source: https://oldschool.runescape.wiki/w/Kraken
 import {GEM, MEGA, TALISMAN, ITEMS as SHARED_ITEMS} from "../giant-mole/simulator.mjs";
@@ -40,9 +41,9 @@ export function validateKills(n){
   throw new RangeError("Completed Kraken kills must be a whole number from 0 to 1,000,000.");
  return n;
 }
-export function validateOptions({eliteCAs=false,konarTask=false}={}){
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievements and Konar task options must be booleans.");
+export function validateOptions({eliteCAs=false}={}){
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievement options must be booleans.");
 }
 export function rateOf(id){
  return UNIQUE.find(x=>x.id===id)?.rate??0;
@@ -68,30 +69,31 @@ function amount(low,high,rng){
 }
 // GEM has nested branches with their own 128-ticket tables; do not
 // accidentally normalize away the 63/128 empty gem-table outcomes.
-export function rollCommon(rng=Math.random){
+export function rollCommon(rng=Math.random,ringOfWealth=false){
  let row=pick(MAIN,rng);
  const subtables={"@gem":GEM,"@mega":MEGA,"@talisman":TALISMAN};
  for(let depth=0;depth<5&&row[0].startsWith("@")&&row[0]!=="@nothing";depth++){
   const table=subtables[row[0]];
   if(!table)throw new Error("Unrecognized shared table "+row[0]);
-  row=pick(table,rng);
+  row=pick(wealthTable(table,ringOfWealth,3,{nested:true}),rng);
  }
  if(row[0].startsWith("@"))return null;
  return {id:row[0],quantity:amount(row[1],row[2],rng)};
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({eliteCAs,konarTask});
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
+ validateKills(kills);validateOptions({eliteCAs});
  if(typeof rng!=="function")throw new TypeError("Random generator must be a function.");
  const drops=Object.create(null);
  const add=(id,qty=1)=>{if(qty>0)drops[id]=(drops[id]??0)+qty;};
  for(let kill=0;kill<kills;kill++){
-  const normal=rollCommon(rng);
+  const normal=rollCommon(rng,ringOfWealth);
   if(normal)add(normal.id,normal.quantity);
   // Unique drops are separate independent rolls, not the 128-ticket table.
   for(const reward of UNIQUE)
    if(unit(rng)<reward.rate)add(reward.id);
   if(unit(rng)<clueRate(eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/49)add("brimstone-key");
+
  }
- return {kills,drops,eliteCAs,konarTask};
+ return {kills,drops,eliteCAs};
 }

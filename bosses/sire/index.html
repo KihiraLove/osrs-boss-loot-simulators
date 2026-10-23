@@ -32,9 +32,8 @@
      <input type="number" id="kill-count" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Abyssal Sire kills">
     </label>
     <div id="loot-options">
-     <label class="sire-option"><input type="checkbox" id="elite-cas"> Elite Combat Achievements (clue chance)</label>
-     <label class="sire-option"><input type="checkbox" id="konar-task"> On a Konar Slayer task (brimstone keys)</label>
-    </div>
+     <label class="sire-option"><input type="checkbox" id="elite-cas"> Elite Combat Achievements</label>
+         </div>
     <div class="dry-fields" id="dry-fields" hidden>
      <h3>Unsired drops</h3>
      <label class="depth-field sire-kills"><span>Unsireds obtained</span>
@@ -43,7 +42,8 @@
      <h3>Rewards obtained from Unsireds</h3>
      <div id="dry-inputs" class="dry-inputs"></div>
     </div>
-    <p id="validation-message" class="validation-message" role="alert" hidden></p>
+    <label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
     <div class="action-row"><button type="submit" class="primary-action"><span id="action-label">Simulate loot</span><span aria-hidden="true">→</span></button>
      <button type="button" class="secondary-action" id="clear-button">Clear</button></div>
    </form>
@@ -80,12 +80,6 @@
    </section>
   </div>
  </main>
- <footer>
-  <div class="footer-meta"><p><strong>Drop data:</strong>
-   <a href="https://oldschool.runescape.wiki/w/Abyssal_Sire" target="_blank" rel="noopener noreferrer">OSRS Wiki — Abyssal Sire</a> ·
-   <a href="https://oldschool.runescape.wiki/w/Unsired" target="_blank" rel="noopener noreferrer">Unsired</a>
-  </p><p>No data is stored, collected, or sold by this site.</p></div>
-  <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
- </footer>
+ <footer data-wiki-links="https://oldschool.runescape.wiki/w/Abyssal_Sire https://oldschool.runescape.wiki/w/Unsired"></footer>
 </body>
 </html>

@@ -122,7 +122,7 @@ test("All item sprites, navigation and restricted full-clear form present",()=>{
  const home=file("index.html"),page=file("bosses/moons-of-peril/index.html");
  const app=file("bosses/moons-of-peril/app.mjs"),readme=file("bosses/moons-of-peril/README.md");
  assert.match(home,/href="bosses\/moons-of-peril\/"/);
- assert.match(page,/all 3 moons defeated/i);
+ assert.match(page,/aria-label="Lunar Chests opened after defeating all three moons"/);
  for(const id of ["kill-count","mode-loot","mode-dry","unique-grid","loot-grid",
   "dry-inputs","completion-chance","loot-summary"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");

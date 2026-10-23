@@ -30,15 +30,16 @@
 <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Obor kills"></label>
 <label class="depth-field phosani-kills" id="chests-input" hidden><span>Opened chests</span>
 <input id="chest-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Number of chest openings"></label>
-<fieldset class="obor-choice" id="key-mode"><legend>Chest keys</legend>
+<fieldset class="obor-choice" id="key-mode"><legend></legend>
 <label><input name="key-mode" type="radio" value="preobtained" checked> Pre-obtained keys</label>
-<label><input name="key-mode" type="radio" value="boss"> Key obtained form boss</label>
+<label><input name="key-mode" type="radio" value="boss"> Keys obtained from boss</label>
 </fieldset>
-<fieldset class="obor-choice" id="world-mode"><legend>World type</legend>
+<fieldset class="obor-choice" id="world-mode"><legend></legend>
 <label><input name="world" type="radio" value="members" checked> Members</label>
 <label><input name="world" type="radio" value="f2p"> Free-to-play</label>
 </fieldset>
-<p id="validation-message" class="validation-message" role="alert" hidden></p>
+<label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
 <div class="action-row">
 <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
 <button type="button" class="secondary-action" id="clear-button">Clear</button>
@@ -64,9 +65,5 @@
 <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
 </section>
 </main>
-<footer><div class="footer-meta">
-<p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Obor" target="_blank" rel="noopener noreferrer">OSRS Wiki — Obor</a>
-and <a href="https://oldschool.runescape.wiki/w/Chest_(Obor%27s_lair)" target="_blank" rel="noopener noreferrer">Obor's chest</a></p>
-<p>No data is stored, collected, or sold by this site.</p>
-</div><div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div></footer>
+<footer data-wiki-links="https://oldschool.runescape.wiki/w/Obor https://oldschool.runescape.wiki/w/Chest_(Obor%27s_lair)"></footer>
 </body></html>

@@ -25,7 +25,7 @@ function setMode(next){
  mode=next;const dry=next==="dry";
  $("dry-fields").hidden=!dry;$("dry-panel").hidden=!dry;$("loot-panel").hidden=dry;
  $("elite-cas").closest("label").hidden=dry;
- $("include-cape").closest("label").hidden=dry;
+
  for(const name of ["loot","dry"]){
   $("mode-"+name).classList.toggle("is-active",name===next);
   $("mode-"+name).setAttribute("aria-pressed",String(name===next));
@@ -113,7 +113,7 @@ $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{reset();setError("");});
 $("clear-button").addEventListener("click",()=>{
  $("regular-kills").value="0";$("corrupted-kills").value="0";
- $("elite-cas").checked=false;$("include-cape").checked=true;
+ $("elite-cas").checked=false;
  for(const input of dryInputs.querySelectorAll("input"))input.value="0";
  reset();setError("");
 });
@@ -123,8 +123,7 @@ form.addEventListener("submit",event=>{
   const n=kills();
   if(mode==="dry")renderDry(calculateDry(n.regular,n.corrupted,readReceived(n.regular+n.corrupted)));
   else renderLoot(simulate(n.regular,n.corrupted,{
-   eliteCAs:$("elite-cas").checked,includeCape:$("include-cape").checked
-  }));
+   eliteCAs:$("elite-cas").checked}));
  }catch(error){setError(error instanceof Error?error.message:"Unable to calculate results.");}
 });
 

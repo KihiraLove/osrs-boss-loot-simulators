@@ -49,9 +49,9 @@ export function validateKills(kills){
   throw new RangeError("Enter a whole number of Duke Sucellus kills from 0 to 1,000,000.");
  return kills;
 }
-export function validateOptions({perfect=false,awakened=false,konarTask=false}={}){
- if([perfect,awakened,konarTask].some(v=>typeof v!=="boolean"))
-  throw new TypeError("Perfect, awakened and Konar task must be booleans.");
+export function validateOptions({perfect=false,awakened=false}={}){
+ if([perfect,awakened].some(v=>typeof v!=="boolean"))
+  throw new TypeError("Perfect and awakened options must be booleans.");
 }
 export const uniqueTableRate=awakened=>awakened?1/30:1/90;
 export const vestigeHitRate=awakened=>uniqueTableRate(awakened)*3/8;
@@ -86,8 +86,8 @@ export function quartzRate(kill,alreadyObtained=false){
  if(typeof alreadyObtained!=="boolean")throw new TypeError("Quartz state must be a boolean.");
  return alreadyObtained?1/200:1/(200-Math.min(kill,300)/2);
 }
-export function simulate(kills,{rng=Math.random,perfect=false,awakened=false,konarTask=false}={}){
- validateKills(kills);validateOptions({perfect,awakened,konarTask});
+export function simulate(kills,{rng=Math.random,perfect=false,awakened=false}={}){
+ validateKills(kills);validateOptions({perfect,awakened});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null),add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  let vestigeProgress=0,gotTablet=false,gotQuartz=false;
@@ -118,7 +118,7 @@ export function simulate(kills,{rng=Math.random,perfect=false,awakened=false,kon
   }
   if(unit(rng)<PET_RATE)add("baron");
   if(unit(rng)<1/40)add(clues[Math.floor(unit(rng)*4)]);
-  if(konarTask&&unit(rng)<1/50)add("brimstone-key");
+
  }
- return {kills,perfect,awakened,konarTask,vestigeProgress,drops};
+ return {kills,perfect,awakened,vestigeProgress,drops};
 }

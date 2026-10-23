@@ -43,7 +43,7 @@ test("Steel ring replaces other main loot; independent tertiary rolls",()=>{
  assert.ok(x.drops.numulite>=5&&x.drops.numulite<=32);
  assert.equal(x.drops["unidentified-small-fossil"],1);
  assert.equal(x.drops["clue-scroll-elite"],1);
- assert.equal(x.drops["brimstone-key"],1);
+ assert.equal(x.drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
 });
 test("Seed and noted stack rolls preserve quantities",()=>{
@@ -58,7 +58,7 @@ test("Tertiary boosts, rates and options",()=>{
  close(clueRate(),1/200);
  close(clueRate({eliteCAs:true}),1/190);
  assert.throws(()=>clueRate({eliteCAs:1}),TypeError);
- assert.throws(()=>simulate(1,{konarTask:1}),TypeError);
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}),TypeError);
  close(FOSSILS.reduce((sum,x)=>sum+x[1],0),.06857142857142857);
 });
 test("Steel ring dry calculator uses binomial odds",()=>{
@@ -88,7 +88,7 @@ test("Homepage, page controls and local PNG assets",()=>{
  const home=source("index.html"),page=source("bosses/deranged-archaeologist/index.html");
  const app=source("bosses/deranged-archaeologist/app.mjs");
  assert.match(home,/href="bosses\/deranged-archaeologist\/"/);
- for(const id of ["kill-count","elite-cas","konar-task","mode-loot","mode-dry","unique-grid","loot-grid"])
+ for(const id of ["kill-count","elite-cas","mode-loot","mode-dry","unique-grid","loot-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  for(const item of Object.values(ITEMS)){

@@ -31,8 +31,8 @@ test("Harvest awards unique pre-roll instead of normal loot, with tertiary rewar
  assert.equal(r.drops["jar-of-venom"],1);
  assert.equal(r.drops.nid,1);
  assert.equal(r.drops["clue-scroll-elite"],1);
- assert.equal(r.drops["brimstone-key"],1);
- assert.equal(r.drops["coagulated-venom"],1);
+ assert.equal(r.drops["brimstone-key"],undefined);
+ assert.equal(r.drops["coagulated-venom"],undefined);
  assert.equal(r.drops["rune-kiteshield"],undefined);
 });
 test("Halberd piece sequence is a random permutation, refreshed after three hits",()=>{
@@ -59,7 +59,7 @@ test("Elite combat achievements affect clue roll, Konar affects keys only while 
  assert.equal(no.drops["clue-scroll-elite"],undefined);
  assert.equal(ca.drops["clue-scroll-elite"],1);
  const konar=simulate(1,{rng:()=>0.02,konarTask:true});
- assert.equal(konar.drops["brimstone-key"],1);
+ assert.equal(konar.drops["brimstone-key"],undefined);
  assert.equal(no.drops["brimstone-key"],undefined);
 });
 test("Per-piece dry odds respect non-repeating sets, and any unique is 1/150",()=>{
@@ -104,10 +104,10 @@ test("Araxxor route, corpse modes, and every item icon are local",()=>{
  const home=read("index.html"),page=read("bosses/araxxor/index.html"),app=read("bosses/araxxor/app.mjs");
  assert.match(home,/href="bosses\/araxxor\/"/);
  assert.match(home,/assets\/items\/nid\.png/);
- for(const id of ["mode-loot","mode-dry","kill-count","elite-cas","konar-task","coagulated-venom"])
+ for(const id of ["mode-loot","mode-dry","harvest-count","destroy-count","elite-cas"])
   assert.ok(page.includes('id="'+id+'"'));
- assert.match(page,/name="corpse" value="harvest"/);
- assert.match(page,/name="corpse" value="destroy"/);
+ assert.doesNotMatch(page,/name="corpse"/);
+ assert.match(app,/simulateCombined as simulate/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(home+page+app,/oldschool\.runescape\.wiki\/images/);
  for(const item of Object.values(ITEMS)){

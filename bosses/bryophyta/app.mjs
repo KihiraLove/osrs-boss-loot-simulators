@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   clearInputsOnClick,
   showError,
   createItemIcon as icon,
@@ -11,6 +12,7 @@ import {ITEMS,ESSENCE,KEY,MAX_KILLS,simulate} from "./simulator.mjs";
 import {calculateDry} from "./dry-calc.mjs";
 
 const form=$("simulator-form");
+const readRings=setupRingOptions(form);
 let mode="loot";
 const setting=name=>form.querySelector('input[name="'+name+'"]:checked').value;
 function count(id,label){
@@ -121,7 +123,7 @@ form.addEventListener("submit",event=>{
   if(mode==="dry")dryResults(calculateDry(count("chest-count","Chest openings")));
   else {
    const kills=count("kill-count","Boss kills");
-   lootResults(simulate(kills,{
+   lootResults(simulate(kills,{...readRings(),
     mode:setting("key-mode"),world:setting("world"),
     slayerKills:count("slayer-kills","Kills on Slayer task")
    }));

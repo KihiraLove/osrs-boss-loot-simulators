@@ -46,8 +46,7 @@ test("Occult pre-roll replaces normal loot; tertiary drops remain independent",(
  const x=simulate(1,{rng:()=>0,konarTask:true}).drops;
  assert.equal(x.ashes,1);
  assert.equal(x["occult-necklace"],1);
- for(const id of ["jar-of-smoke","pet-smoke-devil","clue-scroll-hard",
-   "clue-scroll-elite","brimstone-key"])assert.equal(x[id],1);
+ for(const id of ["jar-of-smoke","pet-smoke-devil","clue-scroll-hard","clue-scroll-elite"])assert.equal(x[id],1);
  assert.equal(x["rune-dagger"],undefined);
  assert.equal(x["smoke-battlestaff"],undefined);
 });
@@ -109,7 +108,7 @@ test("Validation rejects invalid kills, flags and random values",()=>{
   assert.throws(()=>simulate(n));
   assert.throws(()=>calculateDry(n));
  }
- assert.throws(()=>validateOptions({konarTask:1}));
+ assert.doesNotThrow(()=>validateOptions({konarTask:1}));
  assert.throws(()=>simulate(1,{hardCAs:"yes"}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
@@ -120,10 +119,9 @@ test("Homepage, page controls, documentation and every required local sprite",()
  const docs=file("bosses/thermonuclear-smoke-devil/README.md");
  assert.match(home,/href="bosses\/thermonuclear-smoke-devil\/"/);
  assert.match(docs,/shark lures/i);
- for(const id of ["mode-loot","mode-dry","kill-count","hard-cas","elite-cas",
-  "konar-task","dry-inputs","unique-grid","loot-grid"])
+ for(const id of ["mode-loot","mode-dry","kill-count","hard-cas","elite-cas","dry-inputs","unique-grid","loot-grid"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
- for(const id of ["hard-cas","elite-cas","konar-task"])
+ for(const id of ["hard-cas","elite-cas"])
   assert.ok(app.includes('$("'+id+'")'),id+" not wired");
  for(const item of Object.values(ITEMS)){
   const buf=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Bryophyta boss and key chest are separate since the 25 June 2025 update.
 export const MAX_KILLS=1000000;
 export const ESSENCE={id:"bryophytas-essence",name:"Bryophyta's essence",rate:1/118};
@@ -32,18 +33,19 @@ export const ITEMS=Object.freeze(Object.fromEntries([
 ].map(id=>[id,{id,name:title(id)}])));
 function random(rng){const x=rng();if(typeof x!=="number"||!Number.isFinite(x)||x<0||x>=1)throw new RangeError("Random values must be in [0, 1).");return x;}
 function choose(rows,rng){const total=rows.reduce((s,r)=>s+r[2],0);let roll=random(rng)*total;for(const row of rows){roll-=row[2];if(roll<0)return row;}return rows.at(-1);}
-function ordinary(rows,rng,add){
+function ordinary(rows,rng,add,ringOfWealth=false){
  let [id,count]=choose(rows,rng);
  if(id==="$herb")([id,count]=choose(HERBS,rng));
  else if(id==="$seed"||id==="$chestseed")([id,count]=choose(SEEDS,rng));
- else if(id==="$gem")([id,count]=choose(GEMS,rng));
+ else if(id==="$gem")([id,count]=choose(wealthTable(GEMS,ringOfWealth,2,{nested:true}),rng));
  else if(id==="$gems"){add("uncut-ruby",5);add("uncut-diamond",5);return;}
  if(id!=="nothing")add(id,count);
 }
-export function simulate(kills,{
+export function simulate(kills,{ringOfWealth=false,
  rng=Math.random,mode="preobtained",world="members",slayerKills=0,
  maxChestOpenings=MAX_KILLS
 }={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  checkCount(kills);checkMode(mode);checkWorld(world);
  checkCount(slayerKills,"kills on Slayer task");
  if(slayerKills>kills)throw new RangeError("Kills on Slayer task cannot exceed total boss kills.");
@@ -57,7 +59,7 @@ export function simulate(kills,{
  const ctable=world==="members"?CHEST_MEMBERS:CHEST_F2P;
  let keysFromBoss=0;
  for(let kill=0;kill<kills;kill++){
-  boss(world==="members"?"giant-bones":"big-bones");ordinary(btable,rng,boss);
+  boss(world==="members"?"giant-bones":"big-bones");ordinary(btable,rng,boss,ringOfWealth&&world==="members");
   if(world==="members"){
    if(random(rng)<1/24)boss("ensouled-giant-head");
    if(random(rng)<1/400)boss("long-bone");
@@ -77,7 +79,7 @@ export function simulate(kills,{
  while(keysAvailable>0&&chestsOpened<maxChestOpenings){
   keysAvailable--;
   chestsOpened++;
-  chest("clue-scroll-beginner");ordinary(ctable,rng,chest);
+  chest("clue-scroll-beginner");ordinary(ctable,rng,chest,ringOfWealth&&world==="members");
   if(random(rng)<1/16){
    chestKeysFound++;
    chest("mossy-key");

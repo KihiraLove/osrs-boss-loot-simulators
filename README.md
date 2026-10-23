@@ -73,6 +73,8 @@ All navigation and asset URLs on the site are relative.
 
 All pages use the root `styles.css`, which contains the shared theme and boss-specific styles. Body classes scope overrides that differ between simulators. Shared image paths, input behavior, and rendering helpers live in `shared/ui.mjs`.
 
+`shared/footer.mjs` builds every calculator footer from the page's `data-wiki-links` URLs and keeps the GitHub link in one place. `shared/rare-tables.mjs` applies Ring of wealth effects inside rare and gem tables; the imbued ring also doubles Wilderness clue chances. Araxxor and Maggot King combine both corpse choices, including their different pet probabilities.
+
 Serve the repository root with any static HTTP server (no package installation or build required):
 
 ```sh

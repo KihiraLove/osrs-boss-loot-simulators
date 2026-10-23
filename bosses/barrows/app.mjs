@@ -17,7 +17,6 @@ import { calculateDry } from "./dry-calc.mjs";
 const form = $("simulator-form");
 const dryInputs = $("dry-inputs");
 const totalChests=()=>parseNumber($("chest-count"),MAX_CHESTS,"completed chests");
-const potential=()=>Number(form.querySelector('input[name="potential"]:checked').value);
 let mode = "loot";
 
 function setMode(next) {
@@ -29,7 +28,6 @@ function setMode(next) {
   $("loot-panel").hidden=isDry;
   $("elite-cas").closest("label").hidden=isDry;
   $("hard-diary").closest("label").hidden=isDry;
-  form.querySelector(".barrows-potential").hidden=isDry;
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -101,7 +99,6 @@ $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
   $("chest-count").value="0";$("elite-cas").checked=false;$("hard-diary").checked=false;
-  form.querySelector('input[name="potential"][value="880"]').checked=true;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -110,7 +107,7 @@ form.addEventListener("submit",event=>{
   try{
     const chests=totalChests();
     if(mode==="dry")renderDry(calculateDry(chests,readReceived(chests)));
-    else renderLoot(simulate(chests,{potential:potential(),hardDiary:$("hard-diary").checked,eliteCAs:$("elite-cas").checked}));
+    else renderLoot(simulate(chests,{hardDiary:$("hard-diary").checked,eliteCAs:$("elite-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

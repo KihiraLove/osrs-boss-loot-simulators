@@ -67,7 +67,7 @@ test("Trident, tentacle, jar, pet and clues are independent of common loot",()=>
  assert.equal(drops["mystic-water-staff"],1);
  for(const item of UNIQUE)assert.equal(drops[item.id],1);
  assert.equal(drops["clue-scroll-elite"],1);
- assert.equal(drops["brimstone-key"],1);
+ assert.equal(drops["brimstone-key"],undefined);
 });
 
 test("Kill count and toggle validation",()=>{
@@ -77,7 +77,7 @@ test("Kill count and toggle validation",()=>{
   assert.throws(()=>simulate(bad));
   assert.throws(()=>calculateDry(bad));
  }
- assert.throws(()=>validateOptions({konarTask:1}));
+ assert.doesNotThrow(()=>validateOptions({konarTask:1}));
  assert.throws(()=>validateOptions({eliteCAs:"yes"}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
@@ -118,8 +118,7 @@ test("Homepage, options, docs and item sprites are present",()=>{
  assert.match(doc,/1\/512/);
  assert.match(doc,/1\/400/);
  assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
- for(const id of ["kill-count","mode-loot","mode-dry","elite-cas",
-  "konar-task","unique-grid","loot-grid","dry-results-grid"])
+ for(const id of ["kill-count","mode-loot","mode-dry","elite-cas","unique-grid","loot-grid","dry-results-grid"])
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
  for(const item of Object.values(ITEMS)){
   const data=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

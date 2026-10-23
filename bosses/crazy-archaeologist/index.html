@@ -33,12 +33,8 @@
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Crazy Archaeologist kills">
         </label>
         <label class="phosani-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements</label>
-        <label class="phosani-option" id="row-option"><input id="ring-of-wealth" type="checkbox"> Imbued ring of wealth (improved hard clues)</label>
-        <fieldset class="chaos-task" id="task-fieldset"><legend>Slayer task</legend>
-          <label><input type="radio" name="slayer-task" value="none" checked> None</label>
-          <label><input type="radio" name="slayer-task" value="konar"> Konar</label>
-          <label><input type="radio" name="slayer-task" value="krystilia"> Krystilia</label>
-        </fieldset>
+        <label data-ring-option class="phosani-option" id="row-option"><input id="imbued-ring-of-wealth" type="checkbox"> Ring of wealth (i)</label>
+
         <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
@@ -74,12 +70,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Chaos_Fanatic" target="_blank" rel="noopener noreferrer">OSRS Wiki — Crazy Archaeologist</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Crazy_archaeologist"></footer>
 </body>
 </html>

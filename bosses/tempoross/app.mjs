@@ -26,8 +26,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("fishing-level").closest("label").hidden=isDry;
-  $("owns-barrel").closest("label").hidden=isDry;
-  $("owns-tackle-box").closest("label").hidden=isDry;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -88,7 +87,7 @@ $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
-  $("pull-count").value="0";$("fishing-level").value="99";$("owns-barrel").checked=false;$("owns-tackle-box").checked=false;
+  $("pull-count").value="0";$("fishing-level").value="99";
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -98,9 +97,7 @@ form.addEventListener("submit",event=>{
     const pulls=parseNumber($("pull-count"),MAX_PULLS,"reward permits");
     if(mode==="dry")renderDry(calculateDry(pulls,readReceived(pulls)));
     else renderLoot(simulate(pulls,{
-      fishingLevel:parseNumber($("fishing-level"),99,"base Fishing level"),
-      ownsBarrel:$("owns-barrel").checked,ownsTackleBox:$("owns-tackle-box").checked
-    }));
+      fishingLevel:parseNumber($("fishing-level"),99,"base Fishing level")}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

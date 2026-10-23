@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#11100d">
-  <meta name="description" content="The Whisperer loot simulator and dry calculator with Bellator vestige protection, perfect drops, and awakened encounters.">
+  <meta name="description" content="The Whisperer loot simulator and dry calculator with Bellator vestige protection, perfect drops.">
   <title>The Whisperer | Loot Simulator</title>
   <link rel="icon" type="image/png" href="../../assets/items/wisp.png">
   <link rel="stylesheet" href="../../styles.css">
@@ -32,10 +32,8 @@
         <label class="depth-field phosani-kills"><span>Completed kills</span>
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed The Whisperer kills">
         </label>
-        <label class="phosani-option"><input id="perfect" type="checkbox"> Perfect kills (50% more standard loot)</label>
-        <label class="phosani-option"><input id="awakened" type="checkbox"> Awakened encounters (3/64 unique table)</label>
-        <label class="phosani-option"><input id="konar-task" type="checkbox"> Konar Slayer task (brimstone keys)</label>
-        <div id="dry-fields" class="dry-fields" hidden>
+        <label class="phosani-option"><input id="perfect" type="checkbox"> Perfect</label>
+                        <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
         </div>
@@ -71,12 +69,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/The_Whisperer" target="_blank" rel="noopener noreferrer">OSRS Wiki — The Whisperer</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/The_Whisperer"></footer>
 </body>
 </html>

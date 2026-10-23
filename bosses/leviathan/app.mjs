@@ -26,7 +26,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("perfect").closest("label").hidden=isDry;
-  $("konar-task").closest("label").hidden=isDry||$("awakened").checked;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -49,7 +49,7 @@ function dryField(item) {
 for(const item of DRY_ITEMS)dryField(item);
 
 function uniqueCard(item,count) {
-  return createUniqueCard(item, count, item.id==="venator-vestige"?(("3 hits at ")+($("awakened").checked?"3/256":"1/256")):(item.id==="scarred-tablet"?"First only":item.id==="smoke-quartz"?"Variable rate":"1/"+format(Math.round(1/rateOf(item.id,$("awakened").checked)))));
+  return createUniqueCard(item, count, item.id==="venator-vestige"?(("3 hits at ")+"1/256"):(item.id==="scarred-tablet"?"First only":item.id==="smoke-quartz"?"Variable rate":"1/"+format(Math.round(1/rateOf(item.id,false)))));
 }
 
 function renderLoot(result) {
@@ -85,12 +85,10 @@ function readReceived(kills){
 $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{
-  if($("awakened").checked)$("konar-task").checked=false;
-  $("konar-task").closest("label").hidden=mode==="dry"||$("awakened").checked;
   resetPanels();showError("");
 });
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";$("perfect").checked=false;$("awakened").checked=false;$("konar-task").checked=false;
+  $("kill-count").value="0";$("perfect").checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -98,10 +96,9 @@ form.addEventListener("submit",event=>{
   event.preventDefault();showError("");
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
-    if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills),$("awakened").checked));
+    if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills),false));
     else renderLoot(simulate(kills,{
-      perfect:$("perfect").checked,awakened:$("awakened").checked,konarTask:$("konar-task").checked
-    }));
+      perfect:$("perfect").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

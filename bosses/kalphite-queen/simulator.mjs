@@ -1,3 +1,4 @@
+import {wealthTable,RARE_ITEM_METADATA} from "../../shared/rare-tables.mjs";
 // OSRS Kalphite Queen. Each kill gives one 126-ticket normal table
 // outcome, one 9-ticket consumable, and independent tertiary rolls.
 // Source: https://oldschool.runescape.wiki/w/Kalphite_Queen
@@ -49,9 +50,9 @@ const nameOf=id=>NAME[id]??id.split("-").map(x=>x[0].toUpperCase()+x.slice(1)).j
 const ids=[...new Set([...UNIQUE.map(x=>x.id),...MAIN.map(x=>x[0]),
  ...CONSUMABLES.map(x=>x[0]),...TERTIARY.map(x=>x.id),
  ...RDT.map(x=>x[0]),"brimstone-key"])].filter(x=>!x.startsWith("@"));
-export const ITEMS=Object.freeze(Object.fromEntries(ids.map(id=>[
+export const ITEMS=Object.freeze({...RARE_ITEM_METADATA,...Object.fromEntries(ids.map(id=>[
  id,{id,name:UNIQUE.find(x=>x.id===id)?.name??nameOf(id)}
-])));
+]))});
 export function validateKills(n){
  if(!Number.isSafeInteger(n)||n<0||n>MAX_KILLS)
   throw new RangeError("Enter a whole number of Kalphite Queen kills from 0 to 1,000,000.");
@@ -71,10 +72,10 @@ function pick(table,rng){
 function quantity(min,max,rng){
  return min===max?min:min+Math.floor(random(rng)*(max-min+1));
 }
-function rare(rng,add){
+function rare(rng,add,ringOfWealth=false){
  let chance=0;const roll=random(rng);
- for(const [id,qty,overall] of RDT){
-  chance+=overall*126;
+ for(const [id,qty,overall] of wealthTable(RDT,ringOfWealth,2)){
+  chance+=ringOfWealth?overall:overall*126;
   if(roll<chance){add(id,qty);return;}
  }
 }
@@ -86,20 +87,21 @@ export function rateOf(id,eliteCAs=false){
  if(id==="brimstone-key")return 1/54;
  return 0;
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Elite Combat Achievements and Konar task settings must be booleans.");
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Elite Combat Achievements must be boolean.");
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let i=0;i<kills;i++){
   const [main,min,max]=pick(MAIN,rng);
-  if(main==="@rare")rare(rng,add);
+  if(main==="@rare")rare(rng,add,ringOfWealth);
   else add(main,quantity(min,max,rng));
   const [id,cmin,cmax]=pick(CONSUMABLES,rng);
   add(id,quantity(cmin,cmax,rng));
   for(const item of TERTIARY)if(random(rng)<rateOf(item.id,eliteCAs))add(item.id);
-  if(konarTask&&random(rng)<1/54)add("brimstone-key");
+
  }
- return {kills,eliteCAs,konarTask,drops};
+ return {kills,eliteCAs,drops};
 }

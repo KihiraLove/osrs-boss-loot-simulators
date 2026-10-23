@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Skotizo rewards: independent guaranteed, shard, standard, gem and tertiary rolls.
 // Sources: https://oldschool.runescape.wiki/w/Skotizo
 export const MAX_KILLS=1_000_000;
@@ -61,9 +62,9 @@ export function validateKills(n){
   throw new RangeError("Skotizo kills must be a whole number from 0 to 1,000,000.");
  return n;
 }
-export function validateOptions({eliteCAs=false,konarTask=false}={}){
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievements and Konar task must be booleans.");
+export function validateOptions({eliteCAs=false}={}){
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievements must be boolean.");
 }
 export function rateOf(id){
  return UNIQUE.find(item=>item.id===id)?.rate??0;
@@ -93,8 +94,9 @@ export function pickTotem(drops,rng=Math.random){
  for(const id of TOTEM_PIECES)min=Math.min(min,drops[id]??0);
  return TOTEM_PIECES.find(id=>(drops[id]??0)===min);
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({eliteCAs,konarTask});
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
+ validateKills(kills);validateOptions({eliteCAs});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,q=1)=>{if(q>0)drops[id]=(drops[id]??0)+q;};
@@ -106,12 +108,12 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
   const shard=choose(SHARDS,rng);add(shard[0],shard[1]);
   const ordinary=choose(MAIN,rng);add(ordinary[0],ordinary[1]);
   // Separate gem table: 9/1000 dragonstones, 1/1000 onyx.
-  const gem=choose(GEM,rng);if(gem[0]!=="@nothing")add(gem[0],gem[1]);
+  const gem=choose(wealthTable(GEM,ringOfWealth,3,{nested:true}),rng);if(gem[0]!=="@nothing")add(gem[0],gem[1]);
   // Independent tertiary rolls can occur together.
   for(const [id,p] of TERTIARY)if(unit(rng)<p)add(id);
   if(unit(rng)<1/32)add(pickTotem(drops,rng));
   if(unit(rng)<eliteClueRate(eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/56)add("brimstone-key");
+
  }
- return {kills,drops,eliteCAs,konarTask};
+ return {kills,drops,eliteCAs};
 }

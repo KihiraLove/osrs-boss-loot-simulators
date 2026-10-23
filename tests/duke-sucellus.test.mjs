@@ -113,7 +113,7 @@ test("Kill limits, option types and random generator are checked",()=>{
  }
  assert.throws(()=>validateOptions({perfect:1}));
  assert.throws(()=>simulate(1,{awakened:"yes"}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
 });
@@ -123,10 +123,9 @@ test("Homepage, controls, docs and all item PNG sprites are present",()=>{
  const app=source("bosses/duke-sucellus/app.mjs");
  const docs=source("bosses/duke-sucellus/README.md");
  assert.match(home,/href="bosses\/duke-sucellus\/"/);
- for(const id of ["kill-count","perfect","awakened","konar-task","mode-loot",
-   "mode-dry","unique-grid","loot-grid","vestige-progress"])
+ for(const id of ["kill-count","perfect","mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
- assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
+ assert.match(app,/calculateDry\(kills,readReceived\(kills\),false\)/);
  assert.match(docs,/third|three|3-hit/i);
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

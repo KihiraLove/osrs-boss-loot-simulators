@@ -72,7 +72,8 @@ export function rollUnique(boss,rng=Math.random){
  for(const item of PRIMARY){sum+=item[boss];if(ticket<sum)return item.id;}
  return null;
 }
-export function simulate(callistoKills,artioKills,{rng=Math.random}={}){
+export function simulate(callistoKills,artioKills,{rng=Math.random,imbuedRingOfWealth=false}={}){
+ if(typeof imbuedRingOfWealth!=="boolean")throw new TypeError("Imbued Ring of wealth must be a boolean.");
  validateKills(callistoKills,"Callisto KC");validateKills(artioKills,"Artio KC");
  const drops=Object.create(null);
  const add=(id,q=1)=>{if(q>0)drops[id]=(drops[id]??0)+q;};
@@ -87,7 +88,7 @@ export function simulate(callistoKills,artioKills,{rng=Math.random}={}){
     const [id,min,max]=SUPPLY[Math.floor(unit(rng)*SUPPLY.length)];
     add(id,min+Math.floor(unit(rng)*(max-min+1)));
    }
-   for(const [id,p] of TERTIARY[boss])if(unit(rng)<p)add(id);
+   for(const [id,p] of TERTIARY[boss])if(unit(rng)<p*(id.startsWith("clue-scroll-")&&imbuedRingOfWealth?2:1))add(id);
    if(unit(rng)<PET[boss])add(PET.id);
   }
  }

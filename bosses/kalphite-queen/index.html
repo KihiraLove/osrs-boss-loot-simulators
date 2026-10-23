@@ -32,12 +32,12 @@
         <label class="depth-field phosani-kills"><span>Completed kills</span>
           <input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed Kalphite Queen kills">
         </label>
-        <label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (elite clues: 1/95)</label>
-        <label class="phosani-option"><input id="konar-task" type="checkbox"> Konar task (brimstone keys: 1/54)</label>
-        <div id="dry-fields" class="dry-fields" hidden>
+        <label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
+                <div id="dry-fields" class="dry-fields" hidden>
           <h3>Drops obtained</h3>
           <div id="dry-inputs" class="dry-inputs"></div>
         </div>
+        <label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
         <p id="validation-message" class="validation-message" role="alert" hidden></p>
         <div class="action-row">
           <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
@@ -69,12 +69,6 @@
       <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
     </section>
   </main>
-  <footer>
-    <div class="footer-meta">
-      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Kalphite Queen" target="_blank" rel="noopener noreferrer">OSRS Wiki — Kalphite Queen</a></p>
-      <p>No data is stored, collected, or sold by this site.</p>
-    </div>
-    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
-  </footer>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Kalphite_Queen"></footer>
 </body>
 </html>

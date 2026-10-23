@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#11100d">
 <meta name="description" content="Dagannoth Rex, Prime and Supreme loot simulator and dry calculator, with separate kill counts and loot inventories.">
 <title>Dagannoth Kings | Loot Simulator</title>
-<link rel="icon" type="image/png" href="../../assets/items/ring-of-life.png">
+<link rel="icon" type="image/png" href="../../assets/items/pet-dagannoth-prime.png">
 <link rel="stylesheet" href="../../styles.css">
 <script type="module" src="app.mjs"></script>
 </head>
@@ -14,7 +14,7 @@
 <nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../..">← All simulators</a></nav>
 <a class="skip-link" href="#main">Skip to simulator</a>
 <header class="site-header">
-<div class="brand-mark"><img src="../../assets/items/ring-of-life.png" alt="" width="42" height="42"></div>
+<div class="brand-mark"><img src="../../assets/items/pet-dagannoth-prime.png" alt="" width="42" height="42"></div>
 <h1>Dagannoth Kings <span>Loot Simulator</span></h1>
 <a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi"><img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" width="24" height="24"><span class="kofi-banner-label">Support me on Ko-fi</span></a>
 </header>
@@ -34,11 +34,10 @@
 <div class="king-options">
 <label class="phosani-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements</label>
 <label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
-<label class="phosani-option"><input id="konar-task" type="checkbox"> Konar Slayer task</label>
-<label class="phosani-option"><input id="quest-ribs" type="checkbox"> Rag and Bone Man II (dagannoth ribs)</label>
 </div>
 <div id="dry-fields" class="dry-fields" hidden><h3>Drops obtained</h3><div id="dry-inputs" class="dry-inputs"></div></div>
-<p id="validation-message" class="validation-message" role="alert" hidden></p>
+<label class="phosani-option" data-ring-option><input id="ring-of-wealth" type="checkbox"> Ring of wealth</label>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
 <div class="action-row">
 <button type="submit" class="primary-action"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
 <button type="button" class="secondary-action" id="clear-button">Clear</button>
@@ -48,7 +47,7 @@
 <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
 <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
 <div id="empty-state" class="empty-state">
-<div class="empty-orb"><img src="../../assets/items/ring-of-life.png" alt="" width="62" height="62"></div>
+<div class="empty-orb"><img src="../../assets/items/pet-dagannoth-prime.png" alt="" width="62" height="62"></div>
 <h3>Nothing claimed yet</h3><p>Enter kills for each king to simulate their loot separately.</p>
 </div>
 <div id="loot-result" hidden></div>
@@ -56,12 +55,12 @@
 <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
 <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
 <div id="dry-empty" class="empty-state">
-<div class="empty-orb"><img src="../../assets/items/ring-of-life.png" alt="" width="62" height="62"></div>
+<div class="empty-orb"><img src="../../assets/items/pet-dagannoth-prime.png" alt="" width="62" height="62"></div>
 <h3>How lucky are your drops?</h3><p>Enter the number of rare drops obtained from each king.</p>
 </div>
 <div id="dry-result" hidden></div>
 </section>
 </main>
-<footer><div class="footer-meta">Unofficial Old School RuneScape simulator · <a href="https://oldschool.runescape.wiki/w/Dagannoth_Kings">OSRS Wiki</a> · <a href="https://github.com/KihiraLove/osrs-boss-loot-simulators">Source code</a></div></footer>
+<footer data-wiki-links="https://oldschool.runescape.wiki/w/Dagannoth_Kings"></footer>
 </body>
 </html>

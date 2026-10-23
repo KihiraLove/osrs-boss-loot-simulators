@@ -62,9 +62,9 @@ test("Kree main table paired potion roll and conditional key rewards",()=>{
  assert.equal(base.drops["frozen-key-piece-armadyl"],undefined);
  assert.equal(base.drops["brimstone-key"],undefined);
  const enabled=simulate(1,{rng:()=>0,frozenDoor:true,konarTask:true});
- assert.equal(enabled.drops["frozen-key-piece-armadyl"],4);
- assert.equal(enabled.bySource.kree["brimstone-key"],1);
- for(const guard of SOURCES.slice(1))assert.equal(enabled.bySource[guard.id]["brimstone-key"],1);
+ assert.equal(enabled.drops["frozen-key-piece-armadyl"],undefined);
+ assert.equal(enabled.bySource.kree["brimstone-key"],undefined);
+ for(const guard of SOURCES.slice(1))assert.equal(enabled.bySource[guard.id]["brimstone-key"],undefined);
  close(KONAR_RATE.kilisa,1/89);
  close(KONAR_RATE.skree,1/92);
  close(KONAR_RATE.geerin,1/91);
@@ -100,7 +100,7 @@ test("Input and option validation",()=>{
  assert.throws(()=>simulate(1,{rng:()=>NaN}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{hardCAs:1}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,[]));
 });
@@ -111,8 +111,7 @@ test("Navigation, 4 source windows, README and all local sprites",()=>{
  assert.match(read("README.md"),/kree-arra\/README\.md/);
  assert.match(docs,/bodyguards/);
  for(const s of SOURCES)assert.match(html,new RegExp('data-source="'+s.id+'"'));
- for(const id of ["kill-count","hard-cas","elite-cas","konar-task","frozen-door",
-  "mode-loot","mode-dry","source-panels","dry-results-grid"])
+ for(const id of ["kill-count","hard-cas","elite-cas","mode-loot","mode-dry","source-panels","dry-results-grid"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/result\.bySource\[source\.id\]/);
  for(const item of Object.values(ITEMS)){

@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Obor uses separate kill and giant-key chest loot (25 June 2025).
 // Rates: OSRS Wiki Obor + Chest (Obor's lair), revision 2026-09-30.
 // The first giant key permanently unlocks the lair and is not spent;
@@ -93,19 +94,20 @@ function choose(table,rng){
  for(const row of table){r-=row[3];if(r<0)return row;}
  return table.at(-1);
 }
-function draw(table,rng,add,world){
+function draw(table,rng,add,world,ringOfWealth=false){
  let [id,min,max]=choose(table,rng);
  if(id==="$herb")([id,min,max]=choose(HERBS,rng));
  else if(id==="$seed")([id,min,max]=choose(SEEDS,rng));
- else if(id==="$gem")([id,min,max]=choose(world==="members"?GEMS_MEMBERS:GEMS_F2P,rng));
+ else if(id==="$gem")([id,min,max]=choose(wealthTable(world==="members"?GEMS_MEMBERS:GEMS_F2P,ringOfWealth&&world==="members",3,{nested:true}),rng));
  else if(id==="$gems"){add("uncut-ruby",5);add("uncut-diamond",5);return;}
  if(id==="nothing")return;
  add(id,min===max?min:min+Math.floor(random(rng)*(max-min+1)));
 }
-export function simulate(kills,{
+export function simulate(kills,{ringOfWealth=false,
  rng=Math.random,mode="preobtained",world="members",
  maxChestOpenings=MAX_KILLS
 }={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  checkCount(kills);checkMode(mode);checkWorld(world);
  checkCount(maxChestOpenings,"maximum chest openings");
  if(mode==="preobtained"&&maxChestOpenings<kills)
@@ -119,7 +121,7 @@ export function simulate(kills,{
  let keysFromBoss=0;
  for(let kill=0;kill<kills;kill++){
   boss(world==="members"?"giant-bones":"big-bones");
-  draw(bossTable,rng,boss,world);
+  draw(bossTable,rng,boss,world,ringOfWealth);
   if(world==="members"){
    if(random(rng)<1/25)boss("ensouled-giant-head");
    if(random(rng)<1/400)boss("long-bone");
@@ -136,7 +138,7 @@ export function simulate(kills,{
  while(available>0&&chestsOpened<maxChestOpenings){
   available--;chestsOpened++;
   chest("clue-scroll-beginner");chest("ensouled-giant-head");
-  draw(CHEST_TABLE,rng,chest,world);
+  draw(CHEST_TABLE,rng,chest,world,ringOfWealth);
   if(random(rng)<1/16){
    chestKeysFound++;chest("giant-key");
    if(mode==="boss")available++;

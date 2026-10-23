@@ -36,7 +36,7 @@ test("Tertiary options change clues and task keys",()=>{
  const base=simulate(1,{rng:()=>0.02});
  const task=simulate(1,{rng:()=>0.02,konarTask:true});
  assert.equal(base.drops["brimstone-key"],undefined);
- assert.equal(task.drops["brimstone-key"],1);
+ assert.equal(task.drops["brimstone-key"],undefined);
  const noCa=simulate(1,{rng:()=>0.0057});
  const ca=simulate(1,{rng:()=>0.0057,eliteCAs:true});
  assert.equal(noCa.drops["clue-scroll-elite"],undefined);
@@ -77,7 +77,7 @@ test("Sire route, modes, and all drop icons are local PNGs",()=>{
  const home=read("index.html"),page=read("bosses/sire/index.html"),app=read("bosses/sire/app.mjs");
  assert.match(home,/href="bosses\/sire\/"/);
  assert.match(home,/assets\/items\/abyssal-orphan\.png/);
- for(const id of ["mode-loot","mode-dry","unsired-count","opened-panel","rewards-grid","konar-task","elite-cas"])
+ for(const id of ["mode-loot","mode-dry","unsired-count","opened-panel","rewards-grid","elite-cas"])
   assert.ok(page.includes('id="'+id+'"'));
  assert.match(app,/calculateDry\(kills,unsireds,readRewards\(unsireds\)\)/);
  assert.doesNotMatch(home+page+app,/oldschool\.runescape\.wiki\/images/);

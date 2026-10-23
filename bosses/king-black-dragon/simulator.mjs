@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // King Black Dragon: OSRS Wiki (Oct 2026) main 128-ticket table.
 // The dragon pickaxe is a 1/1000 pre-roll (replaces the standard roll).
 // Guaranteed bones/hides and heads, pet, visage, clue are additional rolls.
@@ -25,9 +26,9 @@ export function validateKills(kills){
   throw new RangeError("Enter a whole number of King Black Dragon kills from 0 to 1,000,000.");
  return kills;
 }
-export function validateOptions({monkeyMadness2=true,eliteCAs=false,konarTask=false}={}){
- if([monkeyMadness2,eliteCAs,konarTask].some(x=>typeof x!=="boolean"))
-  throw new TypeError("Quest, Combat Achievement and Slayer task options must be booleans.");
+export function validateOptions({monkeyMadness2=true,eliteCAs=false}={}){
+ if([monkeyMadness2,eliteCAs].some(x=>typeof x!=="boolean"))
+  throw new TypeError("Quest and Combat Achievement options must be booleans.");
 }
 export const clueRate=eliteCAs=>eliteCAs?1/427:1/450;
 export const rateOf=id=>UNIQUE.find(x=>x.id===id)?.rate??0;
@@ -43,19 +44,20 @@ function weighted(table,rng){
  return table[table.length-1];
 }
 function amount(lo,hi,rng){return lo===hi?lo:lo+Math.floor(unit(rng)*(hi-lo+1));}
-function rollSubtable(which,rng,add){
+function rollSubtable(which,rng,add,ringOfWealth=false){
  let table=TABLES[which];
  if(!table)throw new RangeError("Unknown drop subtable.");
  for(let depth=0;depth<4;depth++){
-  const [id,lo,hi]=weighted(table,rng);
+  const [id,lo,hi]=weighted(wealthTable(table,ringOfWealth,3,{nested:true}),rng);
   if(id==="@nothing")return;
   if(id.startsWith("@")){table=TABLES[id.slice(1)];if(!table)throw new RangeError("Missing subtable.");continue;}
   add(id,amount(lo,hi,rng));return;
  }
  throw new Error("Drop subtable nesting too deep.");
 }
-export function simulate(kills,{rng=Math.random,monkeyMadness2=true,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({monkeyMadness2,eliteCAs,konarTask});
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,monkeyMadness2=true,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
+ validateKills(kills);validateOptions({monkeyMadness2,eliteCAs});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,count=1)=>{if(count>0)drops[id]=(drops[id]??0)+count;};
@@ -64,8 +66,8 @@ export function simulate(kills,{rng=Math.random,monkeyMadness2=true,eliteCAs=fal
   if(unit(rng)<1/1000)add("dragon-pickaxe");
   else{
    const [id,lo,hi]=weighted(MAIN,rng);
-   if(id==="@rareDrop")rollSubtable("rareDrop",rng,add);
-   else if(id==="@gem")rollSubtable("gem",rng,add);
+   if(id==="@rareDrop")rollSubtable("rareDrop",rng,add,ringOfWealth);
+   else if(id==="@gem")rollSubtable("gem",rng,add,ringOfWealth);
    else if(id==="dragon-javelin-tips"&&!monkeyMadness2)add("fire-rune",300);
    else add(id,amount(lo,hi,rng));
   }
@@ -73,7 +75,7 @@ export function simulate(kills,{rng=Math.random,monkeyMadness2=true,eliteCAs=fal
   if(unit(rng)<1/3000)add("prince-black-dragon");
   if(unit(rng)<1/5000)add("draconic-visage");
   if(unit(rng)<clueRate(eliteCAs))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/65)add("brimstone-key");
+
  }
- return {kills,monkeyMadness2,eliteCAs,konarTask,drops};
+ return {kills,monkeyMadness2,eliteCAs,drops};
 }

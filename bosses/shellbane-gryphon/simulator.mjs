@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Shellbane gryphon: current OSRS Wiki table (Belle's folly 1/75 since July 2026).
 // Two independent 128-ticket ordinary rolls per eligible kill.
 export const MAX_KILLS=1_000_000;
@@ -75,40 +76,39 @@ function pick(table,rng){
  return table.at(-1);
 }
 function amount(min,max,rng){return min===max?min:min+Math.floor(unit(rng)*(max-min+1));}
-export function rollMain(rng=Math.random){
+export function rollMain(rng=Math.random,ringOfWealth=false){
  let row=pick(MAIN,rng);
  if(row[0]==="@seed")row=pick(SEEDS,rng);
  if(row[0]==="@restricted-seed"||row[0]==="@other-seeds")row=pick(RESTRICTED_SEEDS,rng);
  if(row[0]==="@herb")row=pick(HERBS,rng);
  if(row[0]==="@combat-herb")row=pick(COMBAT_HERBS,rng);
  if(row[0]==="@gem"){
-  row=pick(GEM,rng);
+  row=pick(wealthTable(GEM,ringOfWealth,3,{nested:true}),rng);
   if(row[0]==="@talisman")row=pick(TALISMANS,rng);
  }
  if(row[0].startsWith("@"))return null;
  return [row[0],amount(row[1],row[2],rng)];
 }
-export function simulate(kills,{rng=Math.random,konarTask=false,eliteCAs=false,clueStep=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if([konarTask,eliteCAs,clueStep].some(x=>typeof x!=="boolean"))
+ if([eliteCAs].some(x=>typeof x!=="boolean"))
   throw new TypeError("Options must be booleans.");
- if(konarTask&&clueStep)
-  throw new RangeError("Choose a Konar task or an elite clue step, not both.");
+
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let k=0;k<kills;k++){
   add("big-bones");
   add("gryphon-feather",amount(7,10,rng));
   if(unit(rng)<1/75)add("belles-folly-tarnished");
-  for(let i=0;i<2;i++){const rolled=rollMain(rng);if(rolled)add(rolled[0],rolled[1]);}
+  for(let i=0;i<2;i++){const rolled=rollMain(rng,ringOfWealth);if(rolled)add(rolled[0],rolled[1]);}
   if(unit(rng)<1/2000)add("jar-of-feathers");
   if(unit(rng)<1/3000)add("gull");
   if(unit(rng)<1/400)add("long-bone");
   if(unit(rng)<1/5012.5)add("curved-bone");
   if(unit(rng)<clueRate(eliteCAs))add("clue-scroll-elite");
-  if(clueStep){add("clue-scroll-elite");add("reward-casket-elite");}
-  if(konarTask&&unit(rng)<1/58)add("brimstone-key");
+
  }
- return {kills,konarTask,eliteCAs,clueStep,drops};
+ return {kills,eliteCAs,drops};
 }

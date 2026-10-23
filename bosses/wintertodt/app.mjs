@@ -26,8 +26,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   for(const skill of SKILLS)$("level-"+skill).closest("label").hidden=isDry;
-  $("owned-gloves").closest("label").hidden=isDry;
-  $("owned-torches").closest("label").hidden=isDry;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -90,7 +89,7 @@ form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
   $("pull-count").value="0";
   for(const skill of SKILLS)$("level-"+skill).value=String(DEFAULT_LEVELS[skill]);
-  $("owned-gloves").value="0";$("owned-torches").value="0";
+
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -100,9 +99,7 @@ form.addEventListener("submit",event=>{
     const pulls=parseNumber($("pull-count"),MAX_PULLS,"Reward Cart pulls");
     if(mode==="dry")renderDry(calculateDry(pulls,readReceived(pulls)));
     else renderLoot(simulate(pulls,{
-      levels:Object.fromEntries(SKILLS.map(skill=>[skill,parseNumber($("level-"+skill),99,skill)])),
-      owned:{"warm-gloves":parseNumber($("owned-gloves"),3,"owned gloves"),
-        "bruma-torch":parseNumber($("owned-torches"),3,"owned torches")}
+      levels:Object.fromEntries(SKILLS.map(skill=>[skill,parseNumber($("level-"+skill),99,skill)]))
     }));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });

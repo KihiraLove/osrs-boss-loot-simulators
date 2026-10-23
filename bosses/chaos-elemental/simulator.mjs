@@ -1,3 +1,4 @@
+import {wealthTable,RARE_ITEM_METADATA} from "../../shared/rare-tables.mjs";
 // OSRS Chaos Elemental. One minor (5 equal tickets) and one major
 // reward per kill, with a Dragon pickaxe pre-roll ahead of the
 // 128-ticket ordinary major table. Tertiaries are independent.
@@ -32,7 +33,7 @@ export const MAIN=table("rune-dart:100:100:5 rune-platelegs:1:1:4 rune-plateskir
 // RDT table probabilities are the published unboosted OVERALL
 // chances, conditional on the 8/128 table branch (and reaching
 // the table after the pickaxe pre-roll). Unlisted outcomes are empty.
-// Rings of wealth are not modeled as boosts to the RDT.
+// Ring of wealth is applied within the shared rare and gem subtables.
 export const RARE=[
  ["@nothing",0,1/88.19],["coins",3000,1/97.52],
  ["uncut-sapphire",1,1/409.6],["loop-half-of-key",1,1/101.61],
@@ -58,23 +59,18 @@ const ids=[...new Set([
  "looting-bag","clue-scroll-elite","brimstone-key",
  "larrans-key","slayers-enchantment"
 ])].filter(id=>!id.startsWith("@"));
-export const ITEMS=Object.freeze(Object.fromEntries(ids.map(id=>[
+export const ITEMS=Object.freeze({...RARE_ITEM_METADATA,...Object.fromEntries(ids.map(id=>[
  id,{id,name:UNIQUE.find(x=>x.id===id)?.name??label(id)}
-])));
+]))});
 export function validateKills(kills){
  if(!Number.isSafeInteger(kills)||kills<0||kills>MAX_KILLS)
   throw new RangeError("Enter a whole number of Chaos Elemental kills from 0 to 1,000,000.");
  return kills;
 }
-export function validateTask(task){
- if(task!=="none"&&task!=="konar"&&task!=="krystilia")
-  throw new RangeError("Choose None, Konar or Krystilia for Slayer task.");
- return task;
-}
-export function clueRate({eliteCAs=false,ringOfWealth=false}={}){
- if(typeof eliteCAs!=="boolean"||typeof ringOfWealth!=="boolean")
+export function clueRate({eliteCAs=false,imbuedRingOfWealth=false}={}){
+ if(typeof eliteCAs!=="boolean"||typeof imbuedRingOfWealth!=="boolean")
   throw new TypeError("Combat Achievement and ring options must be booleans.");
- return ringOfWealth?(eliteCAs?1/95:1/100):(eliteCAs?1/190:1/200);
+ return (eliteCAs?1/190:1/200)*(imbuedRingOfWealth?2:1);
 }
 export function rateOf(id){
  return UNIQUE.find(x=>x.id===id)?.rate??0;
@@ -91,11 +87,11 @@ function weighted(rows,rng){
  throw new Error("Drop weights are inconsistent.");
 }
 function qty(a,b,rng){return a===b?a:a+Math.floor(unit(rng)*(b-a+1));}
-function rollRare(rng,add){
+function rollRare(rng,add,ringOfWealth=false){
  const value=unit(rng);
  let threshold=0;
- for(const [id,count,overall] of RARE){
-  threshold+=overall/(8/128);
+ for(const [id,count,overall] of wealthTable(RARE,ringOfWealth,2)){
+  threshold+=ringOfWealth?overall:overall/(8/128);
   if(value<threshold){
    if(id!=="@nothing")add(id,count);
    return;
@@ -103,9 +99,9 @@ function rollRare(rng,add){
  }
 }
 export function simulate(kills,{
- rng=Math.random,task="none",eliteCAs=false,ringOfWealth=false
+ rng=Math.random,eliteCAs=false,imbuedRingOfWealth=false
 }={}){
- validateKills(kills);validateTask(task);clueRate({eliteCAs,ringOfWealth});
+ validateKills(kills);clueRate({eliteCAs,imbuedRingOfWealth});
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let kill=0;kill<kills;kill++){
@@ -114,18 +110,14 @@ export function simulate(kills,{
   if(unit(rng)<PICKAXE_CHANCE)add("dragon-pickaxe");
   else {
    const [id,min,max]=weighted(MAIN,rng);
-   if(id==="@rare")rollRare(rng,add);
+   if(id==="@rare")rollRare(rng,add,imbuedRingOfWealth);
    else add(id,qty(min,max,rng));
   }
   if(unit(rng)<10/128)add("weapon-poison-plus-plus");
   if(unit(rng)<1/3)add("looting-bag");
-  if(unit(rng)<clueRate({eliteCAs,ringOfWealth}))add("clue-scroll-elite");
+  if(unit(rng)<clueRate({eliteCAs,imbuedRingOfWealth}))add("clue-scroll-elite");
   if(unit(rng)<PET_CHANCE)add("pet-chaos-elemental");
-  if(task==="konar"&&unit(rng)<1/59)add("brimstone-key");
-  if(task==="krystilia"){
-   if(unit(rng)<1/58)add("larrans-key");
-   if(unit(rng)<1/30)add("slayers-enchantment");
-  }
+
  }
- return {kills,task,eliteCAs,ringOfWealth,drops};
+ return {kills,eliteCAs,imbuedRingOfWealth,drops};
 }

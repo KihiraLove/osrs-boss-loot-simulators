@@ -64,12 +64,11 @@ export function validateMode(mode){
  if(!MODES.includes(mode))throw new RangeError("Choose Open-stomach or Take-eggs.");
  return mode;
 }
-export function validateOptions({mode="stomach",eliteCAs=false,konarTask=false}={}){
+export function validateOptions({mode="stomach",eliteCAs=false}={}){
  validateMode(mode);
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievements and Konar task must be booleans.");
- if(mode==="eggs"&&konarTask)
-  throw new RangeError("Brimstone keys are modeled only for Open-stomach.");
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievements must be boolean.");
+
 }
 export function rateOf(id,mode="stomach"){
  validateMode(mode);
@@ -89,8 +88,8 @@ function pick(table,scale,rng){
  for(const row of table){ticket-=row[4];if(ticket<0)return row;}
  return null;
 }
-export function simulate(kills,{mode="stomach",rng=Math.random,eliteCAs=false,konarTask=false}={}){
- validateKills(kills);validateOptions({mode,eliteCAs,konarTask});
+export function simulate(kills,{mode="stomach",rng=Math.random,eliteCAs=false}={}){
+ validateKills(kills);validateOptions({mode,eliteCAs});
  if(typeof rng!=="function")throw new TypeError("Random generator must be a function.");
  const drops=Object.create(null);
  const add=(id,amount=1)=>{if(amount>0)drops[id]=(drops[id]??0)+amount;};
@@ -109,7 +108,7 @@ export function simulate(kills,{mode="stomach",rng=Math.random,eliteCAs=false,ko
     }else add(row[0],quantity(row[2],row[3],rng));
    }
    if(unit(rng)<1/3500)add("maggot-marquess");
-   if(konarTask&&unit(rng)<1/50)add("brimstone-key");
+
   }else{
    const ticket=unit(rng)*1500;
    let lower=0;
@@ -129,4 +128,13 @@ export function simulate(kills,{mode="stomach",rng=Math.random,eliteCAs=false,ko
   if(unit(rng)<(eliteCAs?1/38:1/40))add("clue-scroll-elite");
  }
  return {kills,mode,drops};
+}
+
+export function simulateCombined(stomachKills,eggsKills,options={}) {
+ validateKills(stomachKills);validateKills(eggsKills);
+ const a=simulate(stomachKills,{...options,mode:"stomach"});
+ const b=simulate(eggsKills,{...options,mode:"eggs"});
+ const drops={...a.drops};
+ for(const [id,count] of Object.entries(b.drops))drops[id]=(drops[id]??0)+count;
+ return {kills:stomachKills+eggsKills,stomachKills,eggsKills,drops};
 }

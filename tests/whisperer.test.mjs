@@ -77,11 +77,11 @@ test("Whisperer supply bundle always contains manta rays, ancient brew and praye
  assert.equal(drops["prayer-potion-3"],1);
 });
 
-test("Konar task is optional and cannot be paired with awakened mode",()=>{
- assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],1);
+test("Removed task options cannot award brimstone keys",()=>{
+ assert.equal(simulate(1,{rng:()=>0,konarTask:true}).drops["brimstone-key"],undefined);
  assert.equal(simulate(1,{rng:()=>0}).drops["brimstone-key"],undefined);
- assert.throws(()=>validateOptions({awakened:true,konarTask:true}));
- assert.throws(()=>simulate(1,{awakened:true,konarTask:true}));
+ assert.doesNotThrow(()=>validateOptions({awakened:true,konarTask:true}));
+ assert.doesNotThrow(()=>simulate(1,{awakened:true,konarTask:true}));
 });
 
 test("Shadow quartz pity approximation improves to 1/50 at 300 KC",()=>{
@@ -139,9 +139,8 @@ test("Navigation, responsive homepage grid, UI fields, docs, and all local sprit
  assert.match(css,/grid-template-columns:\s*repeat\(7,\s*minmax\(0,\s*1fr\)\)/);
  assert.match(page,/oldschool\.runescape\.wiki\/w\/The_Whisperer/);
  assert.match(readme,/Bellator vestige/);
- assert.match(app,/calculateDry\(kills,readReceived\(kills\),\$\("awakened"\)\.checked\)/);
- for(const id of ["kill-count","perfect","awakened","konar-task",
-  "mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
+ assert.match(app,/calculateDry\(kills,readReceived\(kills\),false\)/);
+ for(const id of ["kill-count","perfect","mode-loot","mode-dry","unique-grid","loot-grid","vestige-progress"])
   assert.ok(page.includes('id="'+id+'"'),id+" missing");
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

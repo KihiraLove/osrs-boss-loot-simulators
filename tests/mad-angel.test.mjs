@@ -30,7 +30,7 @@ test("every kill gives 25–35 granite dust; eligible sunstone crystal is exactl
  assert.equal(base.drops["granite-dust"],60);
  assert.equal(base.drops["sunstone-crystal"],undefined);
  const eligible=simulate(2,{rng:()=>.5,sunstoneEligible:true});
- assert.equal(eligible.drops["sunstone-crystal"],1);
+ assert.equal(eligible.drops["sunstone-crystal"],undefined);
  assert.equal(eligible.drops["granite-dust"],60);
  const zero=simulate(0,{rng:()=>0,sunstoneEligible:true});
  assert.deepEqual({...zero.drops},{});
@@ -108,7 +108,7 @@ test("homepage integration, two modes, and every item icon is locally backed by 
  assert.match(page,/id="mode-loot"/);
  assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="medium-cas"/);
- assert.match(page,/id="sunstone-eligible"/);
+ assert.doesNotMatch(page,/id="sunstone-eligible"/);
  assert.match(page,/src="\.\.\/\.\.\/assets\/items\/aggy\.png"/);
  assert.match(app,/calculateDry/);
  assert.doesNotMatch(app,/oldschool\.runescape\.wiki\/images/);

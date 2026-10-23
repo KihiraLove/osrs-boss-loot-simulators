@@ -51,8 +51,8 @@ test("Frozen door and Konar key rewards are conditional",()=>{
  assert.equal(base.drops["frozen-key-piece-saradomin"],undefined);
  assert.equal(base.drops["brimstone-key"],undefined);
  const r=simulate(1,{rng:()=>0,frozenDoor:true,konarTask:true});
- assert.equal(r.drops["frozen-key-piece-saradomin"],4);
- assert.equal(r.bySource.zilyana["brimstone-key"],1);
+ assert.equal(r.drops["frozen-key-piece-saradomin"],undefined);
+ assert.equal(r.bySource.zilyana["brimstone-key"],undefined);
  assert.equal(r.bySource.bree["brimstone-key"],undefined);
 });
 test("Dry odds combine a boss roll with three independent guard rolls",()=>{
@@ -85,7 +85,7 @@ test("Input validation and correct per-monster option types",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{hardCAs:1}));
- assert.throws(()=>simulate(1,{konarTask:1}));
+ assert.doesNotThrow(()=>simulate(1,{konarTask:1}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,[]));
 });
@@ -97,8 +97,7 @@ test("Navigation, four distinct windows, documentation and local sprites",()=>{
  assert.match(docs,/three bodyguards/);
  for(const source of SOURCES)
   assert.match(page,new RegExp('data-source="'+source.id+'"'));
- for(const id of ["kill-count","hard-cas","elite-cas","konar-task","frozen-door",
-  "mode-loot","mode-dry","source-panels","dry-results-grid"])
+ for(const id of ["kill-count","hard-cas","elite-cas","mode-loot","mode-dry","source-panels","dry-results-grid"])
   assert.ok(page.includes('id="'+id+'"'),id);
  assert.match(script,/result\.bySource\[source\.id\]/);
  for(const item of Object.values(ITEMS)){

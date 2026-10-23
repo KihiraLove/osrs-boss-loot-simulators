@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -16,6 +17,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -26,7 +28,7 @@ function setMode(next) {
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
   $("medium-cas").closest("label").hidden=isDry;
-  $("sunstone-eligible").closest("label").hidden=isDry;
+
   for(const [name,selected] of [["loot",!isDry],["dry",isDry]]){
     $("mode-"+name).classList.toggle("is-active",selected);
     $("mode-"+name).setAttribute("aria-pressed",String(selected));
@@ -83,7 +85,7 @@ $("mode-loot").addEventListener("click",()=>setMode("loot"));
 $("mode-dry").addEventListener("click",()=>setMode("dry"));
 form.addEventListener("input",()=>{resetPanels();showError("");});
 $("clear-button").addEventListener("click",()=>{
-  $("kill-count").value="0";$("medium-cas").checked=false;$("sunstone-eligible").checked=false;
+  $("kill-count").value="0";$("medium-cas").checked=false;
   for(const input of dryInputs.querySelectorAll("input"))input.value="0";
   resetPanels();showError("");
 });
@@ -92,7 +94,7 @@ form.addEventListener("submit",event=>{
   try{
     const kills=parseNumber($("kill-count"),MAX_KILLS,"completed kills");
     if(mode==="dry")renderDry(calculateDry(kills,readReceived(kills)));
-    else renderLoot(simulate(kills,{mediumCAs:$("medium-cas").checked,sunstoneEligible:$("sunstone-eligible").checked}));
+    else renderLoot(simulate(kills,{...readRings(),mediumCAs:$("medium-cas").checked}));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

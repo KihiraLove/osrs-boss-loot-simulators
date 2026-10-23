@@ -39,13 +39,13 @@ export const CORRUPTED_TABLE=rows(
  "uncut-ruby:10:40:1 uncut-diamond:5:15:1 battlestaff:8:12:1 coins:75000:150000:1.5"
 );
 const names={
- "youngllef":"Youngllef","gauntlet-cape":"Gauntlet cape","crystal-shard":"Crystal shard",
+ "youngllef":"Youngllef","crystal-shard":"Crystal shard",
  "clue-scroll-elite":"Clue scroll (elite)"
 };
 const ids=new Set([
  ...UNIQUE.map(x=>x.id),
  ...REGULAR_TABLE.map(x=>x[0]),...CORRUPTED_TABLE.map(x=>x[0]),
- "crystal-shard","gauntlet-cape","clue-scroll-elite"
+ "crystal-shard","clue-scroll-elite"
 ]);
 export const ITEMS=Object.freeze(Object.fromEntries([...ids].map(id=>[id,{
  id,name:UNIQUE.find(x=>x.id===id)?.name??names[id]??
@@ -78,11 +78,11 @@ function pick(table,rng){
 }
 // Every completed chest receives shards, 2/3 standard rolls and four
 // mutually independent tertiary rolls. Each seed and the pet can coincide.
-export function simulate(regularKills,corruptedKills,{rng=Math.random,eliteCAs=false,includeCape=true}={}){
+export function simulate(regularKills,corruptedKills,{rng=Math.random,eliteCAs=false}={}){
  validateKills(regularKills,"Regular Gauntlet KC");
  validateKills(corruptedKills,"Corrupted Gauntlet KC");
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
- if(typeof eliteCAs!=="boolean"||typeof includeCape!=="boolean")
+ if(typeof eliteCAs!=="boolean")
   throw new TypeError("Options must be booleans.");
  const drops=Object.create(null),add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(const [id,kills,table] of [
@@ -99,7 +99,5 @@ export function simulate(regularKills,corruptedKills,{rng=Math.random,eliteCAs=f
    if(unit(rng)<(eliteCAs?config.clueElite:config.clue))add("clue-scroll-elite");
   }
  }
- // Awarded on first corrupted completion only if the player lacks a cape.
- if(includeCape&&corruptedKills>0)add("gauntlet-cape");
  return {regularKills,corruptedKills,kills:regularKills+corruptedKills,drops};
 }

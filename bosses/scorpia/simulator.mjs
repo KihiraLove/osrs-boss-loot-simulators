@@ -235,15 +235,10 @@ export function validateKills(kills){
   throw new RangeError("Enter 0 to 1,000,000 completed Scorpia kills.");
  return kills;
 }
-export function validateTask(task){
- if(!["none","konar","krystilia"].includes(task))
-  throw new RangeError("Choose None, Konar or Krystilia for the Slayer task.");
- return task;
-}
-export function clueRate({hardCAs=false,ringOfWealth=false}={}){
- if(typeof hardCAs!=="boolean"||typeof ringOfWealth!=="boolean")
+export function clueRate({hardCAs=false,imbuedRingOfWealth=false}={}){
+ if(typeof hardCAs!=="boolean"||typeof imbuedRingOfWealth!=="boolean")
   throw new TypeError("Hard Combat Achievements and imbued ring of wealth must be booleans.");
- return ringOfWealth?(hardCAs?1/47:1/50):(hardCAs?1/95:1/100);
+ return (hardCAs?1/95:1/100)*(imbuedRingOfWealth?2:1);
 }
 export const rateOf=id=>UNIQUE.find(item=>item.id===id)?.rate??0;
 function unit(rng){
@@ -258,8 +253,8 @@ function weightedMain(rng){
  return MAIN.at(-1);
 }
 function amount(min,max,rng){return min===max?min:min+Math.floor(unit(rng)*(max-min+1));}
-export function simulate(kills,{rng=Math.random,task="none",hardCAs=false,ringOfWealth=false}={}){
- validateKills(kills);validateTask(task);clueRate({hardCAs,ringOfWealth});
+export function simulate(kills,{rng=Math.random,hardCAs=false,imbuedRingOfWealth=false}={}){
+ validateKills(kills);clueRate({hardCAs,imbuedRingOfWealth});
  if(typeof rng!=="function")throw new TypeError("RNG must be a function.");
  const drops=Object.create(null);
  const add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
@@ -275,13 +270,8 @@ export function simulate(kills,{rng=Math.random,task="none",hardCAs=false,ringOf
   }
   if(unit(rng)<1/3)add("looting-bag");
   if(unit(rng)<1/18)add("ensouled-scorpion-head");
-  if(unit(rng)<clueRate({hardCAs,ringOfWealth}))add("clue-scroll-hard");
-  if(task==="konar"){
-   if(unit(rng)<1/75)add("brimstone-key");
-  }else if(task==="krystilia"){
-   if(unit(rng)<1/72)add("larrans-key");
-   if(unit(rng)<1/30)add("slayers-enchantment");
-  }
+  if(unit(rng)<clueRate({hardCAs,imbuedRingOfWealth}))add("clue-scroll-hard");
+
  }
- return {kills,task,hardCAs,ringOfWealth,drops};
+ return {kills,hardCAs,imbuedRingOfWealth,drops};
 }

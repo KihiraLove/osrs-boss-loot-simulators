@@ -1,4 +1,5 @@
 import {
+  setupRingOptions,
   createUniqueCard,
   clearInputsOnClick,
   createItemIcon as icon,
@@ -16,6 +17,7 @@ import {
 import { calculateDry } from "./dry-calc.mjs";
 
 const form = $("simulator-form");
+const readRings=setupRingOptions(form);
 const dryInputs = $("dry-inputs");
 let mode = "loot";
 
@@ -91,7 +93,7 @@ form.addEventListener("submit",event=>{
     const callisto=parseNumber($("callisto-kc"),MAX_KILLS,"Callisto KC");
     const artio=parseNumber($("artio-kc"),MAX_KILLS,"Artio KC");
     if(mode==="dry")renderDry(calculateDry(callisto,artio,readReceived(callisto+artio)));
-    else renderLoot(simulate(callisto,artio));
+    else renderLoot(simulate(callisto,artio,readRings()));
   }catch(err){showError(err instanceof Error?err.message:"Could not calculate the result.");}
 });
 

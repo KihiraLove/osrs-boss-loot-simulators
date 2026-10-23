@@ -83,11 +83,11 @@ export function rateOf(id){
  if(primary)return primary.rate;
  return OTHER_RARES.find(x=>x.id===id)?.rate??0;
 }
-export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}={}){
+export function simulate(kills,{rng=Math.random,eliteCAs=false}={}){
  validateKills(kills);
  if(typeof rng!=="function")throw new TypeError("Random source must be a function.");
- if(typeof eliteCAs!=="boolean"||typeof konarTask!=="boolean")
-  throw new TypeError("Combat Achievements and Konar task options must be booleans.");
+ if(typeof eliteCAs!=="boolean")
+  throw new TypeError("Combat Achievement options must be booleans.");
  const drops=Object.create(null),add=(id,n=1)=>{if(n>0)drops[id]=(drops[id]??0)+n;};
  for(let i=0;i<kills;i++){
   add("granite-dust",qty(50,100,rng));
@@ -104,7 +104,7 @@ export function simulate(kills,{rng=Math.random,eliteCAs=false,konarTask=false}=
   if(unit(rng)<1/3000)add("noon");
   if(unit(rng)<1/5000)add("jar-of-stone");
   if(unit(rng)<(eliteCAs?1/218:1/230))add("clue-scroll-elite");
-  if(konarTask&&unit(rng)<1/44)add("brimstone-key");
+
  }
  return {kills,drops};
 }

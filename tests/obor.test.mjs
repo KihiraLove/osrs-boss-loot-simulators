@@ -135,7 +135,7 @@ test("Obor page matches current Bryophyta UX but never invents Slayer key boosts
  assert.match(html,/name="key-mode"/);
  assert.match(html,/value="preobtained"/);
  assert.match(html,/value="boss"/);
- assert.match(html,/Key obtained form boss/);
+ assert.match(html,/Keys obtained from boss/);
  assert.match(html,/id="chest-count"/);
  assert.match(html,/id="unique-grid"/);
  assert.match(html,/id="boss-loot"/);

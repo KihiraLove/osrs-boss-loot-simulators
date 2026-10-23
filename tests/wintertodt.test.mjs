@@ -133,9 +133,7 @@ test("Page, documentation, homepage links and every item sprite are included",()
  assert.match(home,/href="bosses\/wintertodt\/"/);
  assert.match(app,/calculateDry\(pulls,readReceived\(pulls\)\)/);
  assert.match(docs,/October 2024/i);
- for(const id of ["pull-count","level-woodcutting","level-mining","level-fishing","level-crafting",
-  "level-herblore","level-farming","owned-gloves","owned-torches",
-  "mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","reward-summary"])
+ for(const id of ["pull-count","level-woodcutting","level-mining","level-fishing","level-crafting","level-herblore","level-farming","mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","reward-summary"])
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

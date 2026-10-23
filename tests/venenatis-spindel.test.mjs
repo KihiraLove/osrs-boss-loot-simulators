@@ -117,7 +117,7 @@ test("Combined page uses two KCs, one inventory and local sprites",()=>{
  assert.match(page,/id="mode-loot"/);assert.match(page,/id="mode-dry"/);
  assert.match(page,/id="unique-grid"/);assert.match(page,/id="loot-grid"/);
  assert.match(page,/id="dry-inputs"/);
- assert.match(app,/simulate\(venenatis,spindel\)/);
+ assert.match(app,/simulate\(venenatis,spindel,readRings\(\)\)/);
  assert.match(app,/calculateDry\(venenatis,spindel,readReceived\(venenatis\+spindel\)\)/);
  assert.doesNotMatch(page,/id="kill-count"/);
  for(const item of Object.values(ITEMS)){

@@ -478,19 +478,7 @@ body.boss-selection-page {
   :where(.boss-nex) .phosani-kills { flex-wrap: wrap; }
 }
 
-/* Araxxor corpse selection. */
-.araxxor-corpse { display: grid; gap: 8px; border: 0; padding: 0; margin: 0 0 16px; }
-.araxxor-corpse legend { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
-.araxxor-corpse label { padding: 10px; color: var(--muted); border: 1px solid var(--border); background: var(--panel-2); font-size: .84rem; cursor: pointer; }
-.araxxor-corpse label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); background: rgba(213,170,87,.08); }
-.araxxor-corpse input { width: 16px; height: 16px; margin-right: 6px; accent-color: var(--accent); vertical-align: middle; }
-
-/* Barrows reward potential and grouped uniques. */
-.barrows-potential { border: 0; padding: 0; margin: 14px 0; display: grid; gap: 8px; }
-.barrows-potential legend { color: var(--muted); font-size: .83rem; margin-bottom: 7px; }
-.barrows-potential label { padding: 11px 10px; border: 1px solid var(--border); background: var(--panel-2); font-size: .83rem; color: var(--muted); cursor: pointer; }
-.barrows-potential label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
-.barrows-potential input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+/* Barrows grouped uniques. */
 .barrows-unique-heading { margin: 16px 0 8px; color: var(--accent-strong); font-size: .94rem; }
 .barrows-unique-heading:first-child { margin-top: 0; }
 .barrows-uniques { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; }
@@ -551,13 +539,6 @@ body.boss-selection-page {
 /* Wilderness boss drop rates. */
 .boss-rates { display: block; margin-top: 5px; font-size: .72rem; line-height: 1.4; color: var(--muted); }
 .rare-rate { font-size: .72rem; color: var(--muted); line-height: 1.4; }
-
-/* Shared Slayer task selection. */
-.chaos-task { display: grid; gap: 8px; border: 0; padding: 0; margin: 12px 0 15px; }
-.chaos-task legend { font-size: .82rem; color: var(--muted); margin-bottom: 8px; }
-.chaos-task label { padding: 10px 12px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); font-size: .84rem; cursor: pointer; }
-.chaos-task label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
-.chaos-task input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
 
 /* God Wars Dungeon boss and bodyguard loot windows. */
 .room-hint { font-size: .78rem; line-height: 1.5; color: var(--muted); margin: 8px 0 14px; }
@@ -646,13 +627,6 @@ body.boss-selection-page {
   .hydra-kills { flex-wrap: wrap; }
 }
 
-/* Maggot King corpse selection. */
-.maggot-king-corpse { display: grid; gap: 8px; border: 0; padding: 0; margin: 0 0 16px; }
-.maggot-king-corpse legend { color: var(--muted); font-size: .83rem; margin-bottom: 8px; }
-.maggot-king-corpse label { padding: 10px; color: var(--muted); border: 1px solid var(--border); background: var(--panel-2); font-size: .84rem; cursor: pointer; }
-.maggot-king-corpse label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); background: rgba(213,170,87,.08); }
-.maggot-king-corpse input { width: 16px; height: 16px; margin-right: 6px; accent-color: var(--accent); vertical-align: middle; }
-
 /* Moons of Peril summary. */
 .moon-summary { color: var(--muted); font-size: .84rem; line-height: 1.5; margin: 14px 0; }
 
@@ -687,14 +661,7 @@ body.boss-selection-page {
 .obor-limit { grid-column: 1/-1; margin: 0; color: var(--muted); font-size: .8rem; line-height: 1.5; }
 
 /* Royal Titans reward selection. */
-:where(.boss-royal-titans) .controls-panel select { max-width: 100%; min-height: 40px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 5px; padding: 7px 8px; margin-top: 5px; }
-
-/* Scurrius world selection. */
-.scurrius-world { display: grid; gap: 9px; border: 0; padding: 0; margin: 0 0 14px; }
-.scurrius-world legend { font-size: .82rem; color: var(--muted); margin-bottom: 9px; }
-.scurrius-world label { padding: 11px 12px; border: 1px solid var(--border); background: var(--panel-2); color: var(--muted); font-size: .84rem; cursor: pointer; }
-.scurrius-world label:has(input:checked) { border-color: var(--accent); color: var(--accent-strong); }
-.scurrius-world input { width: 16px; height: 16px; accent-color: var(--accent); vertical-align: middle; margin-right: 6px; }
+:where(.boss-royal-titans) .controls-panel select { min-width: 0; max-width: 100%; min-height: 40px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 5px; padding: 7px 8px; margin-top: 5px; }
 
 /* Shellbane Gryphon unique summary. */
 .any-unique-summary { margin: 0 0 18px; color: var(--accent-strong); font-weight: 700; font-size: 1rem; }
@@ -722,14 +689,11 @@ body.boss-selection-page {
 /* Skilling reward tier. */
 .fishing-tier { color: var(--muted); font-size: .82rem; margin: 12px 0 18px; }
 
-/* Wintertodt skills and starting items. */
+/* Wintertodt skills. */
 .skill-levels h3 { font-size: .9rem; margin: 16px 0 8px; }
-.skill-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
-.skill-grid .phosani-kills { display: flex; justify-content: space-between; gap: 8px; margin: 0; font-size: .84rem; }
-.skill-grid .phosani-kills input { width: 90px; max-width: 90px; }
-.starting-items { margin: 16px 0; }
-.starting-items .phosani-kills { display: flex; justify-content: space-between; gap: 8px; font-size: .83rem; }
-.starting-items .phosani-kills input { width: 90px; max-width: 90px; }
+.skill-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(145px,1fr)); gap: 8px; }
+.skill-grid .phosani-kills { display: flex; justify-content: space-between; gap: 6px; margin: 0; padding: 8px 6px; font-size: .84rem; }
+.skill-grid .phosani-kills input { flex: 0 0 48px; width: 48px; max-width: 48px; }
 @media (max-width:550px) {
   .skill-grid { grid-template-columns: 1fr; }
 }

@@ -53,8 +53,8 @@ test("Boss unique branches, paired potion rolls and key piece toggles",()=>{
  assert.equal(no.drops["frozen-key-piece-zamorak"],undefined);
  assert.equal(no.drops["brimstone-key"],undefined);
  const yes=simulate(1,{rng:()=>0,frozenDoor:true,konarTask:true});
- assert.equal(yes.drops["frozen-key-piece-zamorak"],4);
- assert.equal(yes.bySource.kril["brimstone-key"],1);
+ assert.equal(yes.drops["frozen-key-piece-zamorak"],undefined);
+ assert.equal(yes.bySource.kril["brimstone-key"],undefined);
  for(const source of SOURCES.slice(1))
   assert.equal(yes.bySource[source.id]["brimstone-key"],undefined);
 });
@@ -88,7 +88,7 @@ test("Validation and all options reject invalid inputs",()=>{
  assert.throws(()=>simulate(1,{rng:()=>1}));
  assert.throws(()=>simulate(1,{rng:null}));
  assert.throws(()=>simulate(1,{hardCAs:1}));
- assert.throws(()=>simulate(1,{frozenDoor:1}));
+ assert.doesNotThrow(()=>simulate(1,{frozenDoor:1}));
  assert.throws(()=>calculateDry(1,null));
  assert.throws(()=>calculateDry(1,[]));
 });
@@ -99,8 +99,7 @@ test("All separate loot panels, navigation, docs and sprite assets exist",()=>{
  assert.match(read("README.md"),/kril-tsutsaroth\/README\.md/);
  assert.match(docs,/bodyguards/);
  for(const source of SOURCES)assert.match(html,new RegExp('data-source="'+source.id+'"'));
- for(const id of ["kill-count","hard-cas","elite-cas","konar-task","frozen-door",
- "source-panels","dry-results-grid","mode-loot","mode-dry"])
+ for(const id of ["kill-count","hard-cas","elite-cas","source-panels","dry-results-grid","mode-loot","mode-dry"])
   assert.ok(html.includes('id="'+id+'"'),id);
  assert.match(app,/result\.bySource\[source\.id\]/);
  for(const item of Object.values(ITEMS)){

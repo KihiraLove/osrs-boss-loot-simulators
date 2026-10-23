@@ -151,8 +151,7 @@ test("Tempoross page, README, homepage, and local PNG icons",()=>{
  assert.match(home,/href="bosses\/tempoross\/"/);
  assert.match(app,/calculateDry\(pulls,readReceived\(pulls\)\)/);
  assert.match(docs,/reward permits/i);
- for(const id of ["pull-count","fishing-level","owns-barrel","owns-tackle-box",
- "mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","fishing-tier"])
+ for(const id of ["pull-count","fishing-level","mode-loot","mode-dry","dry-inputs","unique-grid","loot-grid","fishing-tier"])
   assert.ok(page.includes('id="'+id+'"'),"Missing "+id);
  for(const item of Object.values(ITEMS)){
   const bytes=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));

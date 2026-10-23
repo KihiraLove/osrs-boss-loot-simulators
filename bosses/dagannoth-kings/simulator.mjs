@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Sources: https://oldschool.runescape.wiki/w/Dagannoth_Rex
 // https://oldschool.runescape.wiki/w/Dagannoth_Prime
 // https://oldschool.runescape.wiki/w/Dagannoth_Supreme
@@ -38,7 +39,7 @@ export const RARE=[
  ["rune-kiteshield",1,2048],["dragon-med-helm",1,2048],["rune-spear",1,1997.29],
  ["rune-javelin",5,1456.36],["shield-left-half",1,3994.58],["dragon-spear",1,5326.1]
 ];
-const ids=new Set(["dagannoth-bones","dagannoth-hide","ensouled-dagannoth-head","clue-scroll-hard","clue-scroll-elite","brimstone-key","dagannoth-ribs"]);
+const ids=new Set(["dagannoth-bones","dagannoth-hide","ensouled-dagannoth-head","clue-scroll-hard","clue-scroll-elite","brimstone-key"]);
 for(const king of KINGS){
  MAIN[king.id].filter(x=>!x.id.startsWith("@")).forEach(x=>ids.add(x.id));
  UNIQUE[king.id].forEach(x=>ids.add(x.id));
@@ -70,9 +71,12 @@ function pick(table,rng){
 const mainTables=Object.fromEntries(KINGS.map(k=>[k.id,setup(MAIN[k.id],r=>r.weight)]));
 const rareTable=setup(RARE,r=>1/r[2]),seedTable=setup(SEEDS,r=>1/r[2]),talismanTable=setup(TALISMANS,r=>1/r[2]);
 const qty=(a,b,rng)=>a===b?a:a+Math.floor(unit(rng)*(b-a+1));
-export function simulate(counts,{rng=Math.random,hardCAs=false,eliteCAs=false,konarTask=false,questRibs=false}={}){
+export function simulate(counts,{ringOfWealth=false,rng=Math.random,hardCAs=false,eliteCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  const kills=validateKills(counts),clues=clueRates({hardCAs,eliteCAs});
- if(typeof konarTask!=="boolean"||typeof questRibs!=="boolean")throw new TypeError("Task and quest options must be booleans.");
+ const selectedRare=ringOfWealth?setup(wealthTable(RARE,true,2,{reciprocal:true}),r=>1/r[2]):rareTable;
+
+ const selectedGem=ringOfWealth?setup(wealthTable(RARE,true,2,{reciprocal:true,kind:"gem"}),r=>1/r[2]):rareTable;
  const kings={};
  for(const king of KINGS){
   const d=Object.create(null),add=(id,n=1)=>{if(n>0)d[id]=(d[id]??0)+n;};
@@ -80,17 +84,16 @@ export function simulate(counts,{rng=Math.random,hardCAs=false,eliteCAs=false,ko
    add("dagannoth-bones");add("dagannoth-hide");
    const row=pick(mainTables[king.id],rng);
    if(row.id.startsWith("@")){
-    const table=row.id==="@seed"?seedTable:row.id==="@talisman"?talismanTable:rareTable;
+    const table=row.id==="@seed"?seedTable:row.id==="@talisman"?talismanTable:row.id==="@gem"?selectedGem:selectedRare;
     const [id,n]=pick(table,rng);if(id!=="@nothing")add(id,n);
    }else add(row.id,qty(row.min,row.max,rng));
    if(unit(rng)<1/20)add("ensouled-dagannoth-head");
    if(unit(rng)<clues.hard)add("clue-scroll-hard");
    if(unit(rng)<clues.elite)add("clue-scroll-elite");
    if(unit(rng)<PET_RATE)add("pet-dagannoth-"+king.id);
-   if(konarTask&&unit(rng)<1/60)add("brimstone-key");
-   if(questRibs&&unit(rng)<1/4)add("dagannoth-ribs");
+
   }
   kings[king.id]={kills:kills[king.id],drops:d};
  }
- return {counts:kills,kings,hardCAs,eliteCAs,konarTask,questRibs};
+ return {counts:kills,kings,hardCAs,eliteCAs};
 }

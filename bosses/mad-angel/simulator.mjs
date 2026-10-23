@@ -1,3 +1,4 @@
+import {wealthTable} from "../../shared/rare-tables.mjs";
 // Mad Angel (repeatable post-quest), OSRS Wiki drop table, October 2026.
 // Pre-roll probabilities are published per kill, total < 1, hence modeled as
 // mutually exclusive main-loot replacements. Default RDT assumes no ring of wealth.
@@ -42,7 +43,7 @@ export const COMMON = [
 export const RDT_WEIGHT = 2;
 export const MAIN_WEIGHT = COMMON.reduce((s,item)=>s+item[4],0)+RDT_WEIGHT;
 export const ITEMS = Object.freeze(Object.fromEntries([
- ["granite-dust","Granite dust"],["sunstone-crystal","Sunstone crystal"],
+ ["granite-dust","Granite dust"],
  ...PREROLL.map(i=>[i.id,i.name]),
  ...TERTIARY.map(i=>[i.id,i.name]),
  ...COMMON.filter(i=>!i[0].startsWith("@")).map(i=>[i[0],i[1]]),
@@ -74,16 +75,14 @@ export function rateOf(id){
  const item=PREROLL.find(i=>i.id===id)||TERTIARY.find(i=>i.id===id);
  return item?.rate??0;
 }
-export function simulate(kills,{rng=Math.random,mediumCAs=false,sunstoneEligible=false}={}){
+export function simulate(kills,{ringOfWealth=false,rng=Math.random,mediumCAs=false}={}){
+ if(typeof ringOfWealth!=="boolean")throw new TypeError("Ring of wealth must be a boolean.");
  validateKills(kills);
  const drops=Object.create(null);
  const add=(id,qty=1)=>{if(qty>0)drops[id]=(drops[id]||0)+qty;};
  const preRate=PREROLL.reduce((sum,item)=>sum+item.rate,0);
  for(let kc=0;kc<kills;kc++){
   add("granite-dust",25+Math.floor(random(rng)*11));
-  // The crystal is a one-off when the player's bank chest isn't built
-  // and the player does not already possess a sunstone crystal.
-  if(kc===0&&sunstoneEligible)add("sunstone-crystal");
   const r=random(rng);
   let cumulative=0;
   let special=false;
@@ -107,7 +106,7 @@ export function simulate(kills,{rng=Math.random,mediumCAs=false,sunstoneEligible
      add("super-combat-potion-1");
     }else add(chosen[0],quantity(chosen,rng));
    }else{
-    const rare=choose(RDT,4,rng);
+    const rare=choose(wealthTable(RDT,ringOfWealth,4),4,rng);
     if(rare[0]!=="nothing")add(rare[0],quantity(rare,rng));
    }
   }

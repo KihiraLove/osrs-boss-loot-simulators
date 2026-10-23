@@ -115,16 +115,16 @@ test("Scurrius HTML, MVP selector and local item images are complete",()=>{
  assert.match(home,/href="bosses\/scurrius\/"/);
  assert.match(home,/assets\/items\/scurry\.png/);
  assert.match(html,/id="kill-count"/);
- assert.match(html,/name="encounter-mode"/);
- assert.match(html,/value="mvp"/);
- assert.match(html,/value="nonMvp"/);
+ assert.doesNotMatch(html,/name="encounter-mode"/);
+ assert.doesNotMatch(html,/value="mvp"|value="nonMvp"/);
+ assert.doesNotMatch(app,/encounterMode|nonMvp/);
  assert.match(html,/id="medium-cas"/);
  assert.match(html,/id="mode-loot"/);
  assert.match(html,/id="mode-dry"/);
  assert.match(html,/id="unique-grid"/);
  assert.match(html,/id="dry-inputs"/);
- assert.match(app,/simulate\(kills,\{mode:encounterMode\(\),mediumCAs:/);
- assert.match(app,/calculateDry\(kills,readReceived\(kills\),encounterMode\(\)\)/);
+ assert.match(app,/simulate\(kills,\{mediumCAs:/);
+ assert.match(app,/calculateDry\(kills,readReceived\(kills\)\)/);
  assert.doesNotMatch(html,/name="world"/);
  for(const item of Object.values(ITEMS)){
   const icon=readFileSync(new URL("../assets/items/"+item.id+".png",import.meta.url));
