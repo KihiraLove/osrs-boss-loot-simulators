@@ -92,18 +92,10 @@ GitHub Actions runs the test suite and validates the simulator modules before de
 ## Deployment
 
 GitHub Pages is deployed by [Deploy GitHub Pages](./.github/workflows/pages.yml).
-The workflow validates the JavaScript and tests, then publishes the static site when
-a commit is pushed to `main`. It also supports manual deployment from
-**Actions → Deploy GitHub Pages → Run workflow → main**.
-
-Some API-authenticated commits may not generate a workflow-triggering push event.
-As a fallback, the workflow checks the current published revision every 15 minutes
-and deploys if it differs from the latest `main` commit. GitHub may delay scheduled
-workflow runs, so the fallback is not an immediate deployment guarantee.
-Successful deployments publish `deployment-revision.txt` to let future scheduled
-checks skip redundant deployments. Always confirm the deployed revision before
-considering the site up to date.
+The workflow validates the JavaScript and tests, then publishes the static site when a commit is pushed to `main`.
+It also supports manual deployment from **Actions → Deploy GitHub Pages → Run workflow → main**.
 
 ## Sources and assets
 
-Boss-specific mechanics are documented and linked to the [OSRS Wiki](https://oldschool.runescape.wiki/) from the relevant [boss README](#boss-simulators). Local item PNG sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db). Old School RuneScape and game artwork belong to Jagex; this project's MIT license applies to its own code, not the game assets.
+Boss mechanics are documented and linked to the [OSRS Wiki](https://oldschool.runescape.wiki/) from the relevant [boss README](#boss-simulators). Local item PNG sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db). Old School RuneScape and game artwork belong to Jagex.
+This project's license applies to its own code, not the game assets.

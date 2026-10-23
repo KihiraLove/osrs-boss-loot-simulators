@@ -23,6 +23,7 @@ let mode = "loot";
 function setMode(next) {
   mode=next;
   const isDry=mode==="dry";
+  document.body.classList.toggle("is-dry-mode",isDry);
   $("dry-fields").hidden=!isDry;
   $("dry-panel").hidden=!isDry;
   $("loot-panel").hidden=isDry;
@@ -37,8 +38,8 @@ function setMode(next) {
   showError("");
 }
 for(const brother of BROTHERS){
- const group=document.createElement("section");group.className="barrows-dry-group";
- const heading=document.createElement("h4");heading.textContent=brother.name;
+ const group=document.createElement("fieldset");group.className="barrows-dry-group";
+ const heading=document.createElement("legend");heading.textContent=brother.name;
  const fields=document.createElement("div");fields.className="dry-inputs";
  group.append(heading,fields);dryInputs.append(group);
  for(const [id] of brother.items){

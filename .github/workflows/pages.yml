@@ -4,9 +4,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Fallback when API-authenticated writes do not generate a push workflow.
-  schedule:
-    - cron: '7,22,37,52 * * * *'
 
 permissions:
   contents: read
