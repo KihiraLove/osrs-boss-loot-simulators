@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,UNSIRED_RATE,REWARDS,REWARD_WEIGHTS,BLUDGEON,MAIN,ITEMS,simulate,openUnsired} from "../sire/simulator.mjs";
-import {calculateDry} from "../sire/dry-calc.mjs";
+import {MAX_KILLS,UNSIRED_RATE,REWARDS,REWARD_WEIGHTS,BLUDGEON,MAIN,ITEMS,simulate,openUnsired} from "../bosses/sire/simulator.mjs";
+import {calculateDry} from "../bosses/sire/dry-calc.mjs";
 const close=(a,b,tol=1e-8)=>assert.ok(Math.abs(a-b)<=tol,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("Unsired and Font probabilities reflect the Sire table",()=>{

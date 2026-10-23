@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,MAIN,ITEMS,rateOf,clueRate,
  validateKills,validateOptions,rollCommon,simulate
-} from "../kraken/simulator.mjs";
-import {calculateDry} from "../kraken/dry-calc.mjs";
+} from "../bosses/kraken/simulator.mjs";
+import {calculateDry} from "../bosses/kraken/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+" got "+a);
 const file=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

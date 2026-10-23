@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,MAIN,CONSUMABLES,RDT,TERTIARY,ITEMS,
  validateKills,rateOf,simulate
-} from "../kalphite-queen/simulator.mjs";
-import {calculateDry} from "../kalphite-queen/dry-calc.mjs";
+} from "../bosses/kalphite-queen/simulator.mjs";
+import {calculateDry} from "../bosses/kalphite-queen/dry-calc.mjs";
 const near=(a,b,delta=1e-9)=>assert.ok(Math.abs(a-b)<=delta,"Expected "+b+", got "+a);
 const total=t=>t.reduce((s,r)=>s+r[3],0);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

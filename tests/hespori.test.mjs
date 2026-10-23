@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,UNIQUE,DRY_ITEMS,ANIMA,ITEMS,BUCKET_RATE,
  FARMING_XP,FARMING_XP_OUTFIT,petRate,rateOf,validateFarmingLevel,validateKills,simulate
-} from "../hespori/simulator.mjs";
-import {calculateDry} from "../hespori/dry-calc.mjs";
+} from "../bosses/hespori/simulator.mjs";
+import {calculateDry} from "../bosses/hespori/dry-calc.mjs";
 const close=(a,b,e=1e-9)=>assert.ok(Math.abs(a-b)<=e,"Expected "+b+", got "+a);
 const source=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

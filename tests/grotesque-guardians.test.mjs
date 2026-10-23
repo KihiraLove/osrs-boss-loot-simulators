@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAIN,SHARK,ITEMS,PRIMARY,PRIMARY_RATE,UNIQUE,MAX_KILLS,rateOf,rollPrimary,validateKills,simulate} from "../grotesque-guardians/simulator.mjs";
-import {binomial,calculateDry} from "../grotesque-guardians/dry-calc.mjs";
+import {MAIN,SHARK,ITEMS,PRIMARY,PRIMARY_RATE,UNIQUE,MAX_KILLS,rateOf,rollPrimary,validateKills,simulate} from "../bosses/grotesque-guardians/simulator.mjs";
+import {binomial,calculateDry} from "../bosses/grotesque-guardians/dry-calc.mjs";
 const close=(x,y,tolerance=1e-9)=>assert.ok(Math.abs(x-y)<=tolerance,x+" !== "+y);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("142-ticket table and 4-ticket shark subtable are exact",()=>{

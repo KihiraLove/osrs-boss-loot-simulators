@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
   PREROLL,TERTIARY,SIGNATURE,DRY_ITEMS,COMMON,MAIN_WEIGHT,
   ITEMS,MAX_KILLS,simulate,rateOf,validateKills
-} from "../mad-angel/simulator.mjs";
-import {calculateDry,anyUniqueOdds} from "../mad-angel/dry-calc.mjs";
+} from "../bosses/mad-angel/simulator.mjs";
+import {calculateDry,anyUniqueOdds} from "../bosses/mad-angel/dry-calc.mjs";
 
 const close=(a,b,eps=1e-9)=>
  assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);

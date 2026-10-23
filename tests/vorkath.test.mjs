@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,MAIN,BOLTS,SHARKS,SEEDS,ITEMS,UNIQUE,TERTIARY,simulate,rateOf,validateKills} from "../vorkath/simulator.mjs";
-import {headOdds,calculateDry} from "../vorkath/dry-calc.mjs";
+import {MAX_KILLS,MAIN,BOLTS,SHARKS,SEEDS,ITEMS,UNIQUE,TERTIARY,simulate,rateOf,validateKills} from "../bosses/vorkath/simulator.mjs";
+import {headOdds,calculateDry} from "../bosses/vorkath/dry-calc.mjs";
 const close=(a,b,e=1e-9)=>assert.ok(Math.abs(a-b)<e,`Expected ${b}, got ${a}`);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("Vorkath uses exactly 150 tickets per main roll, twice per kill",()=>{

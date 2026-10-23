@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11100d">
+<meta name="description" content="K'ril Tsutsaroth loot simulator with separate bodyguard loot windows and combined four-monster dry calculations.">
+<title>K'ril Tsutsaroth | Loot Simulator</title>
+<link rel="icon" type="image/png" href="../../assets/items/pet-kril-tsutsaroth.png">
+<link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="styles.css">
+<script type="module" src="app.mjs"></script>
+</head>
+<body>
+<nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../..">← All simulators</a></nav>
+<a class="skip-link" href="#main">Skip to simulator</a>
+<header class="site-header">
+<div class="brand-mark"><img src="../../assets/items/pet-kril-tsutsaroth.png" alt="" width="42" height="42"></div>
+<h1>K'ril Tsutsaroth <span>Loot Simulator</span></h1>
+<a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi">
+<img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true" width="24" height="24">
+<span class="kofi-banner-label">Support me on Ko-fi</span></a>
+</header>
+<div class="mode-switch" role="group" aria-label="Calculator mode">
+<button type="button" id="mode-loot" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+<button type="button" id="mode-dry" class="mode-button" aria-pressed="false">Dry calculator</button>
+</div>
+<main id="main" class="layout">
+<section class="panel controls-panel" aria-labelledby="plan-heading">
+<div class="section-heading"><h2 id="plan-heading">Your kills</h2></div>
+<form id="simulator-form" novalidate>
+<label class="depth-field phosani-kills"><span>Completed K'ril kills</span>
+<input id="kill-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric" aria-label="Completed K'ril Tsutsaroth kills"></label>
+<p class="room-hint">Each kill includes Tstanon Karlak (melee), Balfrug Kreeyath (magic) and Zakl'n Gritch (ranged) once.</p>
+<label class="phosani-option"><input id="hard-cas" type="checkbox"> Hard Combat Achievements (bodyguard clues: 1/121)</label>
+<label class="phosani-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements (K'ril clues: 1/237)</label>
+<label class="phosani-option"><input id="konar-task" type="checkbox"> Konar Slayer task (K'ril brimstone keys)</label>
+<label class="phosani-option"><input id="frozen-door" type="checkbox"> During The Frozen Door miniquest (Zamorak key pieces)</label>
+<div id="dry-fields" class="dry-fields" hidden><h3>Drops obtained (boss + 3 bodyguards)</h3>
+<div id="dry-inputs" class="dry-inputs"></div></div>
+<p id="validation-message" class="validation-message" role="alert" hidden></p>
+<div class="action-row">
+<button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+<button type="button" class="secondary-action" id="clear-button">Clear</button>
+</div>
+</form>
+</section>
+<div id="loot-panel" class="loot-panel">
+<div id="empty-state" class="panel empty-state"><div class="empty-orb">
+<img src="../../assets/items/pet-kril-tsutsaroth.png" alt="" width="62" height="62"></div>
+<h3>Nothing claimed yet</h3><p>Simulate a full-room kill to see K'ril and each bodyguard in separate loot windows.</p>
+</div>
+<div id="source-panels" class="source-panels" hidden>
+<section class="panel source-window" data-source="kril" aria-labelledby="source-title-kril">
+<div class="section-heading"><h2 id="source-title-kril">K'ril Tsutsaroth</h2></div>
+<div class="source-uniques"></div><div class="source-loot loot-grid"></div></section>
+<section class="panel source-window" data-source="tstanon" aria-labelledby="source-title-tstanon">
+<div class="section-heading"><h2 id="source-title-tstanon">Tstanon Karlak</h2></div>
+<div class="source-uniques"></div><div class="source-loot loot-grid"></div></section>
+<section class="panel source-window" data-source="balfrug" aria-labelledby="source-title-balfrug">
+<div class="section-heading"><h2 id="source-title-balfrug">Balfrug Kreeyath</h2></div>
+<div class="source-uniques"></div><div class="source-loot loot-grid"></div></section>
+<section class="panel source-window" data-source="zakln" aria-labelledby="source-title-zakln">
+<div class="section-heading"><h2 id="source-title-zakln">Zakl'n Gritch</h2></div>
+<div class="source-uniques"></div><div class="source-loot loot-grid"></div></section>
+</div>
+</div>
+<section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+<div class="section-heading"><h2 id="dry-heading">Combined full-room dry calculator</h2></div>
+<div id="dry-empty" class="empty-state"><div class="empty-orb">
+<img src="../../assets/items/pet-kril-tsutsaroth.png" alt="" width="62" height="62"></div>
+<h3>How lucky are your drops?</h3><p>Enter total rare drops from K'ril Tsutsaroth and all three bodyguards. Rates include four monsters per room.</p></div>
+<div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
+</section>
+</main>
+<footer><div class="footer-meta">
+<p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/K%27ril_Tsutsaroth">K'ril Tsutsaroth</a>,
+<a href="https://oldschool.runescape.wiki/w/Tstanon_Karlak">Tstanon Karlak</a>,
+<a href="https://oldschool.runescape.wiki/w/Balfrug_Kreeyath">Balfrug Kreeyath</a>,
+<a href="https://oldschool.runescape.wiki/w/Zakl%27n_Gritch">Zakl'n Gritch</a>.</p>
+<p>No data is stored, collected, or sold by this site.</p></div>
+<div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators">GitHub</a></div></footer>
+</body></html>

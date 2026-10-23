@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
   UNIQUE,TERTIARY,COMMON,RDT,DRY_ITEMS,ITEMS,
   MAX_KILLS,rateOf,validateKills,simulate
-} from "../cerberus/simulator.mjs";
-import {calculateDry} from "../cerberus/dry-calc.mjs";
+} from "../bosses/cerberus/simulator.mjs";
+import {calculateDry} from "../bosses/cerberus/dry-calc.mjs";
 
 const close=(actual,expected,tolerance=1e-8)=>
  assert.ok(Math.abs(actual-expected)<=tolerance,"Expected "+expected+", got "+actual);

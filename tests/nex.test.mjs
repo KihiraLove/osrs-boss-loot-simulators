@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_SHARDS,UNIQUE,UNIQUE_RATE,SHARDS_PER_KILL,ITEMS,OTHER_RATES,COMMON_POOL,exposureOf,validateShards,samplePoisson,simulate} from "../nex/simulator.mjs";
-import {calculateDry} from "../nex/dry-calc.mjs";
+import {MAX_SHARDS,UNIQUE,UNIQUE_RATE,SHARDS_PER_KILL,ITEMS,OTHER_RATES,COMMON_POOL,exposureOf,validateShards,samplePoisson,simulate} from "../bosses/nex/simulator.mjs";
+import {calculateDry} from "../bosses/nex/dry-calc.mjs";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const close=(a,b,tol=1e-9)=>assert.ok(Math.abs(a-b)<tol,"Expected "+b+", got "+a);
 test("Wiki shard bundle means and the six weighted unique rates",()=>{

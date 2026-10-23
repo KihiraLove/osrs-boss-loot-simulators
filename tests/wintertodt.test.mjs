@@ -5,8 +5,8 @@ import {
  MAX_PULLS,SKILLS,DEFAULT_LEVELS,RARE,PYRO_IDS,UNIQUE,DRY_ITEMS,ITEMS,
  EFFECTIVE_RATES,ORDINARY_RATE,COMMON_WEIGHTS,MATERIALS,rateOf,validatePulls,
  validateLevels,validateOwned,category,materialChoice,simulate
-} from "../wintertodt/simulator.mjs";
-import {calculateDry,cappedOdds,pyroPieceOdds} from "../wintertodt/dry-calc.mjs";
+} from "../bosses/wintertodt/simulator.mjs";
+import {calculateDry,cappedOdds,pyroPieceOdds} from "../bosses/wintertodt/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

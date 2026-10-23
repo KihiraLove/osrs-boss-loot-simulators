@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import {
   uniqueDropProbability, uniqueRollGroups, chanceForCount, calculateDryResults,
   anyUniqueRollGroups, calculateAnyUniqueResult
-} from "../dry-calc.mjs";
-import { gearDenominator, domDenominator } from "../simulator.mjs";
+} from "../bosses/doom/dry-calc.mjs";
+import { gearDenominator, domDenominator } from "../bosses/doom/simulator.mjs";
 import { readFileSync } from "node:fs";
 
 function close(actual, expected, tolerance = 1e-10) {

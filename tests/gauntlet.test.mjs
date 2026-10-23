@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MODES,UNIQUE,DRY_ITEMS,REGULAR_TABLE,CORRUPTED_TABLE,ITEMS,
  validateKills,rateOf,simulate
-} from "../gauntlet/simulator.mjs";
-import {combinedDistribution,calculateDry,atLeastOne} from "../gauntlet/dry-calc.mjs";
+} from "../bosses/gauntlet/simulator.mjs";
+import {combinedDistribution,calculateDry,atLeastOne} from "../bosses/gauntlet/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

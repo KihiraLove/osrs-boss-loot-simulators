@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,HALBERD,SIGNATURE,DRY_ITEMS,STANDARD,SEEDS,ITEMS,
  rateOf,simulate,validateKills,validateMode
-} from "../araxxor/simulator.mjs";
-import {pieceOdds,calculateDry} from "../araxxor/dry-calc.mjs";
+} from "../bosses/araxxor/simulator.mjs";
+import {pieceOdds,calculateDry} from "../bosses/araxxor/dry-calc.mjs";
 const close=(a,b,tol=1e-8)=>assert.ok(Math.abs(a-b)<=tol,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,BRANDA,ELDRIC,PRIMARY,PET,UNIQUE,ITEMS,
  MODES,scaledQuantity,rateOf,primaryRate,validateOptions,simulate
-} from "../royal-titans/simulator.mjs";
-import {calculateDry} from "../royal-titans/dry-calc.mjs";
+} from "../bosses/royal-titans/simulator.mjs";
+import {calculateDry} from "../bosses/royal-titans/dry-calc.mjs";
 const close=(a,b,epsilon=1e-10)=>
  assert.ok(Math.abs(a-b)<=epsilon,`Expected ${b}, received ${a}`);
 const file=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");

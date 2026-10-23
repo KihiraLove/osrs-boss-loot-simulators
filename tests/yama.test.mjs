@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,EQUIPMENT,BOSS_UNIQUES,DRY_ITEMS,SUPPLIES,STANDARD,LOCKBOX,DOSSIER,
  ALL_ITEMS,rates,itemRate,simulate,validateKills,validateContribution,validatePlan
-} from "../yama/simulator.mjs";
-import {calculateDry,anyRare} from "../yama/dry-calc.mjs";
+} from "../bosses/yama/simulator.mjs";
+import {calculateDry,anyRare} from "../bosses/yama/dry-calc.mjs";
 
 const close=(a,b,tolerance=1e-9)=>
  assert.ok(Math.abs(a-b)<=tolerance,"Expected "+b+", got "+a);

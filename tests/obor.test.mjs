@@ -5,8 +5,8 @@ import {
  MAX_KILLS,UNIQUE,KEY,DRY_ITEMS,ITEMS,
  BOSS_MEMBERS,BOSS_F2P,CHEST_TABLE,HERBS,SEEDS,
  checkCount,checkMode,checkWorld,simulate
-} from "../obor/simulator.mjs";
-import {calculateDry} from "../obor/dry-calc.mjs";
+} from "../bosses/obor/simulator.mjs";
+import {calculateDry} from "../bosses/obor/dry-calc.mjs";
 const approx=(actual,expected,tolerance=1e-10)=>
  assert.ok(Math.abs(actual-expected)<=tolerance,"Expected "+expected+", got "+actual);
 const total=t=>t.reduce((sum,row)=>sum+row[3],0);

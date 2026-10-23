@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,PRIMARY,PET,UNIQUE,DRY_ITEMS,ITEMS,PRIMARY_RATE,
  CALLISTO_COMMON,ARTIO_COMMON,SUPPLY,TERTIARY,validateKills,rollUnique,simulate
-} from "../callisto-artio/simulator.mjs";
-import {calculateDry} from "../callisto-artio/dry-calc.mjs";
+} from "../bosses/callisto-artio/simulator.mjs";
+import {calculateDry} from "../bosses/callisto-artio/dry-calc.mjs";
 const near=(a,b,t=1e-10)=>assert.ok(Math.abs(a-b)<=t,"Expected "+b+", got "+a);
 const sum=rows=>rows.reduce((s,row)=>s+row[2],0);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");

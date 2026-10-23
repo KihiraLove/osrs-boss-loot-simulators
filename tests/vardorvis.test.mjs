@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,ITEMS,UNIQUE,DRY_ITEMS,PET_RATE,rateOf,vestigeHitRate,
  uniqueTableRate,quartzRate,validateKills,validateOptions,simulate
-} from "../vardorvis/simulator.mjs";
-import {calculateDry,vestigeOdds} from "../vardorvis/dry-calc.mjs";
+} from "../bosses/vardorvis/simulator.mjs";
+import {calculateDry,vestigeOdds} from "../bosses/vardorvis/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

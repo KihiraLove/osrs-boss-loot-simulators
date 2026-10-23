@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,GUARANTEED,TERTIARY,MVP_COMMON,
  NON_MVP_COMMON,ITEMS,validateKills,validateMode,rateOf,simulate
-} from "../scurrius/simulator.mjs";
-import {calculateDry} from "../scurrius/dry-calc.mjs";
+} from "../bosses/scurrius/simulator.mjs";
+import {calculateDry} from "../bosses/scurrius/dry-calc.mjs";
 const approx=(a,b,t=1e-9)=>assert.ok(Math.abs(a-b)<=t,"Expected "+b+", got "+a);
 const total=table=>table.reduce((sum,row)=>sum+row[3],0);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");

@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Fortis Colosseum loot simulator and dry calculator with guaranteed mole parts, 131-ticket ordinary loot, and independent tertiary rewards.">
+  <title>Fortis Colosseum | Loot Simulator</title>
+  <link rel="icon" type="image/png" href="../../assets/items/smol-heredit.png">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <nav class="simulator-navigation" aria-label="Simulator navigation"><a class="back-link" href="../..">← All simulators</a></nav>
+  <a class="skip-link" href="#main">Skip to simulator</a>
+  <header class="site-header">
+    <div class="brand-mark"><img src="../../assets/items/smol-heredit.png" alt="" width="42" height="42"></div>
+    <h1>Fortis Colosseum <span>Loot Simulator</span></h1>
+    <a class="kofi-banner" href="https://ko-fi.com/KihiraLove" target="_blank" rel="noopener noreferrer" aria-label="Support KihiraLove on Ko-fi">
+      <img src="https://storage.ko-fi.com/cdn/cup-border.png" alt="" aria-hidden="true" width="24" height="24">
+      <span class="kofi-banner-label">Support me on Ko-fi</span>
+    </a>
+  </header>
+  <div class="mode-switch" role="group" aria-label="Calculator mode">
+    <button type="button" id="mode-loot" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+    <button type="button" id="mode-dry" class="mode-button" aria-pressed="false">Dry calculator</button>
+  </div>
+  <main id="main" class="layout">
+    <section class="panel controls-panel" aria-labelledby="plan-heading">
+      <div class="section-heading"><h2 id="plan-heading">Your Colosseum runs</h2></div>
+      <form id="simulator-form" novalidate>
+        <label class="depth-field phosani-kills"><span>Completed runs</span>
+          <input id="run-count" type="number" min="0" max="100000" step="1" value="100" inputmode="numeric" aria-label="Completed Colosseum runs">
+        </label>
+        <div class="fortis-settings">
+          <label><span>Highest cleared wave / cash out</span>
+            <select id="wave-reached" class="fortis-select" aria-label="Highest completed Colosseum wave">
+              <option value="1">Wave 1</option>
+              <option value="2">Wave 2</option>
+              <option value="3">Wave 3</option>
+              <option value="4">Wave 4</option>
+              <option value="5">Wave 5</option>
+              <option value="6">Wave 6</option>
+              <option value="7">Wave 7</option>
+              <option value="8">Wave 8</option>
+              <option value="9">Wave 9</option>
+              <option value="10">Wave 10</option>
+              <option value="11">Wave 11</option>
+              <option value="12" selected>Wave 12 — Sol Heredit</option>
+            </select></label>
+          <label><span>Wave 12 quiver handling</span>
+            <select id="quiver-trade" class="fortis-select" aria-label="Quiver handling">
+              <option value="keep">Keep Dizana's quiver</option>
+              <option value="splinters">Exchange for 4,000 sunfire splinters</option>
+              <option value="pet">Gamble for Smol Heredit (1/200)</option>
+            </select></label>
+        </div>
+        <p class="fortis-note">Each run successfully clears waves 1 through the selected wave, then banks the rewards. Deaths or unclaimed loot are not counted; glory does not affect rare-drop chances.</p>
+        <div id="dry-fields" class="dry-fields" hidden>
+          <h3>Rare drops obtained</h3>
+          <p id="dry-note" class="fortis-note" hidden>For echo crystals, enter the number of <strong>reward rolls</strong>, not the number of crystals (one roll can give 1–3). Sunfire fanatic armour dry odds respect the no-duplicates-until-set-completed system. The pet calculator uses chest rewards only, not optional quiver gambles.</p>
+          <div id="dry-inputs" class="dry-inputs"></div>
+        </div>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
+        <div class="action-row">
+          <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="secondary-action" id="clear-button">Clear</button>
+        </div>
+      </form>
+    </section>
+    <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
+      <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/smol-heredit.png" alt="" width="62" height="62"></div>
+        <h3>Nothing claimed yet</h3>
+        <p>Choose a cash-out wave and number of cleared runs to simulate accumulated rewards, including quivers, sunfire armour and the pet.</p>
+      </div>
+      <div id="results-content" hidden>
+        <div class="fortis-summary">
+          <span>Completed runs<strong id="summary-runs">0</strong></span>
+          <span>Wave reached<strong id="summary-wave">12</strong></span>
+          <span>Echo crystal reward rolls<strong id="summary-echo">0</strong></span>
+        </div>
+        <div class="subheading"><h3>Unique rewards</h3></div>
+        <div id="unique-grid" class="unique-grid"></div>
+        <div class="subheading inventory-title"><h3>Collected loot</h3></div>
+        <div id="loot-grid" class="loot-grid"></div>
+      </div>
+    </section>
+    <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+      <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
+      <div id="dry-empty" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/smol-heredit.png" alt="" width="62" height="62"></div>
+        <h3>How lucky are your drops?</h3>
+        <p>Enter your completed runs and rare drops to calculate odds across every cleared wave, including set-protected armour.</p>
+      </div>
+      <div id="dry-results" hidden><p id="dry-quivers" class="fortis-note"></p><div id="dry-results-grid" class="dry-results-grid"></div></div>
+    </section>
+  </main>
+  <footer>
+    <div class="footer-meta">
+      <p><strong>Drop data:</strong> <a href="https://oldschool.runescape.wiki/w/Rewards_Chest_%28Fortis_Colosseum%29" target="_blank" rel="noopener noreferrer">OSRS Wiki — Fortis Colosseum</a></p>
+      <p>Waves 1–12 are modeled separately. A unique replaces normal loot for its wave. Dizana's quiver and Smol Heredit only appear after wave 12. No data is stored, collected, or sold.</p>
+    </div>
+    <div class="footer-actions"><a class="text-button" href="https://github.com/KihiraLove/osrs-boss-loot-simulators" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+  </footer>
+</body>
+</html>

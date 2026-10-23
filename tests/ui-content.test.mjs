@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { ITEMS, SPECIAL_ITEMS } from "../simulator.mjs";
+import { ITEMS, SPECIAL_ITEMS } from "../bosses/doom/simulator.mjs";
 
 const read = path => readFileSync(new URL("../" + path, import.meta.url), "utf-8");
 

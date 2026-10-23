@@ -5,8 +5,8 @@ import {
  MAX_KILLS,SIGIL_CHANCE,ARCANE_CHANCE,SPECTRAL_CHANCE,ELYSIAN_CHANCE,
  SPIRIT_CHANCE,ELIXIR_CHANCE,JAR_CHANCE,PET_CHANCE,
  MAIN,GEM,MEGA,UNIQUE,ITEMS,rateOf,validateKills,clueRate,simulate
-} from "../corporeal-beast/simulator.mjs";
-import {calculateDry} from "../corporeal-beast/dry-calc.mjs";
+} from "../bosses/corporeal-beast/simulator.mjs";
+import {calculateDry} from "../bosses/corporeal-beast/dry-calc.mjs";
 const close=(a,b,e=1e-9)=>assert.ok(Math.abs(a-b)<=e,"Expected "+b+" but got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 const spot=(rows,id)=>{let before=0;const all=rows.reduce((s,r)=>s+r[3],0);

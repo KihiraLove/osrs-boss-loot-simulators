@@ -5,8 +5,8 @@ import {
  MAX_KILLS,ESSENCE,KEY,DRY_ITEMS,ITEMS,
  BOSS_MEMBERS,BOSS_F2P,CHEST_MEMBERS,CHEST_F2P,HERBS,SEEDS,
  checkCount,checkWorld,checkMode,simulate
-} from "../bryophyta/simulator.mjs";
-import {calculateDry} from "../bryophyta/dry-calc.mjs";
+} from "../bosses/bryophyta/simulator.mjs";
+import {calculateDry} from "../bosses/bryophyta/dry-calc.mjs";
 const close=(a,b,e=1e-9)=>assert.ok(Math.abs(a-b)<=e,"Expected "+b+", got "+a);
 const total=t=>t.reduce((s,r)=>s+r[2],0);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

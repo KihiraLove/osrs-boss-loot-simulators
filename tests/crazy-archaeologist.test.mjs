@@ -5,8 +5,8 @@ import {
  MAX_KILLS,MAIN,RARE,ITEMS,UNIQUE,DRY_ITEMS,
  SHARD_CHANCE,ANY_SHARD_CHANCE,FEDORA_CHANCE,
  validateKills,validateTask,clueRate,rateOf,simulate
-} from "../crazy-archaeologist/simulator.mjs";
-import {calculateDry} from "../crazy-archaeologist/dry-calc.mjs";
+} from "../bosses/crazy-archaeologist/simulator.mjs";
+import {calculateDry} from "../bosses/crazy-archaeologist/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

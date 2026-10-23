@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,simulate,rateOf,validateKills} from "../general-graardor/simulator.mjs";
-import {calculateDry} from "../general-graardor/dry-calc.mjs";
+import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,simulate,rateOf,validateKills} from "../bosses/general-graardor/simulator.mjs";
+import {calculateDry} from "../bosses/general-graardor/dry-calc.mjs";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<eps,"Expected "+b+", got "+a);
 

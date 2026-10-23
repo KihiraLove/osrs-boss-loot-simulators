@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MODES,UNIQUE,DRY_ITEMS,EGGS,EGG_PET_RATE,STANDARD,ITEMS,
  validateKills,validateMode,validateOptions,rateOf,simulate
-} from "../maggot-king/simulator.mjs";
-import {calculateDry} from "../maggot-king/dry-calc.mjs";
+} from "../bosses/maggot-king/simulator.mjs";
+import {calculateDry} from "../bosses/maggot-king/dry-calc.mjs";
 const close=(actual,expected,e=1e-10)=>assert.ok(Math.abs(actual-expected)<=e,
  "Expected "+expected+"; got "+actual);
 const source=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

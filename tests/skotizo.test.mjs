@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,SHARDS,MAIN,GEM,TERTIARY,TOTEM_PIECES,
  ITEMS,rateOf,eliteClueRate,validateKills,validateOptions,pickTotem,simulate
-} from "../skotizo/simulator.mjs";
-import {calculateDry} from "../skotizo/dry-calc.mjs";
+} from "../bosses/skotizo/simulator.mjs";
+import {calculateDry} from "../bosses/skotizo/dry-calc.mjs";
 const close=(x,y,eps=1e-9)=>assert.ok(Math.abs(x-y)<=eps,"Expected "+y+" got "+x);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

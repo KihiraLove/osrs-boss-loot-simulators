@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MOON_RATE,ANY_UNIQUE_RATE,SETS,UNIQUE,DRY_ITEMS,COMMON,ITEMS,
  rateOf,validateKills,simulate
-} from "../moons-of-peril/simulator.mjs";
-import {pieceOdds,completionChance,calculateDry} from "../moons-of-peril/dry-calc.mjs";
+} from "../bosses/moons-of-peril/simulator.mjs";
+import {pieceOdds,completionChance,calculateDry} from "../bosses/moons-of-peril/dry-calc.mjs";
 const close=(x,y,epsilon=1e-9)=>assert.ok(Math.abs(x-y)<=epsilon,
  "Expected "+y+" but got "+x);
 const file=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

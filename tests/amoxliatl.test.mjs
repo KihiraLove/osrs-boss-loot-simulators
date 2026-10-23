@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,TERTIARY,COMMON,GEM,ITEMS,
  rateOf,simulate,validateKills
-} from "../amoxliatl/simulator.mjs";
-import {calculateDry,anySignature} from "../amoxliatl/dry-calc.mjs";
+} from "../bosses/amoxliatl/simulator.mjs";
+import {calculateDry,anySignature} from "../bosses/amoxliatl/dry-calc.mjs";
 const close=(actual,expected,tolerance=1e-8)=>
  assert.ok(Math.abs(actual-expected)<=tolerance,"Expected "+expected+", got "+actual);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");

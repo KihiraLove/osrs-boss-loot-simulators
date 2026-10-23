@@ -2,8 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {MAIN,ITEMS,UNIQUE,mainTickets,MAX_KILLS,parameters,rateOf,
- resolveOptions,validateKills,simulate} from "../zalcano/simulator.mjs";
-import {calculateDry} from "../zalcano/dry-calc.mjs";
+ resolveOptions,validateKills,simulate} from "../bosses/zalcano/simulator.mjs";
+import {calculateDry} from "../bosses/zalcano/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 test("Zalcano main loot table has exactly 36 weighted tickets and 20 possible outcomes",()=>{

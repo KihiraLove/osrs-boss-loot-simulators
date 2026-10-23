@@ -5,8 +5,8 @@ import {
  MAX_KILLS,PRIMARY,PET,UNIQUE,DRY_ITEMS,ITEMS,PRIMARY_RATE,
  VETION_COMMON,CALVARION_COMMON,SUPPLY,TERTIARY,
  validateKills,rollUnique,simulate
-} from "../vetion-calvarion/simulator.mjs";
-import {calculateDry} from "../vetion-calvarion/dry-calc.mjs";
+} from "../bosses/vetion-calvarion/simulator.mjs";
+import {calculateDry} from "../bosses/vetion-calvarion/dry-calc.mjs";
 const approx=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", received "+a);
 const weights=x=>x.reduce((sum,row)=>sum+row[2],0);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,rateOf,simulate,validateKills} from "../kril-tsutsaroth/simulator.mjs";
-import {calculateDry} from "../kril-tsutsaroth/dry-calc.mjs";
+import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,rateOf,simulate,validateKills} from "../bosses/kril-tsutsaroth/simulator.mjs";
+import {calculateDry} from "../bosses/kril-tsutsaroth/dry-calc.mjs";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<eps,"Expected "+b+", got "+a);
 test("K'ril and bodyguards have exact 127-ticket source distributions",()=>{

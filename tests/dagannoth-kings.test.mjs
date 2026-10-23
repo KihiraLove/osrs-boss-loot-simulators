@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {KINGS,MAIN,UNIQUE,ITEMS,MAX_KILLS,MAIN_RATE,ANY_MAIN_UNIQUE_RATE,PET_RATE,clueRates,simulate} from "../dagannoth-kings/simulator.mjs";
-import {calculateDry} from "../dagannoth-kings/dry-calc.mjs";
+import {KINGS,MAIN,UNIQUE,ITEMS,MAX_KILLS,MAIN_RATE,ANY_MAIN_UNIQUE_RATE,PET_RATE,clueRates,simulate} from "../bosses/dagannoth-kings/simulator.mjs";
+import {calculateDry} from "../bosses/dagannoth-kings/dry-calc.mjs";
 const kc=(rex=0,prime=0,supreme=0)=>({rex,prime,supreme});
 const close=(a,b,e=1e-8)=>assert.ok(Math.abs(a-b)<=e,"Expected "+b+" got "+a);
 test("Three 128-ticket tables and separate 1/128 uniques",()=>{

@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,RARE,SEEDS,FOSSILS,ITEMS,UNIQUE,DRY_ITEMS,
  STEEL_RING_CHANCE,validateKills,clueRate,rateOf,simulate
-} from "../deranged-archaeologist/simulator.mjs";
-import {calculateDry} from "../deranged-archaeologist/dry-calc.mjs";
+} from "../bosses/deranged-archaeologist/simulator.mjs";
+import {calculateDry} from "../bosses/deranged-archaeologist/dry-calc.mjs";
 const close=(a,b,eps=1e-8)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 function ticket(id){

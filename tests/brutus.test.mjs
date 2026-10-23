@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,PREROLL,PET,UNIQUE,DRY_ITEMS,GUARANTEED,COMMON,
  MEMBERS_MAIN,F2P_MAIN,ITEMS,mainTable,rateOf,validateKills,validateWorld,simulate
-} from "../brutus/simulator.mjs";
-import {calculateDry,anyUnique} from "../brutus/dry-calc.mjs";
+} from "../bosses/brutus/simulator.mjs";
+import {calculateDry,anyUnique} from "../bosses/brutus/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 const total=table=>table.reduce((sum,row)=>sum+row[4],0);

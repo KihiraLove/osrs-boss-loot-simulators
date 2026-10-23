@@ -5,8 +5,8 @@ import {
  MAX_PULLS,MIN_FISHING,MAX_FISHING,RARE,RARE_TOTAL,RARE_DENOMINATOR,
  BASE,BASE_DENOMINATOR,FISH_WEIGHTS,FISH_TIERS,FISH_AMOUNTS,
  UNIQUE,DRY_ITEMS,ITEMS,tierOf,rateOf,validatePulls,validateFishingLevel,simulate
-} from "../tempoross/simulator.mjs";
-import {calculateDry,oneTimeOdds} from "../tempoross/dry-calc.mjs";
+} from "../bosses/tempoross/simulator.mjs";
+import {calculateDry,oneTimeOdds} from "../bosses/tempoross/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const source=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

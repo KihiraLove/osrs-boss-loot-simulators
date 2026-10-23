@@ -6,8 +6,8 @@ import {
  PICKAXE_CHANCE,DRAGON_2H_MAIN_CHANCE,DRAGON_2H_CHANCE,
  PET_CHANCE,PRIMARY_CHANCE,validateKills,validateTask,clueRate,
  rateOf,simulate
-} from "../chaos-elemental/simulator.mjs";
-import {calculateDry} from "../chaos-elemental/dry-calc.mjs";
+} from "../bosses/chaos-elemental/simulator.mjs";
+import {calculateDry} from "../bosses/chaos-elemental/dry-calc.mjs";
 
 const close=(actual,expected,epsilon=1e-10)=>
  assert.ok(Math.abs(actual-expected)<=epsilon,"Expected "+expected+", got "+actual);

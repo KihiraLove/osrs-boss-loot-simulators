@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,SEEDS,RESTRICTED_SEEDS,HERBS,COMBAT_HERBS,GEM,TALISMANS,
  UNIQUE,ITEMS,DRY_ITEMS,rateOf,validateKills,clueRate,rollMain,simulate
-} from "../shellbane-gryphon/simulator.mjs";
-import {calculateDry,anyUniqueChance} from "../shellbane-gryphon/dry-calc.mjs";
+} from "../bosses/shellbane-gryphon/simulator.mjs";
+import {calculateDry,anyUniqueChance} from "../bosses/shellbane-gryphon/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,`Expected ${b}, got ${a}`);
 const src=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 const point=(table,name)=>{

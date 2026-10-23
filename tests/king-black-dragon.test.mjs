@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAIN,RARE,GEM,MEGA,TALISMAN,ITEMS,UNIQUE,MAX_KILLS,
  validateKills,validateOptions,rateOf,clueRate,simulate
-} from "../king-black-dragon/simulator.mjs";
-import {calculateDry} from "../king-black-dragon/dry-calc.mjs";
+} from "../bosses/king-black-dragon/simulator.mjs";
+import {calculateDry} from "../bosses/king-black-dragon/dry-calc.mjs";
 const close=(a,b,epsilon=1e-10)=>assert.ok(Math.abs(a-b)<epsilon,`Expected ${b}, got ${a}`);
 const file=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 function point(table,id){

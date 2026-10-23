@@ -5,8 +5,8 @@ import {
  MAX_KILLS,PRIMARY,PET,UNIQUE,DRY_ITEMS,ITEMS,PRIMARY_RATE,
  VENENATIS_COMMON,SPINDEL_COMMON,SUPPLY,TERTIARY,
  validateKills,rollUnique,simulate
-} from "../venenatis-spindel/simulator.mjs";
-import {calculateDry} from "../venenatis-spindel/dry-calc.mjs";
+} from "../bosses/venenatis-spindel/simulator.mjs";
+import {calculateDry} from "../bosses/venenatis-spindel/dry-calc.mjs";
 const approx=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", received "+a);
 const weights=x=>x.reduce((sum,row)=>sum+row[2],0);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");

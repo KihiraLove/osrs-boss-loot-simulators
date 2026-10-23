@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,UNIQUE,DRY_ITEMS,ITEMS,MAIN,SHARK,PRE_RATE,
  rateOf,clueRate,validateKills,validateOptions,simulate
-} from "../thermonuclear-smoke-devil/simulator.mjs";
-import {calculateDry} from "../thermonuclear-smoke-devil/dry-calc.mjs";
+} from "../bosses/thermonuclear-smoke-devil/simulator.mjs";
+import {calculateDry} from "../bosses/thermonuclear-smoke-devil/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<=eps,`Expected ${b}, got ${a}`);
 const file=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 function point(id){

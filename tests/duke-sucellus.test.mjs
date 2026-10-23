@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,ITEMS,UNIQUE,DRY_ITEMS,PET_RATE,rateOf,vestigeHitRate,
  uniqueTableRate,quartzRate,validateKills,validateOptions,simulate
-} from "../duke-sucellus/simulator.mjs";
-import {calculateDry,vestigeOdds} from "../duke-sucellus/dry-calc.mjs";
+} from "../bosses/duke-sucellus/simulator.mjs";
+import {calculateDry,vestigeOdds} from "../bosses/duke-sucellus/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+" got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("Duke uses an exclusive 100-ticket standard table",()=>{

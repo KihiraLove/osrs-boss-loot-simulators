@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,KONAR_RATE,mainTickets,rateOf,simulate,validateKills} from "../kree-arra/simulator.mjs";
-import {calculateDry} from "../kree-arra/dry-calc.mjs";
+import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,KONAR_RATE,mainTickets,rateOf,simulate,validateKills} from "../bosses/kree-arra/simulator.mjs";
+import {calculateDry} from "../bosses/kree-arra/dry-calc.mjs";
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 const close=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,"Expected "+b+", got "+a);
 

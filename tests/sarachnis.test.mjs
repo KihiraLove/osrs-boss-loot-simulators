@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,HERBS,RARE_SEEDS,UNIQUE,DRY_ITEMS,ITEMS,PAGES,TERTIARY,
  rateOf,clueRate,rollPrimary,simulate,validateKills,validateOptions
-} from "../sarachnis/simulator.mjs";
-import {calculateDry} from "../sarachnis/dry-calc.mjs";
+} from "../bosses/sarachnis/simulator.mjs";
+import {calculateDry} from "../bosses/sarachnis/dry-calc.mjs";
 const close=(a,b,epsilon=1e-9)=>assert.ok(Math.abs(a-b)<=epsilon,"Expected "+b+", got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

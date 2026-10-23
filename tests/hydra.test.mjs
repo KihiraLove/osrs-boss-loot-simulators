@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
   PREROLL,RING_IDS,ITEMS,MAX_KILLS,STANDARD,HERBS,SEEDS,RDT,
   preRollRates,validateKills,simulate
-} from "../hydra/simulator.mjs";
-import {calculateDry,ringCountFromHits,SIGNATURE_CHANCE} from "../hydra/dry-calc.mjs";
+} from "../bosses/hydra/simulator.mjs";
+import {calculateDry,ringCountFromHits,SIGNATURE_CHANCE} from "../bosses/hydra/dry-calc.mjs";
 const close=(a,b,eps=1e-8)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 test("pre-roll is sequential with accurate per-kill rates",()=>{

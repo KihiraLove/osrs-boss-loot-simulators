@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,UNIQUE,DRY_ITEMS,MAIN,HERBS,SEEDS,SUPPLIES,ITEMS,rateOf,validateKills,uniqueRoll,simulate} from "../phantom-muspah/simulator.mjs";
-import {calculateDry} from "../phantom-muspah/dry-calc.mjs";
+import {MAX_KILLS,UNIQUE,DRY_ITEMS,MAIN,HERBS,SEEDS,SUPPLIES,ITEMS,rateOf,validateKills,uniqueRoll,simulate} from "../bosses/phantom-muspah/simulator.mjs";
+import {calculateDry} from "../bosses/phantom-muspah/dry-calc.mjs";
 const close=(a,b,t=1e-10)=>assert.ok(Math.abs(a-b)<t,`Expected ${b}; got ${a}`);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

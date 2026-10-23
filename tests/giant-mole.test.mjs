@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MAIN,RARE,GEM,MEGA,TALISMAN,SUBTABLES,ITEMS,
  UNIQUE,DRY_ITEMS,TERTIARY,simulate,rateOf,clueRate,validateKills
-} from "../giant-mole/simulator.mjs";
-import {calculateDry} from "../giant-mole/dry-calc.mjs";
+} from "../bosses/giant-mole/simulator.mjs";
+import {calculateDry} from "../bosses/giant-mole/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+" got "+a);
 const source=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

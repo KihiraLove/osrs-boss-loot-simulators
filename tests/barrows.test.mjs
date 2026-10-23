@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_CHESTS,ROLLS,UNIQUE_RATE,SPECIFIC_RATE,BROTHERS,UNIQUE,COMMON,ITEMS,
  validateChests,validatePotential,regularReward,simulate
-} from "../barrows/simulator.mjs";
-import {calculateDry,anyEquipment,CHEST_PMF,EQUIPMENT_PER_CHEST} from "../barrows/dry-calc.mjs";
+} from "../bosses/barrows/simulator.mjs";
+import {calculateDry,anyEquipment,CHEST_PMF,EQUIPMENT_PER_CHEST} from "../bosses/barrows/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

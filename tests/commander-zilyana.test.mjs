@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,rateOf,simulate,validateKills} from "../commander-zilyana/simulator.mjs";
-import {calculateDry} from "../commander-zilyana/dry-calc.mjs";
+import {MAX_KILLS,SOURCES,UNIQUE,ITEMS,BOSS_MAIN,MINION_MAIN,mainTickets,rateOf,simulate,validateKills} from "../bosses/commander-zilyana/simulator.mjs";
+import {calculateDry} from "../bosses/commander-zilyana/dry-calc.mjs";
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 const close=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,"Expected "+b+", got "+a);
 

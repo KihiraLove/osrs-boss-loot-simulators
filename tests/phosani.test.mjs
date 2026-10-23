@@ -4,8 +4,8 @@ import { readFileSync } from "node:fs";
 import {
   ARMOUR, ORBS, SIGNATURE, DRY_ITEMS, COMMON, ITEMS, ARMOUR_CHANCE, ORB_CHANCE,
   simulate, rateOf, validateKills
-} from "../phosani/simulator.mjs";
-import { binomial, anySignatureOdds, calculateDry } from "../phosani/dry-calc.mjs";
+} from "../bosses/phosani/simulator.mjs";
+import { binomial, anySignatureOdds, calculateDry } from "../bosses/phosani/dry-calc.mjs";
 const close=(actual,expected,tolerance=1e-9)=>
   assert.ok(Math.abs(actual-expected)<tolerance,"Expected "+expected+", got "+actual);
 test("Phosani rates agree with current wiki and unique probabilities are normalized",()=>{

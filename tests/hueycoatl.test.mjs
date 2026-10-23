@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,MODES,PRIMARY,UNIQUE,COMMON,ITEMS,rateOf,scaledQuantity,
  validateCounts,validateKills,simulate
-} from "../hueycoatl/simulator.mjs";
-import {calculateDry} from "../hueycoatl/dry-calc.mjs";
+} from "../bosses/hueycoatl/simulator.mjs";
+import {calculateDry} from "../bosses/hueycoatl/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"expected "+b+" got "+a);
 const text=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 

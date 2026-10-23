@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 import {UNIQUE,DRY_ITEMS,COMMON,MAX_RUNS,UNIQUE_DENOMS,ITEMS,
  validateRuns,validateWave,uniqueRate,waveRates,ratesUpTo,rateOf,simulate}
- from "../fortis-colosseum/simulator.mjs";
-import {calculateDry} from "../fortis-colosseum/dry-calc.mjs";
+ from "../bosses/fortis-colosseum/simulator.mjs";
+import {calculateDry} from "../bosses/fortis-colosseum/dry-calc.mjs";
 const close=(a,b,eps=1e-10)=>assert.ok(Math.abs(a-b)<eps,"Expected "+b+", got "+a);
 const read=p=>readFileSync(new URL("../"+p,import.meta.url),"utf8");
 test("Each Fortis wave has the updated unique rate and its own normal pool",()=>{

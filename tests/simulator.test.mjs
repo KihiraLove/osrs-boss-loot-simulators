@@ -5,7 +5,7 @@ import {
   ITEMS, SPECIAL_ITEMS, CLUE, TABLE_SIZE, MAX_FLOOR_ROLLS,
   quantityMultiplier, guaranteedTears, gearDenominator, domDenominator,
   rollCommon, rollQuantity, rollGear, rollDom, validatePlan, simulate
-} from "../simulator.mjs";
+} from "../bosses/doom/simulator.mjs";
 
 test("common table has exactly 312 tickets and matches expected individual weights", () => {
   assert.equal(ITEMS.reduce((n, item) => n + item.weight, 0), TABLE_SIZE);

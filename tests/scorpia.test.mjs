@@ -4,8 +4,8 @@ import {readFileSync} from "node:fs";
 import {
  MAX_KILLS,SHARD_CHANCE,ANY_SHARD_CHANCE,PET_CHANCE,DRAGON_2H_CHANCE,
  UNIQUE,DRY_ITEMS,MAIN,ITEMS,validateKills,validateTask,clueRate,rateOf,simulate
-} from "../scorpia/simulator.mjs";
-import {calculateDry,collectionLogOdds,COLLECTION_LOG_PER_KILL} from "../scorpia/dry-calc.mjs";
+} from "../bosses/scorpia/simulator.mjs";
+import {calculateDry,collectionLogOdds,COLLECTION_LOG_PER_KILL} from "../bosses/scorpia/dry-calc.mjs";
 const close=(a,b,eps=1e-9)=>assert.ok(Math.abs(a-b)<=eps,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 

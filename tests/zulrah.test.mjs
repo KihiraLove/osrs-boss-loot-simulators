@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
-import {MAX_KILLS,MAIN,SHARK,UNIQUE,ITEMS,TABLE_TICKETS,MUTAGEN_ROLL,simulate,validateKills,rateOf} from "../zulrah/simulator.mjs";
-import {calculateDry} from "../zulrah/dry-calc.mjs";
+import {MAX_KILLS,MAIN,SHARK,UNIQUE,ITEMS,TABLE_TICKETS,MUTAGEN_ROLL,simulate,validateKills,rateOf} from "../bosses/zulrah/simulator.mjs";
+import {calculateDry} from "../bosses/zulrah/dry-calc.mjs";
 const close=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,"Expected "+b+", got "+a);
 const read=path=>readFileSync(new URL("../"+path,import.meta.url),"utf8");
 
