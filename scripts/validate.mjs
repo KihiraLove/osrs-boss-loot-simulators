@@ -19,7 +19,7 @@ function run(args) {
   if (result.status !== 0) process.exit(result.status ?? 1);
 }
 
-const sources = ["../bosses", "../chests", "../shared", "../scripts"].flatMap(modules);
+const sources = ["../bosses", "../chests", "../treasure-trails", "../shared", "../scripts"].flatMap(modules);
 for (const source of sources) run(["--check", fileURLToPath(new URL(source, import.meta.url))]);
 console.log("Syntax checked " + sources.length + " modules.");
 

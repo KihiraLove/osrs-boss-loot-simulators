@@ -1,6 +1,6 @@
 import { createDryField, createUniqueCard, createLootCard, createDryCard, parseNumber, resetPanels, showError, clearInputsOnClick, setCalculatorMode, byId as $ } from "./ui.mjs";
 
-export function setupEncounterCalculator({encounters,maxEach,maxReceived,items,unique,dryItems,readOptions=()=>({}),simulate,calculateDry,rarity,onLoot=()=>{},onDry=()=>{},onMode=()=>{},summaryLabel,summaryKey}) {
+export function setupEncounterCalculator({encounters,maxEach,maxReceived,items,unique,dryItems,readOptions=()=>({}),simulate,calculateDry,rarity,createUnique=createUniqueCard,onLoot=()=>{},onDry=()=>{},onMode=()=>{},summaryLabel,summaryKey}) {
  const form=$("simulator-form"),dryInputs=$("dry-inputs");
  let mode="loot";
  for(const item of dryItems)dryInputs.append(createDryField(item));
@@ -28,7 +28,7 @@ export function setupEncounterCalculator({encounters,maxEach,maxReceived,items,u
    }else {
     const result=simulate(counts,options),uniqueGrid=$("unique-grid"),loot=$("loot-grid");
     uniqueGrid.replaceChildren();loot.replaceChildren();
-    for(const item of unique)uniqueGrid.append(createUniqueCard(item,result.drops[item.id]??0,rarity(item,result)));
+    for(const item of unique)uniqueGrid.append(createUnique(item,result.drops[item.id]??0,rarity?.(item,result)));
     const excluded=new Set(unique.map(item=>item.id));
     const entries=Object.entries(result.drops).filter(([id])=>!excluded.has(id)).sort((a,b)=>b[1]-a[1]||items[a[0]].name.localeCompare(items[b[0]].name));
     for(const [id,count] of entries)loot.append(createLootCard(items[id],count));

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Easy Clue Caskets loot simulator and dry calculator for Old School RuneScape.">
+  <title>Easy Clue Caskets | Loot Simulator</title>
+  <link rel="icon" type="image/png" href="../../assets/items/reward-casket-easy.png">
+  <link rel="stylesheet" href="../../styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body class="treasure-trail">
+  <header data-simulator-header data-title="Easy Clue Caskets" data-icon="reward-casket-easy"></header>
+  <div class="mode-switch" role="group" aria-label="Calculator mode">
+    <button type="button" id="mode-loot" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+    <button type="button" id="mode-dry" class="mode-button" aria-pressed="false">Dry calculator</button>
+  </div>
+  <main id="main" class="layout">
+    <section class="panel controls-panel" aria-labelledby="plan-heading">
+      <div class="section-heading"><h2 id="plan-heading">Your caskets</h2></div>
+      <form id="simulator-form" novalidate>
+        <label class="depth-field count-field"><span>Opened caskets</span>
+          <input id="casket-count" type="number" min="0" max="1000000" step="1" value="100" inputmode="numeric">
+        </label>
+        <div id="dry-fields" class="dry-fields" hidden>
+          <h3>Rewards obtained</h3>
+          <label class="reward-search"><span>Find a reward</span><input id="reward-search" type="search" placeholder="Search reward names" autocomplete="off"></label>
+          <div id="dry-inputs" class="dry-inputs"></div>
+          <p id="reward-search-empty" class="room-hint" hidden>No matching rewards.</p>
+        </div>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
+        <div class="action-row">
+          <button type="submit" class="primary-action"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="secondary-action" id="clear-button">Clear</button>
+        </div>
+      </form>
+    </section>
+    <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
+      <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/reward-casket-easy.png" alt="" width="62" height="62"></div>
+        <h3>Nothing claimed yet</h3>
+        <p>Enter opened easy caskets to simulate their rewards.</p>
+      </div>
+      <div id="results-content" hidden>
+        <p id="results-summary" class="muted" role="status"></p>
+        <div class="subheading"><h3>Easy collection-log rewards</h3></div>
+        <div id="unique-grid" class="unique-grid"></div>
+        <div id="collected-heading" class="subheading inventory-title"><h3>Collected loot</h3></div>
+        <div id="loot-grid" class="loot-grid"></div>
+      </div>
+    </section>
+    <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+      <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
+      <div id="dry-empty" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/reward-casket-easy.png" alt="" width="62" height="62"></div>
+        <h3>How lucky are your rewards?</h3>
+        <p>Enter opened caskets and copies of each reward received to calculate the odds.</p>
+      </div>
+      <div id="dry-results" hidden><div id="dry-results-grid" class="dry-results-grid"></div></div>
+    </section>
+  </main>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Reward_casket_%28easy%29"></footer>
+</body>
+</html>
+

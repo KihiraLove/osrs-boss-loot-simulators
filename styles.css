@@ -143,7 +143,7 @@ h3 { font-size: 1.06rem; }
   padding: 12px 8px; border: 1px solid var(--border-soft);
   background: rgba(17,16,13,.68);
 }
-.unique-card.found { border-color: var(--accent); background: rgba(213,170,87,.09); }
+.unique-card.found, .treasure-trail .loot-item.found { border-color: var(--accent); background: rgba(213,170,87,.09); }
 .unique-card img, .loot-icon img {
   width: 36px; height: 32px; object-fit: contain; image-rendering: pixelated;
 }
@@ -252,6 +252,20 @@ footer {
 .dry-field input::-webkit-inner-spin-button, .dry-field input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .dry-intro { margin-bottom: 18px; }
 .dry-results-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+.treasure-trail.is-dry-mode .layout { grid-template-columns: minmax(0, 1fr); }
+.treasure-trail.is-dry-mode .dry-inputs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.treasure-trail .dry-results-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.treasure-trail .dry-total-card { grid-column: 1 / -1; }
+.treasure-trail .reward-search { display: flex; align-items: center; gap: 12px; margin: 14px 0 10px; }
+.treasure-trail .reward-search input { min-width: 0; flex: 1; padding: 9px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font: inherit; }
+@media (max-width: 1000px) {
+  .treasure-trail.is-dry-mode .dry-inputs,
+  .treasure-trail .dry-results-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .treasure-trail.is-dry-mode .dry-inputs,
+  .treasure-trail .dry-results-grid { grid-template-columns: minmax(0, 1fr); }
+}
 .dry-result-card {
   border: 1px solid var(--border);
   background: rgba(17, 16, 13, .68);

@@ -15,6 +15,7 @@
 - **Skilling:** [Wintertodt](bosses/wintertodt/README.md), [Tempoross](bosses/tempoross/README.md), [Zalcano](bosses/zalcano/README.md).
 - **Other bosses:** [Brutus](bosses/brutus/README.md), [Scurrius](bosses/scurrius/README.md), [Obor](bosses/obor/README.md), [Bryophyta](bosses/bryophyta/README.md), [Deranged Archaeologist](bosses/deranged-archaeologist/README.md), [Barrows](bosses/barrows/README.md), [Moons of Peril](bosses/moons-of-peril/README.md), [Giant Mole](bosses/giant-mole/README.md), [Amoxliatl](bosses/amoxliatl/README.md), [The Hueycoatl](bosses/hueycoatl/README.md), [Hespori](bosses/hespori/README.md), [Mad Angel](bosses/mad-angel/README.md), [Royal Titans](bosses/royal-titans/README.md), [Zulrah](bosses/zulrah/README.md), [Phantom Muspah](bosses/phantom-muspah/README.md), [The Gauntlet](bosses/gauntlet/README.md), [Corporeal Beast](bosses/corporeal-beast/README.md), [Doom of Mokhaiotl](bosses/doom/README.md), [Phosani's Nightmare](bosses/phosani/README.md), [Yama](bosses/yama/README.md), [Maggot King](bosses/maggot-king/README.md), [Fortis Colosseum](bosses/fortis-colosseum/README.md).
 - **Chests:** [Eight chest calculators and shared reward notes](chests/README.md).
+- **Treasure Trails:** [Beginner clue caskets](treasure-trails/beginner/README.md), [Easy clue caskets](treasure-trails/easy/README.md), [Medium clue caskets](treasure-trails/medium/README.md), [Hard clue caskets](treasure-trails/hard/README.md), [Elite clue caskets](treasure-trails/elite/README.md), [Master clue caskets](treasure-trails/master/README.md).
 
 Each guide explains its inputs, important mechanics and modeling assumptions. Dry results are per-item probabilities, not the joint chance of receiving every entered reward. Starting ownership or progress is modeled only where the page provides an input.
 
@@ -42,9 +43,11 @@ No build or package installation is required. GitHub Actions validates and publi
 - `shared/encounters.mjs`, `shared/encounter-app.mjs`: combined encounter plans and their calculator UI.
 - `shared/rare-tables.mjs`: rare/gem tables and Ring of wealth effects.
 - `shared/chest-*.mjs`: chest reward tables, calculations and UI.
+- `shared/clue-*.mjs`: clue casket rolls, dry probabilities and UI.
+- `shared/mimic-caskets.mjs`: combined normal and Mimic casket calculations.
 
-Boss and chest folders contain their own tables or configuration and page setup. Navigation and asset paths work under a renamed hosting directory.
+Calculator folders contain their own tables or configuration and page setup. Navigation and asset paths work under a renamed hosting directory.
 
 ## Sources
 
-Each calculator links its OSRS Wiki sources. Most local sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db); [chest image sources](assets/chest-sources.json) list the Wiki downloads. Game artwork belongs to Jagex. The project license covers its own code, not game assets.
+Each calculator links its OSRS Wiki sources. Most local sprites come from [osrsreboxed-db](https://github.com/RSPSApp/osrsreboxed-db); [chest image sources](assets/chest-sources.json) and [Treasure Trails image sources](assets/treasure-trails-sources.json) list the Wiki downloads. Game artwork belongs to Jagex. The project license covers its own code, not game assets.

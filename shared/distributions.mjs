@@ -38,6 +38,33 @@ export function convolveDistributions(a, b) {
   return { from: a.from + b.from, values, expected: a.expected + b.expected };
 }
 
+// Repeat a discrete reward distribution using exponentiation by squaring.
+// Keep small supports intact so even several ultra-rares retain nonzero odds.
+// Trimming at most 1e-15 from each tail of larger convolutions keeps large
+// casket counts practical while preserving the analytically known mean.
+export function repeatDistribution(distribution, count) {
+  validateDropCount(count, Number.MAX_SAFE_INTEGER, "Trials");
+  function trim(dist) {
+    let first = 0, last = dist.values.length - 1, lower = 0, upper = 0;
+    const trimTails = dist.values.length > 256;
+    while (trimTails && first < last && lower + dist.values[first] <= 1e-15) lower += dist.values[first++];
+    while (trimTails && last > first && upper + dist.values[last] <= 1e-15) upper += dist.values[last--];
+    const values = dist.values.slice(first, last + 1);
+    let mass = 0;
+    for (const value of values) mass += value;
+    for (let i = 0; i < values.length; i++) values[i] /= mass;
+    return { from: dist.from + first, values, expected: dist.expected };
+  }
+  let result = { from: 0, values: Float64Array.of(1), expected: 0 };
+  let power = distribution, remaining = count;
+  while (remaining > 0) {
+    if (remaining % 2) result = trim(convolveDistributions(result, power));
+    remaining = Math.floor(remaining / 2);
+    if (remaining) power = trim(convolveDistributions(power, power));
+  }
+  return result;
+}
+
 export function distributionOdds(distribution, count, transform) {
   let fewer = 0, exact = 0, expected = transform ? 0 : distribution.expected;
   distribution.values.forEach((probability, index) => {

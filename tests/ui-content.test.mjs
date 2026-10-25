@@ -55,7 +55,7 @@ test("Ko-fi uses the BingoPlayerStats blue pill banner and bounded cup icon", ()
 
 test("every calculator configures the shared header with a title and local icon", () => {
   assert.match(read("shared/ui.mjs"), /import "\.\/header\.mjs"/);
-  for (const category of ["bosses", "chests"]) for (const boss of readdirSync(new URL(`../${category}/`, import.meta.url), { withFileTypes: true }).filter(entry => entry.isDirectory()).map(entry => entry.name)) {
+  for (const category of ["bosses", "chests", "treasure-trails"]) for (const boss of readdirSync(new URL(`../${category}/`, import.meta.url), { withFileTypes: true }).filter(entry => entry.isDirectory()).map(entry => entry.name)) {
     const html = read(`${category}/${boss}/index.html`);
     assert.equal((html.match(/<header\b/g) ?? []).length, 1, boss);
     assert.match(html, /<header data-simulator-header data-title="[^"]+" data-icon="[a-z0-9-]+"/, boss);

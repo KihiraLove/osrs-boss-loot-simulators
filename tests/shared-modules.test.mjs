@@ -6,7 +6,7 @@ import { binomial, convolveDistributions, distributionOdds, validateDropCount } 
 const close = (a, b, tolerance = 1e-10) => assert.ok(Math.abs(a - b) <= tolerance, `${a} != ${b}`);
 const root = new URL("../", import.meta.url);
 const read = path => readFileSync(new URL(path, root), "utf8");
-const calculatorDirectories = ["bosses", "chests"].flatMap(category => readdirSync(new URL(category + "/", root), { withFileTypes: true })
+const calculatorDirectories = ["bosses", "chests", "treasure-trails"].flatMap(category => readdirSync(new URL(category + "/", root), { withFileTypes: true })
   .filter(entry => entry.isDirectory()).map(entry => `${category}/${entry.name}`));
 
 test("shared binomial agrees with the exact four-coin distribution", () => {
