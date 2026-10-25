@@ -137,7 +137,7 @@ test("medium caskets use shared UI, source links, navigation and local PNG sprit
   const page = read("treasure-trails/medium/index.html");
   assert.match(page, /data-title="Medium Clue Caskets" data-icon="reward-casket-medium"/);
   assert.match(page, /data-wiki-links="https:\/\/oldschool.runescape.wiki\/w\/Reward_casket_%28medium%29"/);
-  assert.match(page, /3–5 reward rolls/);
+  assert.match(page, /id="casket-count"/);
   assert.match(page, /id="reward-search"/);
   assert.doesNotMatch(page, /Beginner|beginner|Easy|easy/);
   for (const tier of ["beginner", "easy", "medium"]) {

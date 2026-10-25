@@ -159,7 +159,7 @@ test("hard caskets use shared UI, navigation, documentation and local PNG sprite
   const page = read("treasure-trails/hard/index.html");
   assert.match(page, /data-title="Hard Clue Caskets" data-icon="reward-casket-hard"/);
   assert.match(page, /data-wiki-links="https:\/\/oldschool.runescape.wiki\/w\/Reward_casket_%28hard%29"/);
-  assert.match(page, /4–6 reward rolls/);
+  assert.match(page, /id="casket-count"/);
   assert.match(page, /id="reward-search"/);
   assert.doesNotMatch(page, /Beginner|beginner|Easy|easy|Medium|medium/);
   assert.match(read("treasure-trails/hard/app.mjs"), /shared\/clue-app.mjs/);

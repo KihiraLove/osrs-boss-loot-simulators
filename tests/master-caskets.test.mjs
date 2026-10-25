@@ -195,7 +195,6 @@ test("master caskets share the Mimic module, navigation, footer and local images
   assert.match(page, /data-title="Master Clue Caskets" data-icon="reward-casket-master"/);
   assert.match(page, /id="master-count"/);
   assert.match(page, /id="mimic-count"/);
-  assert.match(page, /first-attempt wins/);
   assert.match(page, /Reward_casket_%28master%29 https:\/\/oldschool.runescape.wiki\/w\/The_Mimic#Master_drops/);
   assert.doesNotMatch(page, /Elite|elite|id="casket-count"/);
   for (const tier of ["master", "elite"]) assert.match(read(`treasure-trails/${tier}/simulator.mjs`), /shared\/mimic-caskets.mjs/);

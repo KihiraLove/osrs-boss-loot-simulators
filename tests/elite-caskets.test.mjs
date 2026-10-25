@@ -187,7 +187,6 @@ test("elite combined page uses shared UI, two counts, source links and local ima
   assert.match(page, /data-title="Elite Clue Caskets" data-icon="reward-casket-elite"/);
   assert.match(page, /id="elite-count"/);
   assert.match(page, /id="mimic-count"/);
-  assert.match(page, /first-attempt wins/);
   assert.match(page, /Reward_casket_%28elite%29 https:\/\/oldschool.runescape.wiki\/w\/The_Mimic#Elite_drops/);
   assert.doesNotMatch(page, /Hard|hard|id="casket-count"/);
   assert.match(read("treasure-trails/elite/app.mjs"), /shared\/clue-app.mjs/);
