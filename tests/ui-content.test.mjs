@@ -39,18 +39,20 @@ test("shortened item names still retain the correct IDs and drop rates", () => {
 });
 
 test("Ko-fi uses the BingoPlayerStats blue pill banner and bounded cup icon", () => {
-  const header = read("shared/header.mjs");
-  const css = read("styles.css");
-  assert.match(header, /className = "kofi-banner"/);
+  const header = read("toolkit-common/toolkit.mjs");
+  const css = read("toolkit-common/toolkit.css");
+  assert.match(read("shared/header.mjs"), /mountToolkitHeader\(header\)/);
+  assert.match(read("styles.css"), /toolkit-common\/toolkit\.css/);
+  assert.match(header, /class="toolkit-kofi"/);
   assert.match(header, /https:\/\/ko-fi.com\/KihiraLove/);
   assert.match(header, /storage\.ko-fi\.com\/cdn\/cup-border\.png/);
   assert.match(header, /Support me on Ko-fi/);
-  assert.match(css, /\.site-header \.kofi-banner\s*\{/);
+  assert.match(css, /\.toolkit-kofi\s*\{/);
   assert.match(css, /background:\s*#29abe0/i);
   assert.match(css, /border-radius:\s*999px/);
-  assert.match(css, /\.site-header \.kofi-banner img/);
-  assert.match(css, /max-width:\s*24px/);
-  assert.match(css, /max-height:\s*24px/);
+  assert.match(css, /\.toolkit-kofi img/);
+  assert.match(css, /width:\s*24px/);
+  assert.match(css, /height:\s*24px/);
 });
 
 test("every calculator configures the shared header with a title and local icon", () => {
@@ -67,18 +69,20 @@ test("every calculator configures the shared header with a title and local icon"
   assert.match(read("bosses/wintertodt/index.html"), /data-subtitle="Reward Cart Simulator"/);
 });
 
-test("footer uses the BingoPlayerStats structure and privacy statement", () => {
+test("footer supplies simulator sources and privacy text to the toolkit footer", () => {
   const html = read("bosses/doom/index.html");
   const footer = read("shared/footer.mjs");
-  const css = read("styles.css");
+  const shared = read("toolkit-common/toolkit.mjs");
+  const css = read("toolkit-common/toolkit.css");
   assert.match(html, /<footer data-wiki-links="https:\/\/oldschool\.runescape\.wiki\/w\/Doom_of_Mokhaiotl"><\/footer>/);
-  assert.match(footer, /className = "footer-meta"/);
-  assert.match(footer, /className = "footer-actions"/);
-  assert.match(footer, /className = "text-button"/);
+  assert.match(footer, /className = "toolkit-footer-info"/);
+  assert.match(footer, /mountToolkitFooter\(footer, \{ githubUrl \}\)/);
+  assert.match(shared, /className = "toolkit-footer-actions"/);
+  assert.match(shared, /className = "toolkit-footer-action"/);
   assert.match(footer, /No data is stored, collected, or sold by this site\./);
-  assert.match(css, /\.footer-meta\s*\{/);
-  assert.match(css, /\.footer-actions\s*\{/);
-  assert.match(css, /\.text-button\s*\{/);
+  assert.match(css, /\.toolkit-footer-info\s*\{/);
+  assert.match(css, /\.toolkit-footer-actions\s*\{/);
+  assert.match(css, /\.toolkit-footer-action\s*\{/);
   assert.match(footer, /https:\/\/github.com\/KihiraLove\/osrs-boss-loot-simulators/);
 });
 
@@ -98,7 +102,7 @@ test("home page includes a centered, accessible Doom boss tile", () => {
   assert.match(homepage, /aria-label="Open Doom of Mokhaiotl loot simulator"/);
   assert.match(homepage, /src="\.\/assets\/items\/dom\.png"/);
   assert.doesNotMatch(homepage, /id="simulator-form"|id="mode-loot"|src="\.\/app\.mjs"/);
-  assert.match(css, /body\.boss-selection-page\s*\{[^}]*place-items:\s*center/s);
+  assert.match(css, /\.boss-picker\s*\{[^}]*margin:\s*auto/);
 });
 
 test("Doom simulator is on a separate, repository-rename-safe path", () => {

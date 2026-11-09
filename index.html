@@ -8,9 +8,12 @@
   <title>OSRS Boss Loot Simulators</title>
   <link rel="icon" type="image/png" href="./assets/items/dom.png">
   <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./shared/header.mjs"></script>
+  <script type="module" src="./shared/footer.mjs"></script>
 </head>
 <body class="boss-selection-page">
-  <main class="boss-picker" aria-label="Select a boss or chest simulator">
+  <header data-simulator-header data-title="OSRS Boss Loot Simulators" data-icon="dom" data-subtitle="" data-simulator-home></header>
+  <main id="main" class="boss-picker" aria-label="Select a boss or chest simulator">
     <div class="boss-group-row">
       <section class="boss-group boss-group--godwars" aria-labelledby="group-godwars">
         <h2 class="room-hint" id="group-godwars">Godwars</h2>
@@ -271,5 +274,6 @@
       </div>
     </section>
   </main>
+  <footer data-wiki-links=""></footer>
 </body>
 </html>

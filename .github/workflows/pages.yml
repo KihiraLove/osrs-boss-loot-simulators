@@ -44,6 +44,8 @@ jobs:
           fi
       - uses: actions/checkout@v4
         if: steps.revision.outputs.deploy == 'true'
+        with:
+          submodules: true
       - uses: actions/setup-node@v4
         if: steps.revision.outputs.deploy == 'true'
         with:

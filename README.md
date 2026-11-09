@@ -21,9 +21,10 @@ Each guide explains its inputs, important mechanics and modeling assumptions. Dr
 
 ## Run and test
 
-Serve the repository root with a static server:
+Fetch the shared toolkit submodule, then serve the repository root with a static server:
 
 ```sh
+git submodule update --init
 python -m http.server 8000
 ```
 
@@ -38,7 +39,8 @@ No build or package installation is required. GitHub Actions validates and publi
 ## Shared code
 
 - `styles.css`: all calculator and main-page styles.
-- `shared/ui.mjs`, `shared/header.mjs`, `shared/footer.mjs`: fields, cards, navigation, Ko-fi and source links.
+- `toolkit-common/`: shared toolkit header, sidebar, and footer.
+- `shared/ui.mjs`, `shared/header.mjs`, `shared/footer.mjs`: calculator controls, titles, icons, and source links.
 - `shared/distributions.mjs`: stable binomial probabilities, convolution, count validation and dry-result statistics.
 - `shared/encounters.mjs`, `shared/encounter-app.mjs`: combined encounter plans and their calculator UI.
 - `shared/rare-tables.mjs`: rare/gem tables and Ring of wealth effects.

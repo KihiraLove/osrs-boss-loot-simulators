@@ -1,22 +1,7 @@
-const supportUrl = "https://ko-fi.com/KihiraLove";
-const supportIconUrl = "https://storage.ko-fi.com/cdn/cup-border.png";
+import { mountToolkitHeader } from "../toolkit-common/toolkit.mjs";
 
 export function renderHeader(header, { title, icon, subtitle = "Loot Simulator" }) {
   const document = header.ownerDocument;
-  const navigation = document.createElement("nav");
-  navigation.className = "simulator-navigation";
-  navigation.setAttribute("aria-label", "Simulator navigation");
-  const back = document.createElement("a");
-  back.className = "back-link";
-  back.href = new URL("../", import.meta.url).href;
-  back.textContent = "← All simulators";
-  navigation.append(back);
-
-  const skip = document.createElement("a");
-  skip.className = "skip-link";
-  skip.href = "#main";
-  skip.textContent = "Skip to simulator";
-
   const branding = document.createElement("div");
   branding.className = "site-header";
   const mark = document.createElement("div");
@@ -28,28 +13,27 @@ export function renderHeader(header, { title, icon, subtitle = "Loot Simulator" 
   bossImage.height = 42;
   mark.append(bossImage);
   const heading = document.createElement("h1");
-  const description = document.createElement("span");
-  description.textContent = subtitle;
-  heading.append(title + " ", description);
+  heading.textContent = title;
+  if (subtitle) {
+    const description = document.createElement("span");
+    description.textContent = subtitle;
+    heading.append(" ", description);
+  }
+  branding.append(mark, heading);
+  header.replaceChildren(branding);
 
-  const support = document.createElement("a");
-  support.className = "kofi-banner";
-  support.href = supportUrl;
-  support.target = "_blank";
-  support.rel = "noopener noreferrer";
-  support.setAttribute("aria-label", "Support KihiraLove on Ko-fi");
-  const cup = document.createElement("img");
-  cup.src = supportIconUrl;
-  cup.alt = "";
-  cup.setAttribute("aria-hidden", "true");
-  cup.width = 24;
-  cup.height = 24;
-  const label = document.createElement("span");
-  label.className = "kofi-banner-label";
-  label.textContent = "Support me on Ko-fi";
-  support.append(cup, label);
-  branding.append(mark, heading, support);
-  header.replaceChildren(navigation, skip, branding);
+  if (!header.hasAttribute("data-simulator-home")) {
+    const navigation = document.createElement("nav");
+    navigation.className = "simulator-navigation";
+    navigation.setAttribute("aria-label", "Simulator navigation");
+    const back = document.createElement("a");
+    back.className = "back-link";
+    back.href = new URL("../", import.meta.url).href;
+    back.textContent = "← All simulators";
+    navigation.append(back);
+    header.prepend(navigation);
+  }
+  mountToolkitHeader(header);
 }
 
 if (typeof document !== "undefined") {

@@ -1,3 +1,5 @@
+@import url("./toolkit-common/toolkit.css");
+
 :root {
   color-scheme: dark;
   --bg: #11100d;
@@ -16,9 +18,12 @@
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
 body {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  min-height: 100dvh;
   color: var(--text);
   background: radial-gradient(circle at 20% 0%, rgba(213,170,87,.08), transparent 34rem), var(--bg);
 }
@@ -30,16 +35,10 @@ button:focus-visible, input:focus-visible, a:focus-visible {
 }
 a { color: var(--accent-strong); }
 a:hover { color: var(--text); }
-.skip-link {
-  position: absolute; top: .75rem; left: .75rem; z-index: 5;
-  transform: translateY(-200%); padding: .7rem 1rem;
-  background: var(--accent-strong); color: var(--bg);
-}
-.skip-link:focus { transform: none; }
 .site-header {
   width: min(1500px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 42px 4px 24px;
+  padding: 16px 4px 24px;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -167,19 +166,11 @@ h3 { font-size: 1.06rem; }
 .loot-info span { display: block; font-size: .8rem; color: var(--text); line-height: 1.35; }
 .inventory-title { margin-top: 12px; }
 .note { margin: 18px 0 0; font-size: .78rem; }
-footer {
-  width: min(1500px, calc(100% - 32px));
-  margin: 0 auto; border-top: 1px solid var(--border-soft);
-  padding: 18px 4px 28px;
-  display: flex; justify-content: space-between; align-items: flex-start; gap: 12px 24px; flex-wrap: wrap;
-  color: #827866; font-size: .8rem;
-}
 @media(max-width: 900px) {
   .layout { grid-template-columns: minmax(270px,320px) minmax(0,1fr); }
   .unique-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 }
 @media(max-width: 760px) {
-  .site-header { padding-top: 24px; }
   .layout { grid-template-columns: 1fr; }
 }
 @media(max-width: 390px) {
@@ -329,73 +320,7 @@ footer {
 .any-drop-chance strong { color: var(--accent-strong); font-size: 1.55rem; font-variant-numeric: tabular-nums; }
 .dry-total-card > .muted { font-size: .78rem; margin: 0; }
 
-/* Match the BingoPlayerStats Ko-fi banner and footer. */
-.site-header { flex-wrap: wrap; }
-.site-header .kofi-banner {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  align-self: flex-start;
-  margin-left: auto;
-  border-radius: 999px;
-  background: #29abe0;
-  color: #fff;
-  padding: 9px 14px;
-  font-size: .9rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  box-shadow: 0 8px 24px rgba(41,171,224,.22);
-  transition: transform 120ms ease-out, filter 120ms ease-out;
-}
-.site-header .kofi-banner:hover { transform: translateY(-1px); filter: brightness(1.06); }
-.site-header .kofi-banner:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
-.site-header .kofi-banner img {
-  display: block;
-  width: 24px;
-  height: 24px;
-  max-width: 24px;
-  max-height: 24px;
-  flex: 0 0 24px;
-  object-fit: contain;
-}
-.site-header .kofi-banner-label { display: inline-block; }
-footer {
-  border-top: 0;
-  align-items: center;
-  padding: 18px 4px 28px;
-  gap: 16px;
-  font-size: .82rem;
-}
-footer p { margin: 0; }
-.footer-meta { display: grid; gap: 3px; }
-.footer-meta strong { color: var(--muted); font-weight: 700; }
-.footer-actions { display: flex; align-items: center; gap: 12px; }
-.text-button {
-  min-height: auto;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  padding: 2px 0;
-  font-size: .82rem;
-  font-weight: 600;
-  text-decoration: underline;
-}
-.text-button:hover { color: var(--text); }
-@media (max-width: 760px) {
-  .site-header .kofi-banner { align-self: flex-start; margin-left: 0; }
-  footer { align-items: flex-start; flex-direction: column; }
-}
-
 /* Grouped boss picker, with tiles two-thirds of their previous size. */
-body.boss-selection-page {
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  min-height: 100dvh;
-  padding: 24px 0;
-}
 .boss-picker {
   --picker-columns: 12;
   --tile-gap: 8px;
@@ -405,6 +330,7 @@ body.boss-selection-page {
   gap: 16px;
   width: max-content;
   max-width: calc(100% - 32px);
+  margin: auto;
   align-items: start;
 }
 .boss-group-row { display: flex; align-items: flex-start; gap: calc(var(--tile-size) + 2 * var(--tile-gap)); }
@@ -459,7 +385,7 @@ body.boss-selection-page {
 .simulator-navigation {
   width: min(1500px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 18px 4px 0;
+  padding: 0 4px;
 }
 .back-link {
   display: inline-block;
