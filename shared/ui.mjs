@@ -144,6 +144,12 @@ export function createLootCard(item, count) {
   return card;
 }
 
+export function createCompactUniqueCard(item, count) {
+  const card = createLootCard(item, count);
+  card.classList.toggle("found", count > 0);
+  return card;
+}
+
 export function createUniqueCard(item, count, rarityText) {
   const card = document.createElement("div");
   card.className = "unique-card" + (count ? " found" : "");

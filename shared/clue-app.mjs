@@ -1,5 +1,5 @@
 import { setupEncounterCalculator } from "./encounter-app.mjs";
-import { byId as $, formatNumber as format, createLootCard } from "./ui.mjs";
+import { byId as $, formatNumber as format, createCompactUniqueCard } from "./ui.mjs";
 
 export function setupClueCalculator({ tier, maxCaskets, maxRolls, items, unique, dryItems = unique, simulate, calculateDry,
   encounters = [{ id: "caskets", inputId: "casket-count", label: "Opened " + tier + " caskets" }],
@@ -11,11 +11,7 @@ export function setupClueCalculator({ tier, maxCaskets, maxRolls, items, unique,
     items, unique, dryItems,
     simulate: (counts, options) => simulate(readPlan(counts), options),
     calculateDry: (counts, received) => calculateDry(readPlan(counts), received),
-    createUnique: (item, count) => {
-      const card = createLootCard(item, count);
-      card.classList.toggle("found", count > 0);
-      return card;
-    },
+    createUnique: createCompactUniqueCard,
     summaryLabel, summaryKey: "anyUnique",
     onMode: dry => document.body.classList.toggle("is-dry-mode", dry),
     onLoot: result => {

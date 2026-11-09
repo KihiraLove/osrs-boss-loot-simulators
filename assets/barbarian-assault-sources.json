@@ -1,0 +1,36 @@
+{
+  "retrieved": "2026-10-25",
+  "credit": "Old School RuneScape artwork belongs to Jagex. Images downloaded unmodified from the OSRS Wiki.",
+  "files": [
+    {
+      "file": "assets/items/ranarr-weed.png",
+      "source": "https://oldschool.runescape.wiki/images/Ranarr_weed.png?c76a5",
+      "page": "https://oldschool.runescape.wiki/w/Ranarr_weed"
+    },
+    {
+      "file": "assets/items/berserker-helm.png",
+      "source": "https://oldschool.runescape.wiki/images/Berserker_helm.png?3be33",
+      "page": "https://oldschool.runescape.wiki/w/Berserker_helm"
+    },
+    {
+      "file": "assets/items/warrior-helm.png",
+      "source": "https://oldschool.runescape.wiki/images/Warrior_helm.png?b7686",
+      "page": "https://oldschool.runescape.wiki/w/Warrior_helm"
+    },
+    {
+      "file": "assets/items/granite-shield.png",
+      "source": "https://oldschool.runescape.wiki/images/Granite_shield.png?e75c0",
+      "page": "https://oldschool.runescape.wiki/w/Granite_shield"
+    },
+    {
+      "file": "assets/items/granite-helm.png",
+      "source": "https://oldschool.runescape.wiki/images/Granite_helm.png?19135",
+      "page": "https://oldschool.runescape.wiki/w/Granite_helm"
+    },
+    {
+      "file": "assets/items/pet-penance-queen.png",
+      "source": "https://oldschool.runescape.wiki/images/Pet_Penance_Queen.png?c0946",
+      "page": "https://oldschool.runescape.wiki/w/Pet_Penance_Queen"
+    }
+  ]
+}
