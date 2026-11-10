@@ -1,0 +1,28 @@
+.completion-field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: .87rem; }
+.completion-entry {
+  position: relative;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px;
+}
+.completion-field input {
+  width: 100%; min-width: 0;
+  border: 1px solid var(--border); padding: 10px;
+  background: var(--bg); color: var(--text);
+}
+.completion-help { display: grid; place-items: center; }
+.completion-help button {
+  display: grid; place-items: center;
+  width: 24px; height: 24px; padding: 0;
+  border: 1px solid var(--border); border-radius: 50%;
+  background: var(--panel-2); color: var(--accent-strong);
+  cursor: help;
+}
+.completion-tooltip {
+  display: none; position: absolute; z-index: 2;
+  inset-block-start: 100%; inset-inline-end: 0;
+  max-width: min(100%, 26rem); padding: 12px;
+  border: 1px solid var(--border); background: var(--panel-2);
+  color: var(--text); box-shadow: var(--shadow);
+  font-size: .82rem; line-height: 1.55; overflow-wrap: anywhere;
+}
+.completion-help:hover .completion-tooltip,
+.completion-help:focus-within .completion-tooltip { display: block; }

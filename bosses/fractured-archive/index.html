@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100d">
+  <meta name="description" content="Simulate personal loot and calculate drop odds from your Fractured Archive completions, group sizes, and deaths.">
+  <title>The Fractured Archive | Loot Simulator</title>
+  <link rel="icon" type="image/png" href="../../assets/items/orion.png">
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <header data-simulator-header data-title="The Fractured Archive" data-icon="orion"></header>
+  <div class="mode-switch" role="group" aria-label="Calculator mode">
+    <button type="button" id="mode-loot" class="mode-button is-active" aria-pressed="true">Loot simulator</button>
+    <button type="button" id="mode-dry" class="mode-button" aria-pressed="false">Dry calculator</button>
+  </div>
+  <main id="main" class="layout">
+    <section class="panel controls-panel" aria-labelledby="plan-heading">
+      <div class="section-heading"><h2 id="plan-heading">Your completions</h2></div>
+      <form id="simulator-form" novalidate>
+        <div class="completion-field">
+          <label for="completion-string">Completion string</label>
+          <div class="completion-entry">
+            <input id="completion-string" type="text" placeholder="12kc5g2d11kc2g0d" autocomplete="off"
+                   autocapitalize="off" spellcheck="false" aria-describedby="completion-format completion-assumptions">
+            <span class="completion-help">
+              <button type="button" aria-label="Completion string format" aria-describedby="completion-format">?</button>
+              <span class="completion-tooltip" id="completion-format" role="tooltip">
+                Construct you completion string like this<br>
+                <code>&lt;number of kc&gt;kc&lt;group size&gt;g&lt;number of deaths&gt;d</code><br>
+                You can string as many as you want together<br>
+                For example: 12 kc in a 5 man with 2 deaths and 11 kc in a duo with 0 deaths:<br>
+                <code>12kc5g2d11kc2g0d</code>
+              </span>
+            </span>
+          </div>
+        </div>
+        <p class="hint" id="completion-assumptions">Enter your own deaths per completion. The model assumes equal contribution before deaths and starts with no folio or fragments. It awards cabbage at zero contribution. In-game cabbage and team-death rules can change your actual odds.</p>
+        <label class="calculator-option"><input id="elite-cas" type="checkbox"> Elite Combat Achievements</label>
+        <div id="dry-fields" class="dry-fields" hidden>
+          <h3>Drops obtained</h3>
+          <div id="dry-inputs" class="dry-inputs"></div>
+        </div>
+        <p id="validation-message" class="validation-message" role="alert" hidden></p>
+        <div class="action-row">
+          <button type="submit" class="primary-action" id="simulate-button"><span id="action-label">Simulate loot</span> <span aria-hidden="true">→</span></button>
+          <button type="button" class="secondary-action" id="clear-button">Clear</button>
+        </div>
+      </form>
+    </section>
+    <section id="loot-panel" class="panel overview-panel" aria-labelledby="results-heading">
+      <div class="section-heading"><h2 id="results-heading">Your loot</h2></div>
+      <div id="empty-state" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/orion.png" alt="" width="62" height="62"></div>
+        <h3>Nothing claimed yet</h3>
+        <p>Enter a completion string to simulate your personal raid loot.</p>
+      </div>
+      <div id="results-content" hidden>
+        <div class="subheading"><h3>Unique rewards</h3></div>
+        <div id="unique-grid" class="unique-grid"></div>
+        <p id="loot-summary" class="vestige-progress" aria-live="polite"></p>
+        <div class="subheading inventory-title"><h3>Collected loot</h3></div>
+        <div id="loot-grid" class="loot-grid"></div>
+      </div>
+    </section>
+    <section id="dry-panel" class="panel dry-panel" aria-labelledby="dry-heading" hidden>
+      <div class="section-heading"><h2 id="dry-heading">Dry calculator results</h2></div>
+      <div id="dry-empty" class="empty-state">
+        <div class="empty-orb"><img src="../../assets/items/orion.png" alt="" width="62" height="62"></div>
+        <h3>How lucky are your drops?</h3>
+        <p>Enter a completion string and your drops to calculate the odds.</p>
+      </div>
+      <div id="dry-results" hidden>
+        <p id="dry-summary" class="vestige-progress" aria-live="polite"></p>
+        <div id="dry-results-grid" class="dry-results-grid"></div>
+      </div>
+    </section>
+  </main>
+  <footer data-wiki-links="https://oldschool.runescape.wiki/w/Chest_(The_Fractured_Archive)"></footer>
+</body>
+</html>

@@ -1,10 +1,14 @@
 import { createDryField, createUniqueCard, createLootCard, createDryCard, parseNumber, resetPanels, showError, clearInputsOnClick, setCalculatorMode, byId as $ } from "./ui.mjs";
 
-export function setupEncounterCalculator({encounters,maxEach,maxReceived,items,unique,dryItems,readOptions=()=>({}),simulate,calculateDry,rarity,createUnique=createUniqueCard,onLoot=()=>{},onDry=()=>{},onMode=()=>{},summaryLabel,summaryKey}) {
+export function setupEncounterCalculator({
+ encounters = [], maxEach, maxReceived, items, unique, dryItems,
+ readCounts = () => Object.fromEntries(encounters.map(group => [group.id, parseNumber($(group.inputId ?? group.id), maxEach, group.label)])),
+ readOptions = () => ({}), simulate, calculateDry, rarity, createUnique = createUniqueCard,
+ onLoot = () => {}, onDry = () => {}, onMode = () => {}, summaryLabel, summaryKey
+}) {
  const form=$("simulator-form"),dryInputs=$("dry-inputs");
  let mode="loot";
  for(const item of dryItems)dryInputs.append(createDryField(item));
- const readCounts=()=>Object.fromEntries(encounters.map(group=>[group.id,parseNumber($(group.inputId??group.id),maxEach,group.label)]));
  for(const name of ["loot","dry"])$("mode-"+name).addEventListener("click",()=>{mode=name;onMode(setCalculatorMode(name));});
  form.addEventListener("input",()=>{resetPanels();showError("");});
  $("clear-button").addEventListener("click",()=>{
